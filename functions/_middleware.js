@@ -59,8 +59,15 @@ h1{font-family:'Josefin Sans',sans-serif;font-weight:300;font-size:1.6rem;letter
 </html>`;
 
 export async function onRequest(context) {
+  const url = new URL(context.request.url);
+
+  // Permitir API routes sem auth (Stripe Checkout)
+  if (url.pathname.startsWith('/create-checkout-session') || url.pathname.startsWith('/session/')) {
+    return context.next();
+  }
+
   // Se é POST para /auth, processar login
-  if (context.request.method === 'POST' && new URL(context.request.url).pathname === '/auth') {
+  if (context.request.method === 'POST' && url.pathname === '/auth') {
     const form = await context.request.formData();
     const password = form.get('password');
     if (password === PASS) {

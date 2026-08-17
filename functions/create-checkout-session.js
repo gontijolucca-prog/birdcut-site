@@ -10,6 +10,7 @@ export async function onRequestPost(context) {
     formData.append('mode', 'payment');
     formData.append('payment_method_types[]', 'card');
     formData.append('payment_method_types[]', 'multibanco');
+    formData.append('payment_method_types[]', 'mb_way');
     formData.append('line_items[0][price]', STRIPE_PRICE_ID);
     formData.append('line_items[0][quantity]', quantity);
     formData.append('success_url', SITE_URL + '/success.html?session_id={CHECKOUT_SESSION_ID}');

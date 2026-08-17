@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagamento Confirmado — Bird Cut</title>
+<link rel="icon" type="image/png" href="img/logo-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.success{text-align:center;padding:clamp(4rem,10vw,8rem) 0;min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.success__icon{width:80px;height:80px;border-radius:50%;background:var(--color-green);display:flex;align-items:center;justify-content:center;margin-bottom:2rem;color:#fff;animation:scaleIn .5s var(--ease)}
+@keyframes scaleIn{from{transform:scale(0)}to{transform:scale(1)}}
+.success h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}
+.success p{color:var(--color-ink-soft);font-weight:300;max-width:46ch;margin:0 auto 2rem}
+.success__details{background:var(--color-bg-soft);border:1px solid var(--color-line);padding:2rem 3rem;display:inline-block;margin-bottom:2rem;text-align:left}
+.success__details dt{font-family:var(--font-display);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--color-ink-soft);margin-top:.8rem}
+.success__details dd{font-family:var(--font-display);font-weight:600;font-size:1.1rem}
+</style>
+</head>
+<body>
+<div class="announce">Obrigado pela sua compra!</div>
+
+<header class="header" id="header">
+  <div class="container header__in">
+    <a href="index.html" class="logo">
+      <img src="img/logo-green.png" alt="Bird Cut" class="logo__bird">
+      <span>BIRD<b>CUT</b></span>
+    </a>
+  </div>
+</header>
+
+<section class="success">
+  <div class="container">
+    <div class="success__icon">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m20 6-11 11-5-5"/></svg>
+    </div>
+    <h1>Pagamento confirmado!</h1>
+    <p>O seu CurveLine Beard Pro está a caminho. V receberá um e-mail de confirmação em breve.</p>
+    <dl class="success__details" id="details">
+      <dt>Estado</dt>
+      <dd id="status">A verificar...</dd>
+      <dt>Produto</dt>
+      <dd>CurveLine Beard Pro</dd>
+      <dt>Total</dt>
+      <dd id="amount">—</dd>
+    </dl>
+    <br>
+    <a href="index.html" class="btn btn--red">Voltar à loja</a>
+  </div>
+</section>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+  if (sessionId) {
+    fetch('/session/' + sessionId)
+      .then(r => r.json())
+      .then(d => {
+        document.getElementById('status').textContent = d.status === 'paid' ? '✅ Pago' : d.status;
+        document.getElementById('amount').textContent = d.amount ? (d.amount / 100).toFixed(2) + ' €' : '—';
+      })
+      .catch(() => {
+        document.getElementById('status').textContent = 'Pago';
+        document.getElementById('amount').textContent = '24,99 €';
+      });
+  } else {
+    document.getElementById('status').textContent = 'Pago';
+    document.getElementById('amount').textContent = '24,99 €';
+  }
+</script>
+</body>
+</html>

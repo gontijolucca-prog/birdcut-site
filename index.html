@@ -55,7 +55,7 @@
       <h1>Desenvolvido para dar a você mais <em>controlo</em>, <em>precisão</em> e <em>agilidade</em> na definição da linha inferior da barba.</h1>
       <p class="hero-produto__sub">Precisão e versatilidade reconhecidas por profissionais</p>
       <div class="hero-produto__cta">
-        <a href="#comprar" class="btn btn--red">Comprar agora</a>
+        <a href="#comprar" class="btn btn--red" onclick="event.preventDefault();document.getElementById('addToCart').click()">Comprar agora</a>
         <a href="#destaques" class="btn btn--outline">Explore todas as possibilidades!</a>
       </div>
     </div>
@@ -132,7 +132,7 @@
       </ul>
       <div class="price-row">
         <span class="price">24,90€ <small>IVA incluído</small></span>
-        <button class="btn btn--red" id="addToCart">Comprar agora</button>
+        <button class="btn btn--red" id="addToCart" data-name="CurveLine Beard Pro" data-price="24.99" data-image="img/produto-hero.jpg">Comprar agora</button>
       </div>
     </div>
   </div>

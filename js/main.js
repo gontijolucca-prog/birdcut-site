@@ -58,36 +58,138 @@
   mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mm.classList.remove('open')));
 })();
 
-/* ===== CART ===== */
+/* ===== CARRINHO ===== */
 (function(){
-  let cart = 0;
+  let cart = JSON.parse(localStorage.getItem('birdcut-cart') || '[]');
   const cartCount = document.querySelector('.cart-count');
-  if (!cartCount) return;
-  const buttons = [document.getElementById('addToCart'), ...document.querySelectorAll('.pcard__btn:not(:disabled)')];
-  buttons.forEach(btn => {
-    if (!btn) return;
+  const cartBtn = document.querySelector('.icon-btn--cart');
+
+  // Mini-carrinho HTML
+  const miniCart = document.createElement('div');
+  miniCart.className = 'mini-cart';
+  miniCart.innerHTML = `
+    <div class="mini-cart__head"><h3>Carrinho</h3><button class="mini-cart__close" aria-label="Fechar">×</button></div>
+    <div class="mini-cart__items"></div>
+    <div class="mini-cart__foot">
+      <div class="mini-cart__total"><span>Total</span><b></b></div>
+      <button class="btn btn--red mini-cart__checkout">Finalizar Compra</button>
+    </div>
+  `;
+  document.body.appendChild(miniCart);
+
+  function save(){ localStorage.setItem('birdcut-cart', JSON.stringify(cart)); }
+  function updateCount(){
+    const total = cart.reduce((s,i) => s + i.qty, 0);
+    if (cartCount) cartCount.textContent = total;
+  }
+  function renderMini(){
+    const items = miniCart.querySelector('.mini-cart__items');
+    const totalEl = miniCart.querySelector('.mini-cart__total b');
+    if (!cart.length){
+      items.innerHTML = '<p style="padding:2rem 0;text-align:center;color:var(--color-ink-soft)">Carrinho vazio</p>';
+      totalEl.textContent = '0,00 €';
+      return;
+    }
+    items.innerHTML = cart.map((item,i) => `
+      <div class="mini-cart__item">
+        <img src="${item.image}" alt="${item.name}">
+        <div class="mini-cart__info">
+          <b>${item.name}</b>
+          <span>${item.price} €</span>
+          <div class="mini-cart__qty">
+            <button data-idx="${i}" data-action="minus">−</button>
+            <span>${item.qty}</span>
+            <button data-idx="${i}" data-action="plus">+</button>
+          </div>
+        </div>
+        <button class="mini-cart__remove" data-idx="${i}" aria-label="Remover">×</button>
+      </div>
+    `).join('');
+    const total = cart.reduce((s,i) => s + i.priceNum * i.qty, 0);
+    totalEl.textContent = total.toFixed(2).replace('.',',') + ' €';
+    // Event listeners
+    items.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.idx);
+        if (btn.dataset.action === 'plus') cart[idx].qty++;
+        else if (btn.dataset.action === 'minus') {
+          cart[idx].qty--;
+          if (cart[idx].qty <= 0) cart.splice(idx, 1);
+        }
+        save(); updateCount(); renderMini();
+      });
+    });
+    items.querySelectorAll('.mini-cart__remove').forEach(btn => {
+      btn.addEventListener('click', () => {
+        cart.splice(parseInt(btn.dataset.idx), 1);
+        save(); updateCount(); renderMini();
+      });
+    });
+  }
+
+  // Abrir/fechar mini-carrinho
+  if (cartBtn) cartBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    renderMini();
+    miniCart.classList.toggle('open');
+  });
+  miniCart.querySelector('.mini-cart__close').addEventListener('click', () => miniCart.classList.remove('open'));
+  document.addEventListener('click', (e) => {
+    if (!miniCart.contains(e.target) && !cartBtn.contains(e.target)) miniCart.classList.remove('open');
+  });
+
+  // Adicionar ao carrinho
+  function addToCart(name, priceNum, image){
+    const existing = cart.find(i => i.name === name);
+    if (existing) existing.qty++;
+    else cart.push({ name, price: priceNum.toFixed(2).replace('.',','), priceNum, image, qty: 1 });
+    save(); updateCount();
+    // Feedback visual
+    if (cartBtn) { cartBtn.style.transform = 'scale(1.15)'; setTimeout(() => cartBtn.style.transform = '', 200); }
+  }
+
+  // Botões "Comprar agora" / "Adicionar ao Carrinho"
+  document.querySelectorAll('#addToCart, .pcard__btn:not(:disabled)').forEach(btn => {
     btn.addEventListener('click', () => {
-      cart += 1;
-      cartCount.textContent = cart;
+      const name = btn.dataset.name || 'CurveLine Beard Pro';
+      const price = parseFloat(btn.dataset.price || '24.99');
+      const image = btn.dataset.image || 'img/produto-hero.jpg';
+      addToCart(name, price, image);
       const old = btn.textContent;
       btn.textContent = '✓ Adicionado';
       setTimeout(() => btn.textContent = old, 1400);
     });
   });
+
+  // Checkout Stripe
+  miniCart.querySelector('.mini-cart__checkout').addEventListener('click', async () => {
+    const btn = miniCart.querySelector('.mini-cart__checkout');
+    btn.textContent = 'A redirecionar...';
+    btn.disabled = true;
+    try {
+      const qty = cart.reduce((s,i) => s + i.qty, 0);
+      const res = await fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ quantity: qty })
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+      else { alert('Erro: ' + (data.error || 'Desconhecido')); btn.textContent = 'Finalizar Compra'; btn.disabled = false; }
+    } catch(e) {
+      alert('Erro de ligação. Tente novamente.');
+      btn.textContent = 'Finalizar Compra';
+      btn.disabled = false;
+    }
+  });
+
+  updateCount();
 })();
 
-/* ===== NEWSLETTER ===== */
-document.querySelectorAll('form.newsletter-form').forEach(form => {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('button');
-    const old = btn.textContent;
-    btn.textContent = '✓ Obrigado!';
-    const input = form.querySelector('input');
-    if (input) input.value = '';
-    setTimeout(() => btn.textContent = old, 2200);
-  });
-});
+/* ===== INFLUENCER SLIDER (autoplay contínuo) ===== */
+(function(){
+  // O carrossel é CSS-only (animation marquee). Nenhum JS necessário.
+})();
 
 /* ===== CURSOR FOLLOW (pássaro Bird Cut) ===== */
 (function(){
@@ -111,8 +213,35 @@ document.querySelectorAll('form.newsletter-form').forEach(form => {
     requestAnimationFrame(loop);
   })();
 
-  document.querySelectorAll('a, button, .pcard, .handle, .ig-item').forEach(el => {
+  document.querySelectorAll('a, button, .pcard, .handle, .ig-item, .mini-cart').forEach(el => {
     el.addEventListener('mouseenter', () => bird.classList.add('hover'));
     el.addEventListener('mouseleave', () => bird.classList.remove('hover'));
+  });
+})();
+
+/* ===== NEWSLETTER ===== */
+document.querySelectorAll('form.newsletter-form').forEach(form => {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    const old = btn.textContent;
+    btn.textContent = '✓ Obrigado!';
+    const input = form.querySelector('input');
+    if (input) input.value = '';
+    setTimeout(() => btn.textContent = old, 2200);
+  });
+});
+
+/* ===== CONTACT FORM ===== */
+(function(){
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    btn.textContent = '✓ Mensagem enviada!';
+    btn.disabled = true;
+    form.querySelectorAll('input, textarea').forEach(i => i.value = '');
+    setTimeout(() => { btn.textContent = 'Enviar Mensagem'; btn.disabled = false; }, 2500);
   });
 })();

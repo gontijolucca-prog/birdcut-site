@@ -1,0 +1,5 @@
+name = "birdcut-site"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "."
+
+account_id = "60071bf0166cf51601b48289692a3cd3"

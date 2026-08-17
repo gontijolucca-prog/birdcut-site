@@ -353,7 +353,7 @@ body.cursor-on .cursor-bird{opacity:.85}
 .hero-produto__in h1 em{font-style:normal;color:var(--color-green)}
 .hero-produto__sub{color:var(--color-ink-soft);font-weight:300;font-size:1.05rem;margin-bottom:2rem}
 .hero-produto__cta{display:flex;gap:1rem;flex-wrap:wrap}
-.hero-produto__media{position:relative;overflow:hidden;aspect-ratio:3/4}
+.hero-produto__media{position:relative;overflow:hidden;aspect-ratio:16/9;background:#f5f0eb}
 .hero-produto__media img{width:100%;height:100%;object-fit:cover}
 .hero-produto__badge{position:absolute;top:1.4rem;left:1.4rem;background:var(--color-green);color:#fff;font-family:var(--font-display);font-weight:600;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;padding:.55rem 1.1rem}
 @media (max-width:1024px){.hero-produto__in{grid-template-columns:1fr}.hero-produto__media{order:-1;max-height:50vh}}

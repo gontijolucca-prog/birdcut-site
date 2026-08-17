@@ -1,31 +1,44 @@
-import Stripe from 'stripe';
-
 export async function onRequestPost(context) {
   const { STRIPE_SECRET_KEY, STRIPE_PRICE_ID, SITE_URL } = context.env;
-  const stripe = new Stripe(STRIPE_SECRET_KEY);
 
   try {
     const body = await context.request.json();
     const quantity = body.quantity || 1;
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card', 'multibanco'],
-      mode: 'payment',
-      line_items: [{
-        price: STRIPE_PRICE_ID,
-        quantity: quantity,
-      }],
-      success_url: `${SITE_URL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_URL}/`,
-      locale: 'pt',
-      shipping_address_collection: {
-        allowed_countries: ['PT', 'ES', 'FR', 'DE', 'NL', 'BE', 'IT'],
+    // Criar Checkout Session via API direta (sem SDK)
+    const formData = new URLSearchParams();
+    formData.append('mode', 'payment');
+    formData.append('payment_method_types[]', 'card');
+    formData.append('payment_method_types[]', 'multibanco');
+    formData.append('line_items[0][price]', STRIPE_PRICE_ID);
+    formData.append('line_items[0][quantity]', quantity);
+    formData.append('success_url', SITE_URL + '/success.html?session_id={CHECKOUT_SESSION_ID}');
+    formData.append('cancel_url', SITE_URL + '/');
+    formData.append('locale', 'pt');
+    formData.append('shipping_address_collection[allowed_countries][]', 'PT');
+    formData.append('shipping_address_collection[allowed_countries][]', 'ES');
+
+    const res = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + STRIPE_SECRET_KEY,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
+      body: formData.toString(),
     });
 
-    return new Response(JSON.stringify({ url: session.url }), {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const session = await res.json();
+
+    if (session.url) {
+      return new Response(JSON.stringify({ url: session.url }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } else {
+      return new Response(JSON.stringify({ error: session.error?.message || 'Stripe error' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,

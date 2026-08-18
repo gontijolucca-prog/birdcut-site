@@ -1,11 +1,11 @@
 // ===== Firebase Config =====
 const firebaseConfig = {
-  apiKey: "AIzaSyBxc-JFWwxlauY6U4A3IKTxxd5UFiDzjhI",
-  authDomain: "recofatima-ferramenta.firebaseapp.com",
-  projectId: "recofatima-ferramenta",
-  storageBucket: "recofatima-ferramenta.firebasestorage.app",
-  messagingSenderId: "561979864363",
-  appId: "1:561979864363:web:4577c584f4802261c0016e"
+  apiKey: "AIzaSyBGb5fGAyC-pRcRU6MUHb__b_vKha71HRE",
+  authDomain: "birdcut-site.firebaseapp.com",
+  projectId: "birdcut-site",
+  storageBucket: "birdcut-site.firebasestorage.app",
+  messagingSenderId: "422214845627",
+  appId: "1:422214845627:web:placeholder"
 };
 
 firebase.initializeApp(firebaseConfig);

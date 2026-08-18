@@ -402,3 +402,43 @@ body.cursor-on .cursor-bird{opacity:.85}
 .mini-cart__total span{font-family:var(--font-display);font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;color:var(--color-ink-soft)}
 .mini-cart__total b{font-family:var(--font-display);font-size:1.4rem;font-weight:700}
 .mini-cart__checkout{width:100%;justify-content:center}
+
+/* ============ ÁREA CLIENTE ============ */
+.conta-page{padding:var(--space) 0}
+.conta-split{display:grid;grid-template-columns:1fr;gap:0;min-height:60vh}
+.conta-login{display:flex;align-items:center;justify-content:center}
+.conta-login__card{text-align:center;max-width:400px;width:100%;padding:3rem 2.5rem;border:1px solid var(--color-line);background:#fff}
+.conta-login__card h2{font-family:var(--font-display);font-weight:600;font-size:1.8rem;margin-bottom:.5rem}
+.conta-form{display:grid;gap:1rem;text-align:left}
+.conta-form label{font-family:var(--font-display);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--color-ink-soft);margin-bottom:.3rem;display:block}
+.conta-form input{padding:1rem 1.2rem;border:1px solid var(--color-line);background:#fff;font-family:var(--font-body);font-size:.95rem;outline:none;transition:border-color .3s;width:100%}
+.conta-form input:focus{border-color:var(--color-orange)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.conta-dashboard{display:grid;grid-template-columns:260px 1fr;gap:clamp(2rem,4vw,3.5rem);align-items:start}
+.conta-sidebar{position:sticky;top:100px;border:1px solid var(--color-line);background:#fff;padding:0}
+.conta-sidebar__user{display:flex;align-items:center;gap:1rem;padding:1.4rem;border-bottom:1px solid var(--color-line)}
+.conta-sidebar__avatar{width:48px;height:48px;border-radius:50%;background:var(--color-green);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:1rem;flex-shrink:0}
+.conta-sidebar__user b{font-family:var(--font-display);font-size:.95rem;display:block}
+.conta-sidebar__user span{font-size:.8rem;color:var(--color-ink-soft)}
+.conta-nav{padding:.8rem 0}
+.conta-nav a{display:flex;align-items:center;gap:.8rem;padding:.85rem 1.4rem;font-family:var(--font-display);font-size:.9rem;font-weight:500;color:var(--color-ink-soft);transition:.25s;border-left:3px solid transparent}
+.conta-nav a:hover{background:var(--color-bg-soft);color:var(--color-ink)}
+.conta-nav a.active{color:var(--color-orange);border-left-color:var(--color-orange);background:rgba(255,105,0,.04);font-weight:600}
+.conta-content h2{font-family:var(--font-display);font-weight:600;font-size:1.6rem;margin-bottom:1.5rem}
+.pedido-card{border:1px solid var(--color-line);background:#fff;margin-bottom:1rem;overflow:hidden}
+.pedido-card__header{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 1.6rem;border-bottom:1px solid var(--color-line);flex-wrap:wrap;gap:.5rem}
+.pedido-card__header b{font-family:var(--font-display);font-size:.95rem}
+.pedido-card__header span{font-size:.82rem;color:var(--color-ink-soft);margin-left:.8rem}
+.pedido-status{font-family:var(--font-display);font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .8rem;border-radius:2px}
+.pedido-status--entregue{background:rgba(90,107,47,.1);color:var(--color-green)}
+.pedido-status--transito{background:rgba(255,105,0,.1);color:var(--color-orange)}
+.pedido-card__body{padding:1.2rem 1.6rem}
+.pedido-item{display:flex;align-items:center;gap:1rem}
+.pedido-item img{width:56px;height:56px;object-fit:cover;border-radius:2px}
+.pedido-item b{font-family:var(--font-display);font-size:.92rem;display:block}
+.pedido-item span{font-size:.85rem;color:var(--color-ink-soft)}
+.pedido-card__footer{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.6rem;border-top:1px solid var(--color-line);background:var(--color-bg-soft)}
+.pedido-card__footer b{font-family:var(--font-display);font-size:1.05rem}
+.btn--outline{border:1px solid var(--color-line);color:var(--color-ink);background:transparent;cursor:pointer;font-family:var(--font-display);font-weight:600;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;padding:.8rem 1.6rem;transition:.25s}
+.btn--outline:hover{border-color:var(--color-orange);color:var(--color-orange)}
+@media (max-width:860px){.conta-dashboard{grid-template-columns:1fr}.conta-sidebar{position:static}.form-row{grid-template-columns:1fr}}

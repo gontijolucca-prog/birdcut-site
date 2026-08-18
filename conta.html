@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Área de Cliente — Bird Cut</title>
+<meta name="description" content="Área de Cliente Bird Cut: gestão de pedidos, dados pessoais e endereços.">
+<link rel="icon" type="image/png" href="img/logo-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  (function(){
+    var goTop = function(){ window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); };
+    goTop();
+    window.addEventListener('load', goTop);
+  })();
+</script>
+</head>
+<body>
+
+<div class="announce">Portes grátis em Portugal continental em encomendas superiores a <b>40€</b></div>
+
+<header class="header" id="header">
+  <div class="container header__in">
+    <a href="index.html" class="logo">
+      <img src="img/logo-green.png" alt="Bird Cut" class="logo__bird">
+      <span>BIRD<b>CUT</b></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Início</a>
+      <a href="a-historia.html">A História</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="header__actions">
+      <button class="icon-btn icon-btn--cart" aria-label="Carrinho">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span>Carrinho</span>
+        <span class="cart-count">0</span>
+      </button>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== AREA CLIENTE ===== -->
+<section class="conta-page">
+  <div class="container">
+    <div class="conta-split">
+      
+      <!-- Login (tela inicial) -->
+      <div class="conta-login" id="contaLogin">
+        <div class="conta-login__card">
+          <img src="img/logo-green.png" alt="Bird Cut" style="width:56px;margin-bottom:1.5rem">
+          <h2>Área de Cliente</h2>
+          <p style="color:var(--color-ink-soft);margin-bottom:2rem">Aceda à sua conta para ver pedidos e dados pessoais.</p>
+          <form id="loginForm" class="conta-form">
+            <input type="email" placeholder="E-mail" required>
+            <input type="password" placeholder="Palavra-passe" required>
+            <button type="submit" class="btn btn--red" style="width:100%;justify-content:center">Entrar</button>
+          </form>
+          <p style="margin-top:1.5rem;font-size:.88rem;color:var(--color-ink-soft)">
+            Não tem conta? <a href="#" style="color:var(--color-orange);font-weight:600" onclick="event.preventDefault();alert('Registo em breve!')">Criar conta</a>
+          </p>
+          <p style="margin-top:.8rem;font-size:.85rem">
+            <a href="#" style="color:var(--color-ink-soft)" onclick="event.preventDefault();alert('Link de recuperação enviado!')">Esqueceu a palavra-passe?</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Dashboard (após "login") -->
+      <div class="conta-dashboard" id="contaDashboard" style="display:none">
+        
+        <!-- Sidebar -->
+        <aside class="conta-sidebar">
+          <div class="conta-sidebar__user">
+            <div class="conta-sidebar__avatar">JR</div>
+            <div><b>João Rafael</b><span>joaorafael@email.pt</span></div>
+          </div>
+          <nav class="conta-nav">
+            <a href="#" class="active" onclick="showTab('pedidos',this);return false">📦 Pedidos</a>
+            <a href="#" onclick="showTab('dados',this);return false">👤 Dados Pessoais</a>
+            <a href="#" onclick="showTab('enderecos',this);return false">📍 Endereços</a>
+            <a href="#" onclick="showTab('seguranca',this);return false">🔒 Segurança</a>
+            <a href="#" onclick="sair();return false" style="color:var(--color-orange)">← Sair</a>
+          </nav>
+        </aside>
+
+        <!-- Conteúdo -->
+        <div class="conta-content">
+          
+          <!-- Pedidos -->
+          <div class="conta-tab" id="tab-pedidos">
+            <h2>Os seus pedidos</h2>
+            <div class="pedido-card">
+              <div class="pedido-card__header">
+                <div><b>Pedido #BC-2026-001</b><span>17 Ago 2026</span></div>
+                <span class="pedido-status pedido-status--entregue">Entregue</span>
+              </div>
+              <div class="pedido-card__body">
+                <div class="pedido-item">
+                  <img src="img/produto-hero.jpg" alt="CurveLine Beard Pro">
+                  <div><b>CurveLine Beard Pro</b><span>1 × 24,99€</span></div>
+                </div>
+              </div>
+              <div class="pedido-card__footer">
+                <span>Total: <b>24,99€</b></span>
+                <a href="#" style="color:var(--color-orange);font-weight:600;font-size:.88rem" onclick="event.preventDefault()">Ver detalhes →</a>
+              </div>
+            </div>
+            <div class="pedido-card">
+              <div class="pedido-card__header">
+                <div><b>Pedido #BC-2026-002</b><span>10 Ago 2026</span></div>
+                <span class="pedido-status pedido-status--transito">Em trânsito</span>
+              </div>
+              <div class="pedido-card__body">
+                <div class="pedido-item">
+                  <img src="img/produto-hero.jpg" alt="CurveLine Beard Pro">
+                  <div><b>CurveLine Beard Pro (Edição Especial)</b><span>2 × 24,99€</span></div>
+                </div>
+              </div>
+              <div class="pedido-card__footer">
+                <span>Total: <b>49,98€</b></span>
+                <a href="#" style="color:var(--color-orange);font-weight:600;font-size:.88rem" onclick="event.preventDefault()">Ver detalhes →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dados Pessoais -->
+          <div class="conta-tab" id="tab-dados" style="display:none">
+            <h2>Dados Pessoais</h2>
+            <form class="conta-form">
+              <div class="form-row">
+                <div><label>Nome</label><input type="text" value="João Rafael"></div>
+                <div><label>Apelido</label><input type="text" value="Farias"></div>
+              </div>
+              <div><label>E-mail</label><input type="email" value="jrafa.farias@hotmail.com"></div>
+              <div><label>Telefone</label><input type="tel" value="+351 912 345 678"></div>
+              <div><label>Data de nascimento</label><input type="date" value="1995-07-15"></div>
+              <button type="button" class="btn btn--red" onclick="alert('Dados guardados!')">Guardar alterações</button>
+            </form>
+          </div>
+
+          <!-- Endereços -->
+          <div class="conta-tab" id="tab-enderecos" style="display:none">
+            <h2>Endereços</h2>
+            <div class="pedido-card" style="margin-bottom:1rem">
+              <div class="pedido-card__header">
+                <div><b>Endereço de envio</b><span style="color:var(--color-orange)">Principal</span></div>
+                <a href="#" style="color:var(--color-orange);font-size:.85rem" onclick="event.preventDefault()">Editar</a>
+              </div>
+              <div class="pedido-card__body">
+                <p>João Rafael Farias<br>Rua da Liberdade, 42<br>2620-123 Póvoa de Santo Adrião<br>Portugal</p>
+              </div>
+            </div>
+            <button class="btn btn--outline" onclick="alert('Adicionar endereço!')">+ Adicionar endereço</button>
+          </div>
+
+          <!-- Segurança -->
+          <div class="conta-tab" id="tab-seguranca" style="display:none">
+            <h2>Segurança</h2>
+            <form class="conta-form">
+              <div><label>Palavra-passe atual</label><input type="password" placeholder="••••••••"></div>
+              <div><label>Nova palavra-passe</label><input type="password" placeholder="••••••••"></div>
+              <div><label>Confirmar nova palavra-passe</label><input type="password" placeholder="••••••••"></div>
+              <button type="button" class="btn btn--red" onclick="alert('Palavra-passe atualizada!')">Atualizar palavra-passe</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function showTab(id, el) {
+  document.querySelectorAll('.conta-tab').forEach(t => t.style.display = 'none');
+  document.querySelectorAll('.conta-nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('tab-' + id).style.display = 'block';
+  el.classList.add('active');
+}
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  document.getElementById('contaLogin').style.display = 'none';
+  document.getElementById('contaDashboard').style.display = 'grid';
+});
+function sair() {
+  document.getElementById('contaDashboard').style.display = 'none';
+  document.getElementById('contaLogin').style.display = 'flex';
+  document.getElementById('loginForm').reset();
+}
+</script>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__about">
+        <a href="index.html" class="logo">
+          <img src="img/logo-white.png" alt="Bird Cut" class="logo__bird">
+          <span>BIRD<b>CUT</b></span>
+        </a>
+        <p>Ferramentas profissionais para Barbeiros que exigem precisão em cada detalhe.</p>
+      </div>
+      <div>
+        <h4>Produto</h4>
+        <ul>
+          <li><a href="index.html">CurveLine Beard Pro</a></li>
+          <li><a href="index.html">Como Utilizar</a></li>
+          <li><a href="contacto.html">Perguntas Frequentes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="a-historia.html">Sobre Nós</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li>✉ <a href="mailto:contacto@birdcut.pt">contacto@birdcut.pt</a></li>
+          <li>💈 <a href="https://www.instagram.com/birdcutpt/" target="_blank" rel="noopener">@birdcut.pt</a></li>
+        </ul>
+        <div class="footer__pay">
+          <span>VISA</span><span>MASTERCARD</span><span>MB WAY</span><span>PAYPAL</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Bird Cut. Todos os direitos reservados.</span>
+      <span><a href="#">Termos e Condições</a> · <a href="#">Política de Privacidade</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close" id="menuClose" aria-label="Fechar">×</button>
+  <a href="index.html">Início</a>
+  <a href="a-historia.html">A História</a>
+  <a href="contacto.html">Contacto</a>
+  <a href="conta.html">Área de Cliente</a>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

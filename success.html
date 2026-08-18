@@ -9,6 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase.js"></script>
 <style>
 .success{text-align:center;padding:clamp(4rem,10vw,8rem) 0;min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .success__icon{width:80px;height:80px;border-radius:50%;background:var(--color-green);display:flex;align-items:center;justify-content:center;margin-bottom:2rem;color:#fff;animation:scaleIn .5s var(--ease)}
@@ -23,14 +27,7 @@
 <body>
 <div class="announce">Obrigado pela sua compra!</div>
 
-<header class="header" id="header">
-  <div class="container header__in">
-    <a href="index.html" class="logo">
-      <img src="img/logo-green.png" alt="Bird Cut" class="logo__bird">
-      <span>BIRD<b>CUT</b></span>
-    </a>
-  </div>
-</header>
+<header class="header"><div class="container header__in"><a href="index.html" class="logo"><img src="img/logo-green.png" alt="Bird Cut" class="logo__bird"><span>BIRD<b>CUT</b></span></a></div></header>
 
 <section class="success">
   <div class="container">
@@ -38,38 +35,54 @@
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m20 6-11 11-5-5"/></svg>
     </div>
     <h1>Pagamento confirmado!</h1>
-    <p>O seu CurveLine Beard Pro está a caminho. V receberá um e-mail de confirmação em breve.</p>
-    <dl class="success__details" id="details">
-      <dt>Estado</dt>
-      <dd id="status">A verificar...</dd>
-      <dt>Produto</dt>
-      <dd>CurveLine Beard Pro</dd>
-      <dt>Total</dt>
-      <dd id="amount">—</dd>
+    <p>O seu CurveLine Beard Pro está a caminho. Receberá um e-mail de confirmação em breve.</p>
+    <dl class="success__details">
+      <dt>Estado</dt><dd id="status">A verificar...</dd>
+      <dt>Produto</dt><dd>CurveLine Beard Pro</dd>
+      <dt>Total</dt><dd id="amount">—</dd>
+      <dt>Pedido</dt><dd id="orderId" style="font-size:.85rem;color:var(--color-ink-soft)">A registar...</dd>
     </dl>
     <br>
     <a href="index.html" class="btn btn--red">Voltar à loja</a>
+    <a href="conta.html" class="btn btn--outline" style="margin-left:1rem">Área de Cliente</a>
   </div>
 </section>
 
 <script>
+(async () => {
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get('session_id');
-  if (sessionId) {
-    fetch('/session/' + sessionId)
-      .then(r => r.json())
-      .then(d => {
-        document.getElementById('status').textContent = d.status === 'paid' ? '✅ Pago' : d.status;
-        document.getElementById('amount').textContent = d.amount ? (d.amount / 100).toFixed(2) + ' €' : '—';
-      })
-      .catch(() => {
-        document.getElementById('status').textContent = 'Pago';
-        document.getElementById('amount').textContent = '24,99 €';
-      });
-  } else {
+  if (!sessionId) {
     document.getElementById('status').textContent = 'Pago';
     document.getElementById('amount').textContent = '24,99 €';
+    document.getElementById('orderId').textContent = '—';
+    return;
   }
+  try {
+    const res = await fetch('/session/' + sessionId);
+    const d = await res.json();
+    document.getElementById('status').textContent = d.status === 'paid' ? '✅ Pago' : d.status || 'Pago';
+    document.getElementById('amount').textContent = d.amount ? (d.amount / 100).toFixed(2) + ' €' : '24,99 €';
+
+    // Guardar pedido no Firestore
+    const user = auth.currentUser;
+    const orderData = {
+      userId: user ? user.uid : 'guest',
+      userEmail: user ? user.email : d.customer_email || 'guest',
+      stripeSessionId: sessionId,
+      items: [{ name: 'CurveLine Beard Pro', price: 24.99, quantity: 1, image: 'img/produto-hero.jpg' }],
+      total: d.amount ? d.amount / 100 : 24.99,
+      status: 'processamento',
+      paymentStatus: d.status || 'paid',
+    };
+    const docRef = await createOrder(orderData);
+    document.getElementById('orderId').textContent = '#' + docRef.id.substring(0, 8);
+  } catch(e) {
+    document.getElementById('status').textContent = 'Pago';
+    document.getElementById('amount').textContent = '24,99 €';
+    console.log('order save:', e.message);
+  }
+})();
 </script>
 </body>
 </html>

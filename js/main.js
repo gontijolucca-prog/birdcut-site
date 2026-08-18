@@ -60,6 +60,18 @@
 
 /* ===== CARRINHO ===== */
 (function(){
+  // Auth state — atualizar UI
+  if (typeof onAuthChange === 'function') {
+    onAuthChange(user => {
+      const contaLink = document.querySelector('a[href="conta.html"]');
+      if (user && contaLink) {
+        contaLink.querySelector('span').textContent = user.email?.split('@')[0] || 'Conta';
+      } else if (contaLink) {
+        contaLink.querySelector('span').textContent = 'Conta';
+      }
+    });
+  }
+
   let cart = JSON.parse(localStorage.getItem('birdcut-cart') || '[]');
   const cartCount = document.querySelector('.cart-count');
   const cartBtn = document.querySelector('.icon-btn--cart');

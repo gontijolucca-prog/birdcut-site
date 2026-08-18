@@ -10,14 +10,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-<script>
-  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-  (function(){
-    var goTop = function(){ window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); };
-    goTop();
-    window.addEventListener('load', goTop);
-  })();
-</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase.js"></script>
 </head>
 <body>
 
@@ -35,206 +31,150 @@
       <a href="contacto.html">Contacto</a>
     </nav>
     <div class="header__actions">
+      <a href="conta.html" class="icon-btn" style="text-decoration:none"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Conta</span></a>
       <button class="icon-btn icon-btn--cart" aria-label="Carrinho">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span>Carrinho</span>
         <span class="cart-count">0</span>
       </button>
-      <button class="burger" id="burger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
 
-<!-- ===== AREA CLIENTE ===== -->
-<section class="conta-page">
+<!-- ===== AUTH (Login + Registo) ===== -->
+<section class="conta-page" id="authSection">
   <div class="container">
     <div class="conta-split">
-      
-      <!-- Login (tela inicial) -->
-      <div class="conta-login" id="contaLogin">
+      <div class="conta-login">
         <div class="conta-login__card">
           <img src="img/logo-green.png" alt="Bird Cut" style="width:56px;margin-bottom:1.5rem">
-          <h2>Área de Cliente</h2>
-          <p style="color:var(--color-ink-soft);margin-bottom:2rem">Aceda à sua conta para ver pedidos e dados pessoais.</p>
-          <form id="loginForm" class="conta-form">
-            <input type="email" placeholder="E-mail" required>
-            <input type="password" placeholder="Palavra-passe" required>
-            <button type="submit" class="btn btn--red" style="width:100%;justify-content:center">Entrar</button>
-          </form>
-          <p style="margin-top:1.5rem;font-size:.88rem;color:var(--color-ink-soft)">
-            Não tem conta? <a href="#" style="color:var(--color-orange);font-weight:600" onclick="event.preventDefault();alert('Registo em breve!')">Criar conta</a>
-          </p>
-          <p style="margin-top:.8rem;font-size:.85rem">
-            <a href="#" style="color:var(--color-ink-soft)" onclick="event.preventDefault();alert('Link de recuperação enviado!')">Esqueceu a palavra-passe?</a>
-          </p>
-        </div>
-      </div>
 
-      <!-- Dashboard (após "login") -->
-      <div class="conta-dashboard" id="contaDashboard" style="display:none">
-        
-        <!-- Sidebar -->
-        <aside class="conta-sidebar">
-          <div class="conta-sidebar__user">
-            <div class="conta-sidebar__avatar">JR</div>
-            <div><b>João Rafael</b><span>joaorafael@email.pt</span></div>
-          </div>
-          <nav class="conta-nav">
-            <a href="#" class="active" onclick="showTab('pedidos',this);return false">📦 Pedidos</a>
-            <a href="#" onclick="showTab('dados',this);return false">👤 Dados Pessoais</a>
-            <a href="#" onclick="showTab('enderecos',this);return false">📍 Endereços</a>
-            <a href="#" onclick="showTab('seguranca',this);return false">🔒 Segurança</a>
-            <a href="#" onclick="sair();return false" style="color:var(--color-orange)">← Sair</a>
-          </nav>
-        </aside>
-
-        <!-- Conteúdo -->
-        <div class="conta-content">
-          
-          <!-- Pedidos -->
-          <div class="conta-tab" id="tab-pedidos">
-            <h2>Os seus pedidos</h2>
-            <div class="pedido-card">
-              <div class="pedido-card__header">
-                <div><b>Pedido #BC-2026-001</b><span>17 Ago 2026</span></div>
-                <span class="pedido-status pedido-status--entregue">Entregue</span>
-              </div>
-              <div class="pedido-card__body">
-                <div class="pedido-item">
-                  <img src="img/produto-hero.jpg" alt="CurveLine Beard Pro">
-                  <div><b>CurveLine Beard Pro</b><span>1 × 24,99€</span></div>
-                </div>
-              </div>
-              <div class="pedido-card__footer">
-                <span>Total: <b>24,99€</b></span>
-                <a href="#" style="color:var(--color-orange);font-weight:600;font-size:.88rem" onclick="event.preventDefault()">Ver detalhes →</a>
-              </div>
-            </div>
-            <div class="pedido-card">
-              <div class="pedido-card__header">
-                <div><b>Pedido #BC-2026-002</b><span>10 Ago 2026</span></div>
-                <span class="pedido-status pedido-status--transito">Em trânsito</span>
-              </div>
-              <div class="pedido-card__body">
-                <div class="pedido-item">
-                  <img src="img/produto-hero.jpg" alt="CurveLine Beard Pro">
-                  <div><b>CurveLine Beard Pro (Edição Especial)</b><span>2 × 24,99€</span></div>
-                </div>
-              </div>
-              <div class="pedido-card__footer">
-                <span>Total: <b>49,98€</b></span>
-                <a href="#" style="color:var(--color-orange);font-weight:600;font-size:.88rem" onclick="event.preventDefault()">Ver detalhes →</a>
-              </div>
-            </div>
+          <!-- Login Form -->
+          <div id="loginView">
+            <h2>Entrar</h2>
+            <p style="color:var(--color-ink-soft);margin-bottom:2rem">Aceda à sua conta Bird Cut.</p>
+            <form id="loginForm" class="conta-form">
+              <div><label>E-mail</label><input type="email" id="loginEmail" placeholder="seu@email.pt" required></div>
+              <div><label>Palavra-passe</label><input type="password" id="loginPass" placeholder="••••••••" required></div>
+              <div id="loginError" style="color:#e56d6d;font-size:.85rem;min-height:1.2em"></div>
+              <button type="submit" class="btn btn--red" style="width:100%;justify-content:center" id="loginBtn">Entrar</button>
+            </form>
+            <p style="margin-top:1.5rem;font-size:.88rem;color:var(--color-ink-soft)">
+              Não tem conta? <a href="#" onclick="showRegister();return false" style="color:var(--color-orange);font-weight:600">Criar conta</a>
+            </p>
+            <p style="margin-top:.8rem;font-size:.85rem">
+              <a href="#" onclick="resetPass();return false" style="color:var(--color-ink-soft)">Esqueceu a palavra-passe?</a>
+            </p>
           </div>
 
-          <!-- Dados Pessoais -->
-          <div class="conta-tab" id="tab-dados" style="display:none">
-            <h2>Dados Pessoais</h2>
-            <form class="conta-form">
+          <!-- Register Form -->
+          <div id="registerView" style="display:none">
+            <h2>Criar Conta</h2>
+            <p style="color:var(--color-ink-soft);margin-bottom:2rem">Junte-se à comunidade Bird Cut.</p>
+            <form id="registerForm" class="conta-form">
               <div class="form-row">
-                <div><label>Nome</label><input type="text" value="João Rafael"></div>
-                <div><label>Apelido</label><input type="text" value="Farias"></div>
+                <div><label>Nome</label><input type="text" id="regName" placeholder="João" required></div>
+                <div><label>Apelido</label><input type="text" id="regSurname" placeholder="Rafael" required></div>
               </div>
-              <div><label>E-mail</label><input type="email" value="jrafa.farias@hotmail.com"></div>
-              <div><label>Telefone</label><input type="tel" value="+351 912 345 678"></div>
-              <div><label>Data de nascimento</label><input type="date" value="1995-07-15"></div>
-              <button type="button" class="btn btn--red" onclick="alert('Dados guardados!')">Guardar alterações</button>
+              <div><label>E-mail</label><input type="email" id="regEmail" placeholder="seu@email.pt" required></div>
+              <div><label>Palavra-passe</label><input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required minlength="6"></div>
+              <div><label>Confirmar palavra-passe</label><input type="password" id="regPass2" placeholder="••••••••" required minlength="6"></div>
+              <div id="regError" style="color:#e56d6d;font-size:.85rem;min-height:1.2em"></div>
+              <button type="submit" class="btn btn--red" style="width:100%;justify-content:center" id="regBtn">Criar Conta</button>
             </form>
+            <p style="margin-top:1.5rem;font-size:.88rem;color:var(--color-ink-soft)">
+              Já tem conta? <a href="#" onclick="showLogin();return false" style="color:var(--color-orange);font-weight:600">Entrar</a>
+            </p>
           </div>
-
-          <!-- Endereços -->
-          <div class="conta-tab" id="tab-enderecos" style="display:none">
-            <h2>Endereços</h2>
-            <div class="pedido-card" style="margin-bottom:1rem">
-              <div class="pedido-card__header">
-                <div><b>Endereço de envio</b><span style="color:var(--color-orange)">Principal</span></div>
-                <a href="#" style="color:var(--color-orange);font-size:.85rem" onclick="event.preventDefault()">Editar</a>
-              </div>
-              <div class="pedido-card__body">
-                <p>João Rafael Farias<br>Rua da Liberdade, 42<br>2620-123 Póvoa de Santo Adrião<br>Portugal</p>
-              </div>
-            </div>
-            <button class="btn btn--outline" onclick="alert('Adicionar endereço!')">+ Adicionar endereço</button>
-          </div>
-
-          <!-- Segurança -->
-          <div class="conta-tab" id="tab-seguranca" style="display:none">
-            <h2>Segurança</h2>
-            <form class="conta-form">
-              <div><label>Palavra-passe atual</label><input type="password" placeholder="••••••••"></div>
-              <div><label>Nova palavra-passe</label><input type="password" placeholder="••••••••"></div>
-              <div><label>Confirmar nova palavra-passe</label><input type="password" placeholder="••••••••"></div>
-              <button type="button" class="btn btn--red" onclick="alert('Palavra-passe atualizada!')">Atualizar palavra-passe</button>
-            </form>
-          </div>
-
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<script>
-function showTab(id, el) {
-  document.querySelectorAll('.conta-tab').forEach(t => t.style.display = 'none');
-  document.querySelectorAll('.conta-nav a').forEach(a => a.classList.remove('active'));
-  document.getElementById('tab-' + id).style.display = 'block';
-  el.classList.add('active');
-}
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  document.getElementById('contaLogin').style.display = 'none';
-  document.getElementById('contaDashboard').style.display = 'grid';
-});
-function sair() {
-  document.getElementById('contaDashboard').style.display = 'none';
-  document.getElementById('contaLogin').style.display = 'flex';
-  document.getElementById('loginForm').reset();
-}
-</script>
+<!-- ===== DASHBOARD ===== -->
+<section class="conta-page" id="dashboardSection" style="display:none">
+  <div class="container">
+    <div class="conta-dashboard">
+      <aside class="conta-sidebar">
+        <div class="conta-sidebar__user">
+          <div class="conta-sidebar__avatar" id="userAvatar">?</div>
+          <div><b id="userName">—</b><span id="userEmail">—</span></div>
+        </div>
+        <nav class="conta-nav">
+          <a href="#" class="active" onclick="showTab('pedidos',this);return false">📦 Pedidos</a>
+          <a href="#" onclick="showTab('dados',this);return false">👤 Dados Pessoais</a>
+          <a href="#" onclick="showTab('enderecos',this);return false">📍 Endereços</a>
+          <a href="#" onclick="showTab('seguranca',this);return false">🔒 Segurança</a>
+          <a href="#" onclick="doLogout();return false" style="color:var(--color-orange)">← Sair</a>
+        </nav>
+      </aside>
+      <div class="conta-content">
+        <!-- Pedidos -->
+        <div class="conta-tab" id="tab-pedidos">
+          <h2>Os seus pedidos</h2>
+          <div id="ordersList"><p style="color:var(--color-ink-soft)">A carregar pedidos...</p></div>
+        </div>
+        <!-- Dados -->
+        <div class="conta-tab" id="tab-dados" style="display:none">
+          <h2>Dados Pessoais</h2>
+          <form id="profileForm" class="conta-form">
+            <div class="form-row">
+              <div><label>Nome</label><input type="text" id="profName"></div>
+              <div><label>Apelido</label><input type="text" id="profSurname"></div>
+            </div>
+            <div><label>E-mail</label><input type="email" id="profEmail" disabled style="opacity:.6"></div>
+            <div><label>Telefone</label><input type="tel" id="profPhone" placeholder="+351 912 345 678"></div>
+            <div><label>Data de nascimento</label><input type="date" id="profBirthday"></div>
+            <div id="profileMsg" style="font-size:.88rem;min-height:1.2em"></div>
+            <button type="submit" class="btn btn--red">Guardar alterações</button>
+          </form>
+        </div>
+        <!-- Endereços -->
+        <div class="conta-tab" id="tab-enderecos" style="display:none">
+          <h2>Endereços</h2>
+          <div id="addressesList"></div>
+          <form id="addressForm" class="conta-form" style="margin-top:1.5rem;border-top:1px solid var(--color-line);padding-top:1.5rem">
+            <h3 style="margin-bottom:1rem">Novo endereço</h3>
+            <div><label>Morada</label><input type="text" id="addrStreet" placeholder="Rua, nº, andar" required></div>
+            <div class="form-row">
+              <div><label>Código Postal</label><input type="text" id="addrZip" placeholder="0000-000" required></div>
+              <div><label>Cidade</label><input type="text" id="addrCity" required></div>
+            </div>
+            <div><label>País</label><input type="text" id="addrCountry" value="Portugal" required></div>
+            <button type="submit" class="btn btn--red">Guardar endereço</button>
+          </form>
+        </div>
+        <!-- Segurança -->
+        <div class="conta-tab" id="tab-seguranca" style="display:none">
+          <h2>Segurança</h2>
+          <form id="passForm" class="conta-form">
+            <div><label>Nova palavra-passe</label><input type="password" id="newPass" placeholder="Mínimo 6 caracteres" required minlength="6"></div>
+            <div><label>Confirmar nova palavra-passe</label><input type="password" id="newPass2" placeholder="••••••••" required></div>
+            <div id="passMsg" style="font-size:.88rem;min-height:1.2em"></div>
+            <button type="submit" class="btn btn--red">Atualizar palavra-passe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer class="footer">
   <div class="container">
     <div class="footer__grid">
       <div class="footer__about">
-        <a href="index.html" class="logo">
-          <img src="img/logo-white.png" alt="Bird Cut" class="logo__bird">
-          <span>BIRD<b>CUT</b></span>
-        </a>
+        <a href="index.html" class="logo"><img src="img/logo-white.png" alt="Bird Cut" class="logo__bird"><span>BIRD<b>CUT</b></span></a>
         <p>Ferramentas profissionais para Barbeiros que exigem precisão em cada detalhe.</p>
       </div>
-      <div>
-        <h4>Produto</h4>
-        <ul>
-          <li><a href="index.html">CurveLine Beard Pro</a></li>
-          <li><a href="index.html">Como Utilizar</a></li>
-          <li><a href="contacto.html">Perguntas Frequentes</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Empresa</h4>
-        <ul>
-          <li><a href="a-historia.html">Sobre Nós</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Contacto</h4>
-        <ul>
-          <li>✉ <a href="mailto:contacto@birdcut.pt">contacto@birdcut.pt</a></li>
-          <li>💈 <a href="https://www.instagram.com/birdcutpt/" target="_blank" rel="noopener">@birdcut.pt</a></li>
-        </ul>
-        <div class="footer__pay">
-          <span>VISA</span><span>MASTERCARD</span><span>MB WAY</span><span>PAYPAL</span>
-        </div>
-      </div>
+      <div><h4>Explorar</h4><ul><li><a href="index.html">Início</a></li><li><a href="a-historia.html">A História</a></li><li><a href="contacto.html">Contacto</a></li><li><a href="conta.html">Área de Cliente</a></li></ul></div>
+      <div><h4>Apoio ao Cliente</h4><ul><li><a href="contacto.html">Contactos</a></li><li><a href="contacto.html">Envios e Devoluções</a></li><li><a href="contacto.html">Perguntas Frequentes</a></li><li><a href="contacto.html">Garantia</a></li></ul></div>
+      <div><h4>Contacto</h4><ul><li>✉ <a href="mailto:contacto@birdcut.pt">contacto@birdcut.pt</a></li><li>💈 <a href="https://www.instagram.com/birdcutpt/" target="_blank">@birdcut.pt</a></li></ul></div>
     </div>
     <div class="footer__bottom">
       <span>© 2026 Bird Cut. Todos os direitos reservados.</span>
-      <span><a href="#">Termos e Condições</a> · <a href="#">Política de Privacidade</a></span>
+      <span><a href="#">Termos</a> · <a href="#">Privacidade</a></span>
     </div>
   </div>
 </footer>
@@ -248,5 +188,199 @@ function sair() {
 </div>
 
 <script src="js/main.js"></script>
+<script>
+// ===== AUTH UI =====
+function showRegister(){ document.getElementById('loginView').style.display='none'; document.getElementById('registerView').style.display='block'; }
+function showLogin(){ document.getElementById('registerView').style.display='none'; document.getElementById('loginView').style.display='block'; }
+
+function showTab(id, el) {
+  document.querySelectorAll('.conta-tab').forEach(t => t.style.display='none');
+  document.querySelectorAll('.conta-nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('tab-'+id).style.display='block';
+  if(el) el.classList.add('active');
+}
+
+// ===== LOGIN =====
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginError');
+  btn.textContent = 'A entrar...'; btn.disabled = true; err.textContent = '';
+  try {
+    await login(document.getElementById('loginEmail').value, document.getElementById('loginPass').value);
+  } catch(error) {
+    const msgs = {'auth/user-not-found':'E-mail não encontrado','auth/wrong-password':'Palavra-passe incorreta','auth/invalid-email':'E-mail inválido','auth/too-many-requests':'Muitas tentativas. Tente novamente mais tarde.'};
+    err.textContent = msgs[error.code] || error.message;
+    btn.textContent = 'Entrar'; btn.disabled = false;
+  }
+});
+
+// ===== REGISTO =====
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('regBtn');
+  const err = document.getElementById('regError');
+  const pass = document.getElementById('regPass').value;
+  const pass2 = document.getElementById('regPass2').value;
+  if (pass !== pass2) { err.textContent = 'As palavras-passe não coincidem.'; return; }
+  btn.textContent = 'A criar conta...'; btn.disabled = true; err.textContent = '';
+  try {
+    await register(
+      document.getElementById('regEmail').value, pass,
+      document.getElementById('regName').value, document.getElementById('regSurname').value
+    );
+  } catch(error) {
+    const msgs = {'auth/email-already-in-use':'Este e-mail já está registado','auth/weak-password':'A palavra-passe deve ter pelo menos 6 caracteres','auth/invalid-email':'E-mail inválido'};
+    err.textContent = msgs[error.code] || error.message;
+    btn.textContent = 'Criar Conta'; btn.disabled = false;
+  }
+});
+
+// ===== RESET PASSWORD =====
+async function resetPass() {
+  const email = prompt('Insira o seu e-mail para recuperar a palavra-passe:');
+  if (email) {
+    try { await auth.sendPasswordResetEmail(email); alert('E-mail de recuperação enviado!'); }
+    catch(e) { alert('Erro: ' + e.message); }
+  }
+}
+
+// ===== AUTH STATE =====
+onAuthChange(user => {
+  if (user) {
+    document.getElementById('authSection').style.display = 'none';
+    document.getElementById('dashboardSection').style.display = 'block';
+    loadDashboard(user);
+  } else {
+    document.getElementById('authSection').style.display = 'flex';
+    document.getElementById('dashboardSection').style.display = 'none';
+  }
+  document.getElementById('loginBtn').textContent = 'Entrar';
+  document.getElementById('loginBtn').disabled = false;
+  document.getElementById('regBtn').textContent = 'Criar Conta';
+  document.getElementById('regBtn').disabled = false;
+});
+
+// ===== DASHBOARD =====
+async function loadDashboard(user) {
+  // Avatar + nome
+  const initials = (user.email || '?')[0].toUpperCase();
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('userEmail').textContent = user.email;
+  document.getElementById('profEmail').value = user.email;
+
+  // Buscar perfil
+  try {
+    const profile = await getUserProfile(user.uid);
+    if (profile) {
+      document.getElementById('userName').textContent = (profile.name || '') + ' ' + (profile.surname || '');
+      document.getElementById('profName').value = profile.name || '';
+      document.getElementById('profSurname').value = profile.surname || '';
+      document.getElementById('profPhone').value = profile.phone || '';
+      document.getElementById('profBirthday').value = profile.birthday || '';
+      if (profile.name) document.getElementById('userAvatar').textContent = (profile.name[0] || '') + (profile.surname?.[0] || '');
+      // Endereços
+      renderAddresses(profile.addresses || []);
+    }
+  } catch(e) { console.log('perfil:', e.message); }
+
+  // Buscar pedidos
+  try {
+    const orders = await getUserOrders(user.uid);
+    renderOrders(orders);
+  } catch(e) { console.log('pedidos:', e.message); }
+}
+
+function renderOrders(orders) {
+  const el = document.getElementById('ordersList');
+  if (!orders.length) { el.innerHTML = '<p style="color:var(--color-ink-soft);padding:2rem 0">Ainda não tem pedidos. <a href="index.html" style="color:var(--color-orange)">Explorar produtos →</a></p>'; return; }
+  el.innerHTML = orders.map(o => {
+    const date = o.createdAt?.toDate ? o.createdAt.toDate().toLocaleDateString('pt-PT') : '—';
+    const statusClass = o.status === 'entregue' ? 'entregue' : o.status === 'transito' ? 'transito' : 'processamento';
+    const statusText = o.status === 'entregue' ? 'Entregue' : o.status === 'transito' ? 'Em trânsito' : 'Em processamento';
+    const items = (o.items || []).map(i => `<div class="pedido-item"><img src="${i.image || 'img/produto-hero.jpg'}" alt="${i.name}"><div><b>${i.name}</b><span>${i.quantity} × ${i.price}€</span></div></div>`).join('');
+    return `<div class="pedido-card"><div class="pedido-card__header"><div><b>Pedido #${o.id?.substring(0,8) || '—'}</b><span>${date}</span></div><span class="pedido-status pedido-status--${statusClass}">${statusText}</span></div><div class="pedido-card__body">${items}</div><div class="pedido-card__footer"><span>Total: <b>${(o.total||0).toFixed(2).replace('.',',')}€</b></span></div></div>`;
+  }).join('');
+}
+
+function renderAddresses(addrs) {
+  const el = document.getElementById('addressesList');
+  if (!addrs.length) { el.innerHTML = '<p style="color:var(--color-ink-soft)">Ainda não tem endereços guardados.</p>'; return; }
+  el.innerHTML = addrs.map((a,i) => `<div class="pedido-card" style="margin-bottom:1rem"><div class="pedido-card__header"><div><b>${a.label || 'Endereço '+(i+1)}</b>${a.isDefault?'<span style="color:var(--color-orange)">Principal</span>':''}</div><a href="#" onclick="removeAddress(${i});return false" style="color:var(--color-orange);font-size:.85rem">Remover</a></div><div class="pedido-card__body"><p>${a.street}<br>${a.zip} ${a.city}<br>${a.country}</p></div></div>`).join('');
+}
+
+// ===== SAVE PROFILE =====
+document.getElementById('profileForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const user = auth.currentUser;
+  if (!user) return;
+  const msg = document.getElementById('profileMsg');
+  try {
+    await updateUserProfile(user.uid, {
+      name: document.getElementById('profName').value,
+      surname: document.getElementById('profSurname').value,
+      phone: document.getElementById('profPhone').value,
+      birthday: document.getElementById('profBirthday').value,
+    });
+    msg.style.color = 'var(--color-green)'; msg.textContent = '✓ Dados guardados!';
+    const profile = await getUserProfile(user.uid);
+    if (profile) document.getElementById('userName').textContent = (profile.name||'')+' '+(profile.surname||'');
+    setTimeout(() => msg.textContent = '', 2000);
+  } catch(e) { msg.style.color = '#e56d6d'; msg.textContent = 'Erro ao guardar.'; }
+});
+
+// ===== ADD ADDRESS =====
+document.getElementById('addressForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const user = auth.currentUser;
+  if (!user) return;
+  try {
+    const profile = await getUserProfile(user.uid);
+    const addrs = profile?.addresses || [];
+    addrs.push({
+      street: document.getElementById('addrStreet').value,
+      zip: document.getElementById('addrZip').value,
+      city: document.getElementById('addrCity').value,
+      country: document.getElementById('addrCountry').value,
+      isDefault: addrs.length === 0
+    });
+    await updateUserProfile(user.uid, { addresses: addrs });
+    document.getElementById('addressForm').reset();
+    renderAddresses(addrs);
+  } catch(e) { alert('Erro ao guardar endereço.'); }
+});
+
+function removeAddress(idx) {
+  if (!confirm('Remover este endereço?')) return;
+  const user = auth.currentUser;
+  if (!user) return;
+  getUserProfile(user.uid).then(profile => {
+    const addrs = profile?.addresses || [];
+    addrs.splice(idx, 1);
+    return updateUserProfile(user.uid, { addresses: addrs });
+  }).then(() => getUserProfile(user.uid))
+    .then(profile => renderAddresses(profile?.addresses || []));
+}
+
+// ===== CHANGE PASSWORD =====
+document.getElementById('passForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('passMsg');
+  const pass = document.getElementById('newPass').value;
+  const pass2 = document.getElementById('newPass2').value;
+  if (pass !== pass2) { msg.style.color='#e56d6d'; msg.textContent='As palavras-passe não coincidem.'; return; }
+  try {
+    await auth.currentUser.updatePassword(pass);
+    msg.style.color='var(--color-green)'; msg.textContent='✓ Palavra-passe atualizada!';
+    document.getElementById('passForm').reset();
+    setTimeout(() => msg.textContent = '', 2000);
+  } catch(e) {
+    msg.style.color='#e56d6d';
+    msg.textContent = e.code === 'auth/requires-recent-login' ? 'Por segurança, faça login novamente antes de alterar a palavra-passe.' : e.message;
+  }
+});
+
+function doLogout() { logout(); }
+</script>
 </body>
 </html>

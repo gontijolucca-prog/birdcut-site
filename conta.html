@@ -10,10 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="js/firebase.js"></script>
+<script src="js/api.js"></script>
 </head>
 <body>
 
@@ -209,8 +206,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   try {
     await login(document.getElementById('loginEmail').value, document.getElementById('loginPass').value);
   } catch(error) {
-    const msgs = {'auth/user-not-found':'E-mail não encontrado','auth/wrong-password':'Palavra-passe incorreta','auth/invalid-email':'E-mail inválido','auth/too-many-requests':'Muitas tentativas. Tente novamente mais tarde.'};
-    err.textContent = msgs[error.code] || error.message;
+    err.textContent = error.message || 'Erro ao entrar';
     btn.textContent = 'Entrar'; btn.disabled = false;
   }
 });
@@ -230,30 +226,27 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
       document.getElementById('regName').value, document.getElementById('regSurname').value
     );
   } catch(error) {
-    const msgs = {'auth/email-already-in-use':'Este e-mail já está registado','auth/weak-password':'A palavra-passe deve ter pelo menos 6 caracteres','auth/invalid-email':'E-mail inválido'};
-    err.textContent = msgs[error.code] || error.message;
+    err.textContent = error.message || 'Erro ao criar conta';
     btn.textContent = 'Criar Conta'; btn.disabled = false;
   }
 });
 
 // ===== RESET PASSWORD =====
 async function resetPass() {
-  const email = prompt('Insira o seu e-mail para recuperar a palavra-passe:');
-  if (email) {
-    try { await auth.sendPasswordResetEmail(email); alert('E-mail de recuperação enviado!'); }
-    catch(e) { alert('Erro: ' + e.message); }
-  }
+  alert('Contacte-nos para recuperar a palavra-passe: contacto@birdcut.pt');
 }
 
 // ===== AUTH STATE =====
 onAuthChange(user => {
+  const authSection = document.getElementById('authSection');
+  const dashSection = document.getElementById('dashboardSection');
   if (user) {
-    document.getElementById('authSection').style.display = 'none';
-    document.getElementById('dashboardSection').style.display = 'block';
+    authSection.style.display = 'none';
+    dashSection.style.display = 'grid';
     loadDashboard(user);
   } else {
-    document.getElementById('authSection').style.display = 'flex';
-    document.getElementById('dashboardSection').style.display = 'none';
+    authSection.style.display = 'flex';
+    dashSection.style.display = 'none';
   }
   document.getElementById('loginBtn').textContent = 'Entrar';
   document.getElementById('loginBtn').disabled = false;
@@ -263,68 +256,56 @@ onAuthChange(user => {
 
 // ===== DASHBOARD =====
 async function loadDashboard(user) {
-  // Avatar + nome
-  const initials = (user.email || '?')[0].toUpperCase();
-  document.getElementById('userAvatar').textContent = initials;
+  const initials = ((user.name||'')[0] || (user.email||'?')[0]).toUpperCase();
+  document.getElementById('userAvatar').textContent = initials + ((user.surname||'')[0]||'');
+  document.getElementById('userName').textContent = (user.name||'') + ' ' + (user.surname||'');
   document.getElementById('userEmail').textContent = user.email;
   document.getElementById('profEmail').value = user.email;
+  document.getElementById('profName').value = user.name || '';
+  document.getElementById('profSurname').value = user.surname || '';
+  document.getElementById('profPhone').value = user.phone || '';
+  document.getElementById('profBirthday').value = user.birthday || '';
+  renderAddresses(user.addresses || []);
 
-  // Buscar perfil
   try {
-    const profile = await getUserProfile(user.uid);
-    if (profile) {
-      document.getElementById('userName').textContent = (profile.name || '') + ' ' + (profile.surname || '');
-      document.getElementById('profName').value = profile.name || '';
-      document.getElementById('profSurname').value = profile.surname || '';
-      document.getElementById('profPhone').value = profile.phone || '';
-      document.getElementById('profBirthday').value = profile.birthday || '';
-      if (profile.name) document.getElementById('userAvatar').textContent = (profile.name[0] || '') + (profile.surname?.[0] || '');
-      // Endereços
-      renderAddresses(profile.addresses || []);
-    }
-  } catch(e) { console.log('perfil:', e.message); }
-
-  // Buscar pedidos
-  try {
-    const orders = await getUserOrders(user.uid);
+    const orders = await getOrders();
     renderOrders(orders);
-  } catch(e) { console.log('pedidos:', e.message); }
+  } catch(e) { document.getElementById('ordersList').innerHTML = '<p style="color:var(--color-ink-soft)">Erro ao carregar pedidos.</p>'; }
 }
 
 function renderOrders(orders) {
   const el = document.getElementById('ordersList');
   if (!orders.length) { el.innerHTML = '<p style="color:var(--color-ink-soft);padding:2rem 0">Ainda não tem pedidos. <a href="index.html" style="color:var(--color-orange)">Explorar produtos →</a></p>'; return; }
   el.innerHTML = orders.map(o => {
-    const date = o.createdAt?.toDate ? o.createdAt.toDate().toLocaleDateString('pt-PT') : '—';
+    const date = o.created_at ? new Date(o.created_at).toLocaleDateString('pt-PT') : '—';
     const statusClass = o.status === 'entregue' ? 'entregue' : o.status === 'transito' ? 'transito' : 'processamento';
     const statusText = o.status === 'entregue' ? 'Entregue' : o.status === 'transito' ? 'Em trânsito' : 'Em processamento';
-    const items = (o.items || []).map(i => `<div class="pedido-item"><img src="${i.image || 'img/produto-hero.jpg'}" alt="${i.name}"><div><b>${i.name}</b><span>${i.quantity} × ${i.price}€</span></div></div>`).join('');
-    return `<div class="pedido-card"><div class="pedido-card__header"><div><b>Pedido #${o.id?.substring(0,8) || '—'}</b><span>${date}</span></div><span class="pedido-status pedido-status--${statusClass}">${statusText}</span></div><div class="pedido-card__body">${items}</div><div class="pedido-card__footer"><span>Total: <b>${(o.total||0).toFixed(2).replace('.',',')}€</b></span></div></div>`;
+    const items = (o.items || []).map(i => '<div class="pedido-item"><img src="' + (i.image||'img/produto-hero.jpg') + '" alt="' + i.name + '"><div><b>' + i.name + '</b><span>' + i.quantity + ' × ' + i.price + '€</span></div></div>').join('');
+    return '<div class="pedido-card"><div class="pedido-card__header"><div><b>Pedido #' + (o.id||'—') + '</b><span>' + date + '</span></div><span class="pedido-status pedido-status--' + statusClass + '">' + statusText + '</span></div><div class="pedido-card__body">' + items + '</div><div class="pedido-card__footer"><span>Total: <b>' + (o.total||0).toFixed(2).replace('.',',') + '€</b></span></div></div>';
   }).join('');
 }
 
 function renderAddresses(addrs) {
   const el = document.getElementById('addressesList');
   if (!addrs.length) { el.innerHTML = '<p style="color:var(--color-ink-soft)">Ainda não tem endereços guardados.</p>'; return; }
-  el.innerHTML = addrs.map((a,i) => `<div class="pedido-card" style="margin-bottom:1rem"><div class="pedido-card__header"><div><b>${a.label || 'Endereço '+(i+1)}</b>${a.isDefault?'<span style="color:var(--color-orange)">Principal</span>':''}</div><a href="#" onclick="removeAddress(${i});return false" style="color:var(--color-orange);font-size:.85rem">Remover</a></div><div class="pedido-card__body"><p>${a.street}<br>${a.zip} ${a.city}<br>${a.country}</p></div></div>`).join('');
+  el.innerHTML = addrs.map((a,i) => '<div class="pedido-card" style="margin-bottom:1rem"><div class="pedido-card__header"><div><b>' + (a.label||'Endereço '+(i+1)) + '</b>' + (a.is_default?'<span style="color:var(--color-orange)">Principal</span>':'') + '</div><a href="#" onclick="removeAddr('+a.id+');return false" style="color:var(--color-orange);font-size:.85rem">Remover</a></div><div class="pedido-card__body"><p>' + a.street + '<br>' + a.zip + ' ' + a.city + '<br>' + a.country + '</p></div></div>').join('');
 }
 
 // ===== SAVE PROFILE =====
 document.getElementById('profileForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const user = auth.currentUser;
-  if (!user) return;
   const msg = document.getElementById('profileMsg');
   try {
-    await updateUserProfile(user.uid, {
+    await updateProfile({
       name: document.getElementById('profName').value,
       surname: document.getElementById('profSurname').value,
       phone: document.getElementById('profPhone').value,
       birthday: document.getElementById('profBirthday').value,
     });
     msg.style.color = 'var(--color-green)'; msg.textContent = '✓ Dados guardados!';
-    const profile = await getUserProfile(user.uid);
-    if (profile) document.getElementById('userName').textContent = (profile.name||'')+' '+(profile.surname||'');
+    const profile = await getProfile();
+    document.getElementById('userName').textContent = (profile.name||'')+' '+(profile.surname||'');
+    document.getElementById('userAvatar').textContent = ((profile.name||'')[0]||'') + ((profile.surname||'')[0]||'');
     setTimeout(() => msg.textContent = '', 2000);
   } catch(e) { msg.style.color = '#e56d6d'; msg.textContent = 'Erro ao guardar.'; }
 });
@@ -332,52 +313,30 @@ document.getElementById('profileForm').addEventListener('submit', async (e) => {
 // ===== ADD ADDRESS =====
 document.getElementById('addressForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const user = auth.currentUser;
-  if (!user) return;
   try {
-    const profile = await getUserProfile(user.uid);
-    const addrs = profile?.addresses || [];
-    addrs.push({
+    await addAddress({
       street: document.getElementById('addrStreet').value,
       zip: document.getElementById('addrZip').value,
       city: document.getElementById('addrCity').value,
       country: document.getElementById('addrCountry').value,
-      isDefault: addrs.length === 0
     });
-    await updateUserProfile(user.uid, { addresses: addrs });
     document.getElementById('addressForm').reset();
-    renderAddresses(addrs);
+    const profile = await getProfile();
+    renderAddresses(profile.addresses || []);
   } catch(e) { alert('Erro ao guardar endereço.'); }
 });
 
-function removeAddress(idx) {
+function removeAddr(id) {
   if (!confirm('Remover este endereço?')) return;
-  const user = auth.currentUser;
-  if (!user) return;
-  getUserProfile(user.uid).then(profile => {
-    const addrs = profile?.addresses || [];
-    addrs.splice(idx, 1);
-    return updateUserProfile(user.uid, { addresses: addrs });
-  }).then(() => getUserProfile(user.uid))
-    .then(profile => renderAddresses(profile?.addresses || []));
+  removeAddress(id).then(() => getProfile()).then(p => renderAddresses(p.addresses || []));
 }
 
-// ===== CHANGE PASSWORD =====
-document.getElementById('passForm').addEventListener('submit', async (e) => {
+// ===== CHANGE PASSWORD (placeholder) =====
+document.getElementById('passForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const msg = document.getElementById('passMsg');
-  const pass = document.getElementById('newPass').value;
-  const pass2 = document.getElementById('newPass2').value;
-  if (pass !== pass2) { msg.style.color='#e56d6d'; msg.textContent='As palavras-passe não coincidem.'; return; }
-  try {
-    await auth.currentUser.updatePassword(pass);
-    msg.style.color='var(--color-green)'; msg.textContent='✓ Palavra-passe atualizada!';
-    document.getElementById('passForm').reset();
-    setTimeout(() => msg.textContent = '', 2000);
-  } catch(e) {
-    msg.style.color='#e56d6d';
-    msg.textContent = e.code === 'auth/requires-recent-login' ? 'Por segurança, faça login novamente antes de alterar a palavra-passe.' : e.message;
-  }
+  msg.style.color = 'var(--color-green)';
+  msg.textContent = 'Contacte-nos para alterar a palavra-passe: contacto@birdcut.pt';
 });
 
 function doLogout() { logout(); }

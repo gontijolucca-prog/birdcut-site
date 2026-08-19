@@ -9,10 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="js/firebase.js"></script>
+<script src="js/api.js"></script>
 <style>
 .success{text-align:center;padding:clamp(4rem,10vw,8rem) 0;min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .success__icon{width:80px;height:80px;border-radius:50%;background:var(--color-green);display:flex;align-items:center;justify-content:center;margin-bottom:2rem;color:#fff;animation:scaleIn .5s var(--ease)}
@@ -65,18 +62,16 @@
     document.getElementById('amount').textContent = d.amount ? (d.amount / 100).toFixed(2) + ' €' : '24,99 €';
 
     // Guardar pedido no Firestore
-    const user = auth.currentUser;
+    // No auth needed for guest orders
     const orderData = {
-      userId: user ? user.uid : 'guest',
-      userEmail: user ? user.email : d.customer_email || 'guest',
-      stripeSessionId: sessionId,
+      email: d.customer_email || 'guest',
+      stripeSession: sessionId,
       items: [{ name: 'CurveLine Beard Pro', price: 24.99, quantity: 1, image: 'img/produto-hero.jpg' }],
       total: d.amount ? d.amount / 100 : 24.99,
       status: 'processamento',
-      paymentStatus: d.status || 'paid',
     };
-    const docRef = await createOrder(orderData);
-    document.getElementById('orderId').textContent = '#' + docRef.id.substring(0, 8);
+    const docRef = await createGuestOrder(orderData);
+    document.getElementById('orderId').textContent = '#' + docRef.id;
   } catch(e) {
     document.getElementById('status').textContent = 'Pago';
     document.getElementById('amount').textContent = '24,99 €';

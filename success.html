@@ -3,28 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pagamento Confirmado — Bird Cut</title>
-<link rel="icon" type="image/png" href="img/logo-icon.png">
+<title>Compra Confirmada — Bird Cut</title>
+<meta name="description" content="Compra confirmada Bird Cut.">
+<link rel="icon" type="image/png" href="img/favicon-bw.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-<script src="js/api.js"></script>
-<style>
-.success{text-align:center;padding:clamp(4rem,10vw,8rem) 0;min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.success__icon{width:80px;height:80px;border-radius:50%;background:var(--color-green);display:flex;align-items:center;justify-content:center;margin-bottom:2rem;color:#fff;animation:scaleIn .5s var(--ease)}
-@keyframes scaleIn{from{transform:scale(0)}to{transform:scale(1)}}
-.success h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}
-.success p{color:var(--color-ink-soft);font-weight:300;max-width:46ch;margin:0 auto 2rem}
-.success__details{background:var(--color-bg-soft);border:1px solid var(--color-line);padding:2rem 3rem;display:inline-block;margin-bottom:2rem;text-align:left}
-.success__details dt{font-family:var(--font-display);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--color-ink-soft);margin-top:.8rem}
-.success__details dd{font-family:var(--font-display);font-weight:600;font-size:1.1rem}
-</style>
+<link rel="stylesheet" href="css/rafael.css">
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  (function(){
+    var goTop = function(){ window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); };
+    goTop();
+    window.addEventListener('load', goTop);
+  })();
+</script>
 </head>
 <body>
-<div class="announce">Obrigado pela sua compra!</div>
+<!-- ===== 1. FAIXA PRETA: frases a alternar (suave) ===== -->
+<!-- ===== 1. FAIXA PRETA: frases a alternar (suave) ===== -->
+<div class="announce announce--slider" id="announceSlider">
+  <div class="slider-frases">
+    <div class="frase is-on">Lançamento • CurveLine Beard Pro</div>
+    <div class="frase">Primeira edição • Limitada</div>
+    <div class="frase">Adiciona precisão à tua criatividade</div>
+    <div class="frase">Created for Creators</div>
+  </div>
+  <div class="slider-dots" id="fraseDots"></div>
+</div>
 
-<header class="header"><div class="container header__in"><a href="index.html" class="logo"><img src="img/logo-green.png" alt="Bird Cut" class="logo__bird"><span>BIRD<b>CUT</b></span></a></div></header>
+<header class="header header--editorial" id="header">
+  <img src="img/logo-black.png" alt="Bird Cut símbolo" class="brand-symbol" aria-hidden="true">
+  <div class="container header__in header__in--editorial">
+    <div class="brand-editorial">
+      <img src="img/logo-creators.png" alt="Bird Cut — Created for Creators" class="brand-editorial__logo" id="brandLogo">
+    </div>
+    <nav class="nav nav--editorial">
+      <a href="index.html#cria">Cria</a>
+      <a href="index.html#internacional">Comunidade</a>
+      <a href="a-historia.html">Sobre nós</a>
+    </nav>
+  </div>
+  <div class="header__tools">
+    <a href="conta.html" class="icon-btn" style="text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Conta</span></a>
+    <button class="icon-btn icon-btn--cart" aria-label="Carrinho">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span>Carrinho</span>
+      <span class="cart-count">0</span>
+    </button>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
 
 <section class="success">
   <div class="container">
@@ -79,5 +109,67 @@
   }
 })();
 </script>
+<!-- ===== 10. FOOTER 5 COLUNAS (modelo) ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid footer__grid--cinco">
+      <div class="footer__about">
+        <div class="brand-editorial__title brand-editorial__title--footer">Bird Cut</div>
+        <p>Ferramentas profissionais para Barbeiros que exigem precisão em cada detalhe.</p>
+        <ul class="footer__contacto">
+          <li>✉ <a href="mailto:contacto@birdcut.pt">contacto@birdcut.pt</a></li>
+          <li>✆ +351 XXX XXX XXX</li>
+          <li>💈 <a href="https://www.instagram.com/birdcutpt/" target="_blank" rel="noopener">@birdcut.pt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Produto</h4>
+        <ul>
+          <li><a href="#destaques">CurveLine Beard Pro</a></li>
+          <li><a href="index.html#cria">Como Utilizar</a></li>
+          <li><a href="#faq">Perguntas Frequentes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="a-historia.html">Sobre nós</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Informações</h4>
+        <ul>
+          <li><a href="#">Envios</a></li>
+          <li><a href="#">Devoluções</a></li>
+          <li><a href="#">Privacidade</a></li>
+          <li><a href="#">Termos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Importante</h4>
+        <p class="footer__aviso">Por motivos de higiene, apenas aceitamos devoluções de produtos que não apresentem quaisquer sinais de utilização.</p>
+        <div class="footer__pay">
+          <span>VISA</span><span>MASTERCARD</span><span>MB WAY</span><span>PAYPAL</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Bird Cut. Todos os direitos reservados.</span>
+      <span><a href="#">Termos e Condições</a> · <a href="#">Política de Privacidade</a></span>
+    </div>
+  </div>
+</footer>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close" id="menuClose" aria-label="Fechar">×</button>
+  <a href="index.html#cria">Cria</a>
+  <a href="index.html#internacional">Comunidade</a>
+  <a href="a-historia.html">Sobre nós</a>
+  <a href="conta.html">Área de Cliente</a>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/main.js"></script>
+<script src="js/rafael.js"></script>
 </body>
 </html>

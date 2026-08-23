@@ -43,7 +43,7 @@ h1{font-family:'Playfair Display',serif;font-weight:700;font-size:1.7rem;letter-
   </svg>
 </div>
 <div class="card">
-  <div class="logo"><img src="/img/favicon-bw.png" alt="Bird Cut" style="width:100%;height:auto;filter:drop-shadow(0 0 20px rgba(255,255,255,.25))"></div>
+  <div class="logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAD/ElEQVR4nL1WMUzrRhjOnR1jH4IaAU1bGpI8SouYKqoyICEyRGJhQAKZATGA2BBiQGJmYWBmZwSJPYiBIUPTBr0nVYAU8VRI1CqOGlqiF1tQ6ti+6o98lftqx89Q+klWzr67//vu+/+7C4qEBKWUtutHCKEw8dB/QfocMfilyD90LnoJ4jBuYD9ygG3btle/3/d28FsQChp4fHxcODg4EKA9NTWlLy0tjYuiKIEIjHFgCkPVBXWt/O7u7i6bzf4Qj8dpIpGgg4ODNJlM0unp6beVSkWFcZZlWfQJ8HWAujo3NjbyFxcXn9brdVnTtI8c9ZZt20IqlSpls9kYOAErCr31XOOxFzlA1/VouVxOEUIebdvmwHHTNAWMcbNcLr/a3d19AykAF8Ax+DVN02Tv7QS4uZAXObzXarWaoijG7e1tLwi+v7/vdNRTjDHk38rlcrV4PB73IgEREIfjOK6dE8hLACuwarVaXV1d1VRV/bjRaMiUUgQPx3GQe252dja/vb09WqlUaqqqNgzDsPv6+qRUKvUJwB0rlAAAWAnqQcTi4uLjzc3Nq4gL4ASI6e7ufqdpmsw4IBQh5H5sbOzt8vKymclkxv1EtAS0O3CYiKurq5/W1tbQ9fX1FwihVjy3CGiDK44A5OZbX1/PbW5upv1EYD9yJyhnGIYxMjIyPDMzUwHDIP+sH8hAhCOWgwd4nDoxYdfs7e2lC4XCuV8acCQAPM/zUN2FQgFqoEXq7mfvQMrEwDfTNHnnW+T09PSdX3zcjhyIQfnJycnrs7Ozr51d96+qZvazNmiGB9Ily3J9YmKCwMTQArBj2/7+fidbnRdgR4AJQA6ksVislkgkfunv7/8d+o+OjjzJAbxfBysaVVWr5+fnX1kWxEZ/C2aCJEn6Y2tr63VPTw+v67pVr9fty8tLqVgsfq5pWrcoio+KonB+5wEfJKBYLFYsy/oMVue23xGAhoaGfl5ZWZl6f75hGH/quq5LkiQRQr4N7QCDrutNd4EBWJVjjOnCwsJvlmV9CfXCVglWCYLQ0dvb2xF0GPFBZwHHcf+oerb3BUFoyrLcmJ+f/waCC4IguC8Zd8x2JyH2I2aTRkdHY7ZttwJDZcO8rq4urdlsRicnJ0uEkE7Izfs3Irslg25K3E4AWDc8PDw0Nzf3HaWUt22bF0XxYWBg4FfLsoRMJhONPBOINbzSwL7BTbuzs/N9qVTqTCaTD4eHh+OEkId8Pt9BCCFsxaGIvcbTAGia1lAU5cd0Ol3K5XJvnvqvyNMBgF8xMiLmRjQahT8muFWNIVcOcM9BXmRhAz6VHOB5R/9f5J4CXkqEX0wUNPG5KXnyORD5wADPnRs6eJAjYQX/BUc49+1ZlfkwAAAAAElFTkSuQmCC" alt="Bird Cut" style="width:100%;height:auto;filter:drop-shadow(0 0 20px rgba(255,255,255,.25))"></div>
   <h1>Bird Cut</h1>
   <p class="sub">O nosso site está quase pronto.<br>Em breve, precisão para a sua barba.</p>
   <form class="form" method="POST" action="/auth">
@@ -84,6 +84,11 @@ export async function onRequest(context) {
       status: 200,
       headers: { 'Content-Type': 'text/html; charset=utf-8' },
     });
+  }
+
+  // Permitir assets estáticos sem auth (para a página de login carregar favicon/logo)
+  if (url.pathname.startsWith('/img/') || url.pathname.startsWith('/css/') || url.pathname.startsWith('/js/') || url.pathname === '/favicon.ico') {
+    return context.next();
   }
 
   // Verificar cookie

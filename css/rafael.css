@@ -47,7 +47,7 @@ body{font-family:var(--font-body);color:var(--color-ink)}
 /* ===== 2. HEADER EDITORIAL CENTRADO ===== */
 .header--editorial{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.97);border-bottom:1px solid var(--color-line);display:flex;flex-direction:column;align-items:center;text-align:center}
 .header__in--editorial{position:relative;flex-direction:column;height:auto;gap:.35rem;padding:1.6rem clamp(18px,4vw,40px) 1rem;justify-content:center}
-.brand-symbol{position:absolute;left:95px;top:44%;transform:translateY(-50%);height:52px;width:auto;object-fit:contain;z-index:2}
+.brand-symbol{display:none}
 .brand-editorial{display:flex;flex-direction:column;align-items:center;gap:.1rem}
 .brand-editorial__logo{height:168px;width:auto;max-width:min(94vw,860px);object-fit:contain;margin-bottom:.15rem}
 .brand-editorial__title{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-weight:700;font-size:1.9rem;letter-spacing:.02em;line-height:1;color:#111}
@@ -60,14 +60,12 @@ body{font-family:var(--font-body);color:var(--color-ink)}
 .nav--editorial a:hover::after{width:100%}
 .header__tools{position:absolute;right:clamp(14px,3vw,32px);top:50%;transform:translateY(-50%);display:flex;gap:.8rem;align-items:center}
 @media (max-width:860px){
-  .brand-symbol{height:36px;left:53px;top:44%}
   .brand-editorial__logo{height:116px;max-width:88vw}
   .header__tools{position:static;transform:none}
   .header__tools .icon-btn{display:none}
   .header--editorial .burger{display:flex;position:absolute;right:1rem;top:1.1rem;z-index:5}
 }
 @media (max-width:640px){
-  .brand-symbol{height:28px;left:24px;top:42%}
   .brand-editorial__logo{height:84px;max-width:92vw}
   .brand-editorial__title{font-size:1.45rem}
   .nav--editorial{display:none}
@@ -267,6 +265,7 @@ html,body{overflow-x:hidden}
 .section__kicker{color:#111}
 .icon-btn:hover{color:#111}
 .cart-count{background:#111 !important}
+.icon-btn--cart .cart-count{display:inline-flex !important}
 .nav a.active{color:#111}
 
 /* Botão roxo do modelo → preto (UI preto/branco) */

@@ -4,33 +4,27 @@
 (function () {
   'use strict';
 
-  /* ===== 1. FAIXA PRETA: frases a alternar (suave) ===== */
-  const sliderEl = document.getElementById('announceSlider');
-  if (sliderEl) {
-    const frases = Array.from(sliderEl.querySelectorAll('.frase'));
-    const dotsWrap = document.getElementById('fraseDots');
-    let fi = 0, timer;
-    frases.forEach((_, i) => {
-      const d = document.createElement('button');
-      d.setAttribute('aria-label', 'Mensagem ' + (i + 1));
-      if (i === 0) d.classList.add('is-on');
-      d.addEventListener('click', () => go(i));
-      dotsWrap.appendChild(d);
-    });
-    const dots = dotsWrap.children;
-    function go(i) {
-      frases[fi].classList.remove('is-on');
-      dots[fi].classList.remove('is-on');
-      fi = (i + frases.length) % frases.length;
-      frases[fi].classList.add('is-on');
-      dots[fi].classList.add('is-on');
-      reset();
+  /* ===== 1. FAIXA PRETA birdcut.pt fiel: 24px + arrows + 5s ===== */
+  (function(){
+    const bar = document.getElementById('birdcut-announcement-bar');
+    if (!bar) return;
+    const messages = bar.querySelectorAll('.bc-message');
+    const prevBtn = bar.querySelector('.bc-prev');
+    const nextBtn = bar.querySelector('.bc-next');
+    if (!messages.length) return;
+    let current = 0, timer;
+    function showMessage(index){
+      messages[current].classList.remove('active');
+      current = (index + messages.length) % messages.length;
+      messages[current].classList.add('active');
     }
-    function next() { go(fi + 1); }
-    function reset() { clearInterval(timer); timer = setInterval(next, 3600); }
-    frases[0]?.classList.add('is-on');
-    reset();
-  }
+    function nextMessage(){ showMessage(current+1); }
+    function prevMessage(){ showMessage(current-1); }
+    function startTimer(){ clearInterval(timer); timer = setInterval(nextMessage, 5000); }
+    if (nextBtn) nextBtn.addEventListener('click', ()=>{ nextMessage(); startTimer(); });
+    if (prevBtn) prevBtn.addEventListener('click', ()=>{ prevMessage(); startTimer(); });
+    startTimer();
+  })();
 
   /* ===== 2. ESCOLHER COR: muda a foto do pente ===== */
   const previewImg = document.getElementById('previewImg');

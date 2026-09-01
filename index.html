@@ -22,15 +22,15 @@
 </head>
 <body>
 
-<!-- ===== 1. FAIXA PRETA: frases a alternar (suave) ===== -->
-<div class="announce announce--slider" id="announceSlider">
-  <div class="slider-frases">
-    <div class="frase is-on">Lançamento • CurveLine Beard Pro</div>
-    <div class="frase">Primeira edição • Limitada</div>
-    <div class="frase">Adiciona precisão à tua criatividade</div>
-    <div class="frase">Created for Creators</div>
+<!-- ===== 1. FAIXA PRETA: birdcut.pt fiel (24px, #222, Helvetica, arrows) ===== -->
+<div id="birdcut-announcement-bar">
+  <button type="button" class="bc-arrow bc-prev" aria-label="Mensagem anterior">‹</button>
+  <div class="bc-message-area">
+    <div class="bc-message active">Descobre o CurveLine Beard Pro!</div>
+    <div class="bc-message">Primeira Edição — Limitada</div>
+    <div class="bc-message">Mais Possibilidades Para a tua Criatividade!</div>
   </div>
-  <div class="slider-dots" id="fraseDots"></div>
+  <button type="button" class="bc-arrow bc-next" aria-label="Próxima mensagem">›</button>
 </div>
 
 <!-- ===== 2. HEADER EDITORIAL CENTRADO ===== -->
@@ -40,9 +40,10 @@
       <img src="img/logo-creators.png" alt="Bird Cut — Created for Creators" class="brand-editorial__logo" id="brandLogo">
     </div>
     <nav class="nav nav--editorial">
-      <a href="#cria">Cria</a>
-      <a href="#internacional">Comunidade</a>
+      <a href="#experiencias">O que dizem</a>
+      <a href="#internacional">Criadores</a>
       <a href="a-historia.html">Sobre nós</a>
+      <a href="#faq">Perguntas</a>
     </nav>
   </div>
   <div class="header__tools">
@@ -55,10 +56,11 @@
   </div>
 </header>
 
-<!-- ===== 3. BANNER — texto à esquerda + 2 pentes à direita (como no print) ===== -->
+<!-- ===== 3. BANNER — fiel birdcut.pt (FEITO PARA CRIAR + 2 pentes) ===== -->
 <section class="banner-elementor banner-elementor--print">
   <div class="container banner-elementor__in">
     <div class="banner-elementor__text">
+      <div class="bc-eyebrow">FEITO PARA CRIAR.</div>
       <p class="banner-elementor__title">CurveLine Beard Pro.</p>
       <div class="banner-elementor__desc">
         <p>Mais <strong>controlo</strong>. Mais <strong>precisão</strong>.</p>
@@ -80,6 +82,7 @@
       <button type="button" class="swatch swatch--laranja is-active" data-cor="Laranja" aria-label="Laranja"></button>
       <button type="button" class="swatch swatch--amarelo" data-cor="Amarelo" aria-label="Amarelo"></button>
     </div>
+    <div class="esc-colhe__price">18,89 €</div>
     <figure class="esc-colhe__preview">
       <img src="img/produto-hero.jpg" alt="CurveLine Beard Pro" id="previewImg" loading="lazy">
     </figure>
@@ -91,7 +94,7 @@
         <button type="button" id="qtyPlus" aria-label="Aumentar">+</button>
       </div>
     </div>
-    <button class="btn btn--roxo" id="addToCart" data-name="CurveLine Beard Pro" data-price="24.99" data-image="img/produto-hero.jpg">Adicionar ao carrinho</button>
+    <button class="btn btn--roxo" id="addToCart" data-name="CurveLine Beard Pro" data-price="18.89" data-image="img/produto-hero.jpg">Adicionar ao carrinho</button>
   </div>
 </section>
 

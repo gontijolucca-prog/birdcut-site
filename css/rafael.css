@@ -2,15 +2,16 @@
    RAFEL MODEL v2 — fiel ao site modelo (scan 10x, 2026-08-23)
    ============================================================ */
 
-/* ===== 1. FAIXA PRETA SLIDER (frases a alternar, suave) ===== */
-.announce--slider{position:relative;height:44px;background:#0a0a0a;color:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.slider-frases{position:relative;height:100%;flex:1;display:flex;align-items:center;justify-content:center}
-.frase{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--font-display);font-weight:500;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;opacity:0;transform:translateY(12px);transition:opacity .6s var(--ease),transform .6s var(--ease);padding:0 2.6rem}
-.frase.is-on{opacity:1;transform:none}
-.slider-dots{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.35rem}
-.slider-dots button{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4);border:none;padding:0;cursor:pointer;transition:.3s}
-.slider-dots button.is-on{background:#fff;transform:scale(1.35)}
-@media (max-width:640px){.announce--slider{height:38px}.frase{font-size:.62rem;letter-spacing:.12em;padding:0 2.2rem}.slider-dots{left:.55rem}}
+/* ===== 1. FAIXA PRETA birdcut.pt fiel (24px, #222, Helvetica, setas) ===== */
+#birdcut-announcement-bar{width:100%;height:24px;min-height:24px;display:flex;align-items:center;justify-content:space-between;background:#222222 !important;padding:0 18%;box-sizing:border-box;overflow:hidden;position:sticky;top:0;z-index:10001}
+#birdcut-announcement-bar .bc-message-area{position:relative;flex:1;height:24px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#birdcut-announcement-bar .bc-message{position:absolute;left:0;top:0;width:100%;height:24px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:11px !important;font-weight:300 !important;letter-spacing:.15px;line-height:24px;color:#fff !important;opacity:0;visibility:hidden;transform:translateY(2px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
+#birdcut-announcement-bar .bc-message.active{opacity:1 !important;visibility:visible !important;transform:translateY(0)}
+#birdcut-announcement-bar .bc-arrow{appearance:none !important;width:28px;height:24px;flex:0 0 28px;border:none !important;outline:none !important;background:transparent !important;color:#fff !important;box-shadow:none !important;font-family:Arial,sans-serif;font-size:22px !important;font-weight:200;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 !important;margin:0 !important;opacity:.75;transition:opacity .2s ease,transform .2s ease}
+#birdcut-announcement-bar .bc-arrow:hover,#birdcut-announcement-bar .bc-arrow:focus,#birdcut-announcement-bar .bc-arrow:active{background:transparent !important;color:#fff !important;opacity:1;transform:scale(1.08)}
+@media (max-width:767px){#birdcut-announcement-bar{height:28px;min-height:28px;padding:0 6px}#birdcut-announcement-bar .bc-message-area{height:28px}#birdcut-announcement-bar .bc-message{height:28px;line-height:28px}#birdcut-announcement-bar .bc-arrow{width:25px;height:28px;flex:0 0 25px;font-size:20px !important}}
+/* legado slider removido, mantido para compatibilidade */
+.announce--slider,.slider-frases,.frase,.slider-dots{display:none !important}
 
 /* ===== TEMA INSPIRADO birdcut.pt (Astra) — mantém header + ticker ===== */
 :root{
@@ -44,8 +45,14 @@ body{font-family:var(--font-body);color:var(--color-ink)}
 .destaque__galeria figure{border:1px solid var(--color-line);border-radius:6px}
 .esc-colhe__preview img{border:1px solid var(--color-line);box-shadow:0 8px 24px rgba(31,44,51,.06)}
 
-/* ===== 2. HEADER EDITORIAL CENTRADO ===== */
-.header--editorial{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.97);border-bottom:1px solid var(--color-line);display:flex;flex-direction:column;align-items:center;text-align:center}
+/* ===== 2. HEADER EDITORIAL CENTRADO — sticky a 24px (abaixo da barra) ===== */
+.header--editorial{position:sticky;top:24px;z-index:10000;background:#fff !important;border-bottom:1px solid var(--color-line);display:flex;flex-direction:column;align-items:center;text-align:center}
+@media (max-width:767px){.header--editorial{top:28px}}
+/* birdcut.pt Helvetica menu fiel */
+.nav--editorial{gap:34px !important;justify-content:center}
+.nav--editorial a{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:14px !important;font-weight:500 !important;letter-spacing:.15px !important;text-transform:none !important;color:#333 !important}
+.nav--editorial a::after{background:#333 !important;height:1px !important}
+@media (max-width:767px){.nav--editorial{gap:17px !important}}
 .header__in--editorial{position:relative;flex-direction:column;height:auto;gap:.35rem;padding:1.6rem clamp(18px,4vw,40px) 1rem;justify-content:center}
 .brand-symbol{display:none}
 .brand-editorial{display:flex;flex-direction:column;align-items:center;gap:.1rem}
@@ -73,6 +80,9 @@ body{font-family:var(--font-body);color:var(--color-ink)}
   .header--editorial .burger{display:flex;position:absolute;right:.9rem;top:.9rem;z-index:5}
 }
 
+/* ===== eyebrow FEITO PARA CRIAR (birdcut.pt) ===== */
+.bc-eyebrow{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#777;margin-bottom:.9rem}
+.esc-colhe__price{font-family:'Inter',sans-serif;font-size:1.35rem;font-weight:600;color:#111;margin:.6rem 0 .2rem;letter-spacing:-.02em}
 /* ===== 3. HERO MODELO ===== */
 .hero-modelo{background:#fff;border-bottom:1px solid var(--color-line)}
 .hero-modelo__in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;padding:clamp(2.6rem,6vw,5rem) 0}

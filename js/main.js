@@ -150,23 +150,27 @@
     if (!miniCart.contains(e.target) && !cartBtn.contains(e.target)) miniCart.classList.remove('open');
   });
 
-  // Adicionar ao carrinho
-  function addToCart(name, priceNum, image){
-    const existing = cart.find(i => i.name === name);
-    if (existing) existing.qty++;
-    else cart.push({ name, price: priceNum.toFixed(2).replace('.',','), priceNum, image, qty: 1 });
+  // Adicionar ao carrinho (suporta qtyInput)
+  function addToCart(name, priceNum, image, qtyAdd){
+    qtyAdd = parseInt(qtyAdd || 1, 10);
+    if (qtyAdd < 1) qtyAdd = 1;
+    const key = name + '|' + priceNum + '|' + image;
+    const existing = cart.find(i => (i.name + '|' + i.priceNum + '|' + i.image) === key);
+    if (existing) existing.qty += qtyAdd;
+    else cart.push({ name, price: priceNum.toFixed(2).replace('.',','), priceNum, image, qty: qtyAdd });
     save(); updateCount();
-    // Feedback visual
     if (cartBtn) { cartBtn.style.transform = 'scale(1.15)'; setTimeout(() => cartBtn.style.transform = '', 200); }
   }
 
-  // Botões "Comprar agora" / "Adicionar ao Carrinho"
+  // Botões "Comprar agora" / "Adicionar ao Carrinho" (lê qtyInput se existir)
   document.querySelectorAll('#addToCart, .pcard__btn:not(:disabled)').forEach(btn => {
     btn.addEventListener('click', () => {
       const name = btn.dataset.name || 'CurveLine Beard Pro';
-      const price = parseFloat(btn.dataset.price || '24.99');
-      const image = btn.dataset.image || 'img/produto-hero.jpg';
-      addToCart(name, price, image);
+      const price = parseFloat(btn.dataset.price || '18.89');
+      const image = btn.dataset.image || 'img/birdcut-pt/Pente-laranja.png';
+      const qtyInput = document.getElementById('qtyInput');
+      const qty = qtyInput ? parseInt(qtyInput.value || '1', 10) : 1;
+      addToCart(name, price, image, qty);
       const old = btn.textContent;
       btn.textContent = '✓ Adicionado';
       setTimeout(() => btn.textContent = old, 1400);

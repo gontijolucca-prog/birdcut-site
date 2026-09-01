@@ -26,21 +26,43 @@
     startTimer();
   })();
 
-  /* ===== 2. ESCOLHER COR: muda a foto do pente ===== */
+  /* ===== 2. ESCOLHER COR: muda a foto do pente (bc-color + swatch compat) ===== */
   const previewImg = document.getElementById('previewImg');
   const swatches = document.querySelectorAll('.swatch');
+  const bcColors = document.querySelectorAll('.bc-color');
+  const bcCombs = document.querySelectorAll('.bc-comb-item');
+  function setActiveColor(color){
+    // compat: update hidden swatches
+    swatches.forEach(x=>x.classList.remove('is-active'));
+    const sw = document.querySelector(color==='Pink' || color==='pink' ? '.swatch--amarelo' : '.swatch--laranja');
+    if(sw) sw.classList.add('is-active');
+    // update bc-color active
+    bcColors.forEach(b=>b.classList.remove('active'));
+    const bc = document.querySelector(`.bc-color[data-color="${color}"]`);
+    if(bc) bc.classList.add('active');
+    // preview & cart image
+    const addBtn = document.getElementById('addToCart');
+    if(color==='Pink'){
+      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-Rosa.png'; previewImg.style.filter=''; }
+      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-Rosa.png';
+      bcCombs.forEach((c,i)=>{ c.style.opacity = c.dataset.comb==='Pink' ? '1' : '0.35'; c.style.transform = c.dataset.comb==='Pink' ? 'scale(1.02)' : 'scale(1)'; });
+    } else {
+      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-laranja.png'; previewImg.style.filter=''; }
+      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-laranja.png';
+      bcCombs.forEach((c,i)=>{ c.style.opacity = c.dataset.comb==='Orange' ? '1' : '0.35'; c.style.transform = c.dataset.comb==='Orange' ? 'scale(1.02)' : 'scale(1)'; });
+    }
+  }
   swatches.forEach((s) => {
     s.addEventListener('click', () => {
-      swatches.forEach((x) => x.classList.remove('is-active'));
-      s.classList.add('is-active');
-      if (!previewImg) return;
-      if (s.classList.contains('swatch--amarelo')) {
-        previewImg.style.filter = 'sepia(.55) saturate(2.6) hue-rotate(-10deg)';
-      } else {
-        previewImg.style.filter = '';
-      }
+      const isPink = s.classList.contains('swatch--amarelo');
+      setActiveColor(isPink ? 'Pink' : 'Orange');
     });
   });
+  bcColors.forEach(b=>{
+    b.addEventListener('click', ()=> setActiveColor(b.dataset.color));
+  });
+  // init
+  setActiveColor('Orange');
 
   /* ===== 3. QUANTIDADE ===== */
   const qtyInput = document.getElementById('qtyInput');

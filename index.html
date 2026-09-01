@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" href="img/favicon-bw.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&family=Caveat:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/rafael.css">
 <script>
@@ -56,45 +56,36 @@
   </div>
 </header>
 
-<!-- ===== 3. BANNER — fiel birdcut.pt (FEITO PARA CRIAR + 2 pentes) ===== -->
-<section class="banner-elementor banner-elementor--print">
-  <div class="container banner-elementor__in">
-    <div class="banner-elementor__text">
-      <div class="bc-eyebrow">FEITO PARA CRIAR.</div>
-      <p class="banner-elementor__title">CurveLine Beard Pro.</p>
-      <div class="banner-elementor__desc">
-        <p>Mais <strong>controlo</strong>. Mais <strong>precisão</strong>.</p>
-        <p>A criatividade continua a ser tua.</p>
-      </div>
-      <a class="banner-elementor__btn" href="#comprar">COMPRAR AGORA</a>
-    </div>
-    <div class="banner-elementor__media">
-      <img src="img/birdcut-pt/Pente-laranja.png" alt="CurveLine laranja" class="comb comb--orange" loading="eager">
-      <img src="img/birdcut-pt/Pente-Rosa.png" alt="CurveLine rosa" class="comb comb--pink" loading="eager">
+<!-- ===== 3. HERO — cópia fiel birdcut.pt 7e5dee7a (background ChatGPT, Montserrat) ===== -->
+<section class="hero-birdcut" id="hero">
+  <div class="container hero-birdcut__in">
+    <div class="hero-birdcut__text">
+      <p class="hero-birdcut__title">CurveLine Beard Pro.</p>
+      <p class="hero-birdcut__desc"><strong>Mais controlo. Mais precisão.</strong><br>Mais possibilidades para a tua <strong>criatividade</strong>.</p>
+      <a class="hero-birdcut__btn" href="#comprar">COMPRAR AGORA</a>
     </div>
   </div>
 </section>
 
-<!-- ===== 4. ESCOLHE COR + COMPRA (bloco centrado) ===== -->
-<section class="section esc-colhe" id="comprar">
-  <div class="esc-colhe__bloco reveal">
-    <div class="cor-opcoes">
-      <button type="button" class="swatch swatch--laranja is-active" data-cor="Laranja" aria-label="Laranja"></button>
-      <button type="button" class="swatch swatch--amarelo" data-cor="Amarelo" aria-label="Amarelo"></button>
+<!-- ===== 4. SHOP — cópia fiel birdcut.pt #bc-shop-selector (FEITO PARA CRIAR + 2 pentes + Orange/Pink) ===== -->
+<section class="shop-birdcut" id="comprar">
+  <div id="bc-shop-selector">
+    <div class="bc-eyebrow">FEITO PARA CRIAR.</div>
+    <div class="bc-main-title">Escolhe a tua cor.</div>
+    <div class="bc-combs">
+      <div class="bc-comb-item" data-comb="Orange"><img src="img/birdcut-pt/Pente-laranja.png" alt="CurveLine Orange" loading="lazy"></div>
+      <div class="bc-comb-item" data-comb="Pink"><img src="img/birdcut-pt/Pente-Rosa.png" alt="CurveLine Pink" loading="lazy"></div>
     </div>
-    <div class="esc-colhe__price">18,89 €</div>
-    <figure class="esc-colhe__preview">
-      <img src="img/birdcut-pt/Pente-laranja.png" alt="CurveLine Beard Pro" id="previewImg" loading="lazy">
-    </figure>
-    <div class="esc-colhe__qty">
-      <span class="esc-colhe__qty-label">Quantidade</span>
-      <div class="qty">
-        <button type="button" id="qtyMinus" aria-label="Diminuir">−</button>
-        <input type="text" id="qtyInput" value="1" readonly>
-        <button type="button" id="qtyPlus" aria-label="Aumentar">+</button>
-      </div>
+    <div class="bc-price">18,89 €</div>
+    <div class="bc-colors">
+      <button type="button" class="bc-color active" data-color="Orange" aria-label="Orange"><span class="bc-circle orange"></span><span class="bc-color-name">Orange</span></button>
+      <button type="button" class="bc-color" data-color="Pink" aria-label="Pink"><span class="bc-circle pink"></span><span class="bc-color-name">Pink</span></button>
     </div>
-    <button class="btn btn--roxo" id="addToCart" data-name="CurveLine Beard Pro" data-price="18.89" data-image="img/birdcut-pt/Pente-laranja.png">Adicionar ao carrinho</button>
+    <!-- compat: mantém IDs antigos para JS existente, escondidos -->
+    <div class="cor-opcoes" style="display:none"><button type="button" class="swatch swatch--laranja is-active" data-cor="Orange"></button><button type="button" class="swatch swatch--amarelo" data-cor="Pink"></button></div>
+    <figure class="esc-colhe__preview" style="display:none"><img src="img/birdcut-pt/Pente-laranja.png" alt="" id="previewImg"></figure>
+    <div class="esc-colhe__qty" style="display:flex;justify-content:center;gap:.8rem;margin:1rem 0 .4rem;align-items:center"><span class="esc-colhe__qty-label" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:13px;color:#555">Quantidade</span><div class="qty"><button type="button" id="qtyMinus" aria-label="Diminuir">−</button><input type="text" id="qtyInput" value="1" readonly><button type="button" id="qtyPlus" aria-label="Aumentar">+</button></div></div>
+    <button type="button" class="bc-cart" id="addToCart" data-name="CurveLine Beard Pro" data-price="18.89" data-image="img/birdcut-pt/Pente-laranja.png">ADICIONAR AO CARRINHO</button>
   </div>
 </section>
 
@@ -318,9 +309,10 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <button class="close" id="menuClose" aria-label="Fechar">×</button>
-  <a href="#cria">Cria</a>
-  <a href="#internacional">Comunidade</a>
+  <a href="#experiencias">O que dizem</a>
+  <a href="#internacional">Criadores</a>
   <a href="a-historia.html">Sobre nós</a>
+  <a href="#faq">Perguntas</a>
   <a href="conta.html">Área de Cliente</a>
 </div>
 

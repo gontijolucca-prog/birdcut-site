@@ -86,7 +86,36 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
   .header--editorial .burger{display:flex;position:absolute;right:.9rem;top:.9rem;z-index:5}
 }
 
-/* ===== eyebrow FEITO PARA CRIAR (birdcut.pt) ===== */
+/* ===== HERO birdcut.pt fiel — 7e5dee7a ===== */
+.hero-birdcut{position:relative;background-image:url("../img/birdcut-pt/ChatGPT-Image-8_07_2026-00_31_50.png");background-position:center center;background-repeat:no-repeat;background-size:cover;min-height:545px;display:flex;align-items:center;border-bottom:1px solid var(--color-line);margin-top:20px}
+.hero-birdcut::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.18);pointer-events:none}
+.hero-birdcut__in{position:relative;z-index:1;max-width:1280px;margin:0 auto;width:100%;padding:90px 50px 90px 0;display:flex;align-items:center}
+.hero-birdcut__text{max-width:560px;text-align:left}
+.hero-birdcut__title{font-family:"Montserrat",sans-serif;font-size:27px;font-weight:500;line-height:1.3;color:#222;margin-bottom:0}
+.hero-birdcut__desc{font-family:"Montserrat",sans-serif;font-size:17px;font-weight:400;color:#000;line-height:1.4;margin-top:12px}
+.hero-birdcut__desc strong{font-weight:600}
+.hero-birdcut__btn{display:inline-flex;margin-top:22px;padding:12px 24px;background:#fff;border:1px solid #111;color:#111;font-family:"Montserrat",sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;text-decoration:none;transition:.25s}
+.hero-birdcut__btn:hover{background:#111;color:#fff}
+@media (max-width:767px){.hero-birdcut{min-height:420px;margin-top:0;background-position:center}.hero-birdcut__in{padding:38px 15px 45px}.hero-birdcut__title{font-size:22px}.hero-birdcut__desc{font-size:15px}}
+/* ===== SHOP birdcut.pt fiel — #bc-shop-selector ===== */
+#bc-shop-selector{width:100%;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#292929;padding:50px 20px 55px;box-sizing:border-box;background:#fff}
+#bc-shop-selector .bc-eyebrow{font-size:11px;font-weight:300;letter-spacing:1.5px;margin-bottom:17px}
+#bc-shop-selector .bc-main-title{font-size:33px;font-weight:300;line-height:1.15;letter-spacing:.1px;margin-bottom:35px}
+#bc-shop-selector .bc-combs{display:flex;justify-content:center;align-items:center;gap:50px;width:100%;max-width:650px;margin:0 auto 32px}
+#bc-shop-selector .bc-comb-item{width:180px;height:250px;display:flex;justify-content:center;align-items:center}
+#bc-shop-selector .bc-comb-item img{width:100%;height:100%;object-fit:contain;display:block}
+#bc-shop-selector .bc-price{font-size:18px;font-weight:300;color:#777;margin-bottom:28px}
+#bc-shop-selector .bc-colors{display:flex;justify-content:center;align-items:flex-start;gap:38px;margin-bottom:32px}
+#bc-shop-selector .bc-color{appearance:none;border:0;background:transparent;padding:5px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:9px;color:#333;box-shadow:none}
+#bc-shop-selector .bc-circle{width:27px;height:27px;display:block;border-radius:50%;border:1px solid rgba(0,0,0,.12);position:relative}
+#bc-shop-selector .bc-circle.orange{background:#f56600}
+#bc-shop-selector .bc-circle.pink{background:#f28bad}
+#bc-shop-selector .bc-color.active .bc-circle::after{content:"";position:absolute;top:-5px;left:-5px;width:35px;height:35px;border-radius:50%;border:1px solid #292929;box-sizing:border-box}
+#bc-shop-selector .bc-color-name{font-size:12px;font-weight:300;letter-spacing:.2px}
+#bc-shop-selector .bc-cart{width:275px;max-width:100%;padding:14px 20px;background:#292929 !important;color:#fff !important;border:1px solid #292929 !important;border-radius:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;letter-spacing:.8px;cursor:pointer;box-shadow:none;transition:background .25s ease,color .25s ease}
+#bc-shop-selector .bc-cart:hover{background:#fff !important;color:#292929 !important}
+@media (max-width:767px){#bc-shop-selector{padding:38px 15px 45px}#bc-shop-selector .bc-eyebrow{font-size:10px;margin-bottom:13px}#bc-shop-selector .bc-main-title{font-size:26px;margin-bottom:27px}#bc-shop-selector .bc-combs{gap:15px;margin-bottom:27px}#bc-shop-selector .bc-comb-item{width:140px;height:190px}}
+/* legado */
 .bc-eyebrow{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#777;margin-bottom:.9rem}
 .esc-colhe__price{font-family:'Inter',sans-serif;font-size:1.35rem;font-weight:600;color:#111;margin:.6rem 0 .2rem;letter-spacing:-.02em}
 /* ===== TAMANHOS birdcut.pt fiel (Elementor) ===== */

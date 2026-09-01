@@ -128,7 +128,13 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
 .esc-colhe{padding:70px 0 !important}
 .destaque{padding:70px 0 !important}
 .sec-video{padding:80px 0 !important}
-.sec-internacional{padding:80px 0 42px !important}
+.sec-internacional{padding:80px 0 42px !important;background:#000 !important;color:#fff}
+.sec-internacional .sec-internacional__titulo,.sec-internacional .sec-internacional__sub{color:#fff !important}
+.sec-internacional .infl-card{background:#111;border-color:rgba(255,255,255,.08)}
+.sec-internacional .infl-card__barra{background:#fff !important;color:#000 !important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:.6rem .5rem;font-size:.78rem;line-height:1.2}
+.sec-internacional .barra-label{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.7;line-height:1}
+.sec-internacional .infl-card__barra .infl-card__seta{font-size:.8rem}
+.sec-internacional .infl-card__barra span:last-child{font-weight:600;font-size:.85rem}
 .sec-experiencias{padding:80px 0 !important}
 .sec-faq{padding:80px 0 !important}
 /* imagens novas: manter proporção e não esticar */

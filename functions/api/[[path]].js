@@ -1,11 +1,12 @@
 // Proxy same-origin para a API Bird Cut (evita mixed-content HTTPS -> HTTP)
-// Rotas: /api/*  ->  http://VPS:3001/api/*
-const API_ORIGIN = 'http://167.233.116.182:3001';
+// Workers não podem fazer fetch a IPs literais (erro 1003) -> usa hostname com HTTPS
+// Rotas: /api/*  ->  https://media.pontofinal.site/bcapi/api/*  ->  nginx -> node :3001
+const API_BASE = 'https://media.pontofinal.site/bcapi';
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const path = url.pathname.replace(/^\/api/, '') || '/';
-  const upstream = API_ORIGIN + '/api' + path + url.search;
+  const upstream = API_BASE + '/api' + path + url.search;
 
   const headers = {};
   const contentType = context.request.headers.get('content-type');

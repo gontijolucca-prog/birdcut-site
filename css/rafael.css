@@ -73,33 +73,28 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
 .nav--editorial a:hover::after{width:100%}
 .header__tools{position:absolute;right:clamp(14px,3vw,32px);top:1.6rem;height:92px;display:flex;gap:.8rem;align-items:center;transform:none} /* alinhado com logotipo */
 @media (max-width:860px){
-  .brand-editorial__logo{height:116px;max-width:88vw}
-  .header__tools{position:absolute;right:1rem;top:1.1rem;height:48px;transform:none}
-  .header__tools .icon-btn{display:none}
-  .header--editorial .burger{display:flex;position:absolute;right:1rem;top:1.1rem;z-index:5}
+  .brand-editorial__logo{height:116px;max-width:72vw}
+  .header__tools{position:absolute;right:3.6rem;top:50%;transform:translateY(-50%);height:auto}
+  .header__tools .icon-btn{display:flex}
+  .header--editorial .burger{display:flex;position:absolute;right:1rem;top:50%;transform:translateY(-50%);z-index:5}
 }
 @media (max-width:640px){
-  .brand-editorial__logo{height:84px;max-width:92vw}
+  .brand-editorial__logo{height:84px;max-width:64vw}
   .brand-editorial__title{font-size:1.45rem}
   .nav--editorial{display:none}
-  .header__tools .icon-btn{display:none}
-  .header--editorial .burger{display:flex;position:absolute;right:.9rem;top:.9rem;z-index:5}
+  .header__tools{right:3.2rem}
+  .header--editorial .burger{right:.9rem}
 }
 
-/* ===== HERO birdcut.pt fiel — 7e5dee7a PIXEL-PERFECT (copiado do post-1781.css) ===== */
-.hero-birdcut{position:relative;background-image:url("../img/birdcut-pt/ChatGPT-Image-8_07_2026-00_31_50.png");background-position:center center;background-repeat:no-repeat;background-size:cover;max-width:1280px;min-height:545px;margin:20px auto 0;padding:0;border:none;box-shadow:none;display:block}
-.hero-birdcut__in{max-width:1280px;min-height:545px;margin:0 auto;display:flex;align-items:center}
-.hero-birdcut__text{width:100%;max-width:520px;margin:0 0 194px 0;padding:90px 50px 90px 0;box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start}
-.hero-birdcut__title{font-family:"Montserrat",Sans-serif;font-size:27px;font-weight:500;line-height:1.3em;color:#222;text-align:start;margin:-59px 2px 0 19px;padding:0}
-.hero-birdcut__title p{margin:0}
-.hero-birdcut__desc{font-family:"Montserrat",Sans-serif;font-size:17px;font-weight:400;color:#000;text-align:start;margin:-54px 0 0 22px;padding:0;line-height:1.4}
-.hero-birdcut__desc p{margin:0 0 1px 0}
-.hero-birdcut__spacer{width:100%;display:block}
-.hero-birdcut__spacer.spacer-22{height:22px;min-height:22px}
-.hero-birdcut__spacer.spacer-16{height:16px;min-height:16px}
-.hero-birdcut__btn{display:inline-flex;align-items:center;justify-content:center;background:#fff;font-family:"Montserrat",Sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;color:#111;border:1px solid #111;padding:12px 24px 12px 24px;margin:-50px 0 0 17px;text-decoration:none;letter-spacing:.02em;transition:.25s}
+/* ===== HERO birdcut.pt fiel — 7e5dee7a (posição visual do screenshot de referência, sem margens negivas) ===== */
+.hero-birdcut{position:relative;background-image:url("../img/birdcut-pt/ChatGPT-Image-8_07_2026-00_31_50.png");background-position:center center;background-repeat:no-repeat;background-size:cover;max-width:1280px;min-height:545px;margin:20px auto 0;box-sizing:border-box}
+.hero-birdcut__in{min-height:545px;box-sizing:border-box;padding:51px 40px 60px 18px}
+.hero-birdcut__title{font-family:"Montserrat",Sans-serif;font-size:27px;font-weight:500;line-height:1.3;color:#222;margin:0 0 18px;max-width:560px}
+.hero-birdcut__desc{font-family:'Inter',sans-serif;font-size:16px;font-weight:400;line-height:1.65;color:#000;margin:0 0 41px;max-width:360px}
+.hero-birdcut__desc strong{font-weight:700}
+.hero-birdcut__btn{display:inline-block;background:#fff;border:1px solid #111;color:#111;font-family:"Montserrat",Sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;padding:12px 24px;margin:0;text-decoration:none;transition:.25s}
 .hero-birdcut__btn:hover{background:#111;color:#fff;border-color:#111}
-@media (max-width:767px){.hero-birdcut{max-width:100%;min-height:420px;margin-top:0}.hero-birdcut__in{min-height:420px}.hero-birdcut__text{margin:0;padding:38px 15px 45px;max-width:100%}.hero-birdcut__title{margin:-92px 0 0 9px;font-size:22px}.hero-birdcut__desc{margin:-54px 0 0 9px;font-size:15px}.hero-birdcut__spacer.spacer-22{height:22px}.hero-birdcut__spacer.spacer-16{height:16px}.hero-birdcut__btn{margin:-50px 0 0 9px}}
+@media (max-width:767px){.hero-birdcut{max-width:100%;min-height:420px;margin-top:0}.hero-birdcut__in{min-height:420px;padding:28px 16px 40px 9px}.hero-birdcut__title{font-size:22px;margin-bottom:12px}.hero-birdcut__desc{font-size:15px;margin-bottom:30px;max-width:100%}}
 /* ===== SHOP birdcut.pt fiel — #bc-shop-selector ===== */
 #bc-shop-selector{width:100%;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#292929;padding:50px 20px 55px;box-sizing:border-box;background:#fff}
 #bc-shop-selector .bc-eyebrow{font-size:11px;font-weight:300;letter-spacing:1.5px;margin-bottom:17px}

@@ -1,5 +1,6 @@
 // ===== Bird Cut API =====
-const API_URL = 'http://167.233.116.182:3001';
+// Same-origin: o proxy em /api/* (Cloudflare Pages Function) encaminha para o backend
+const API_URL = '';
 
 function getToken() { return localStorage.getItem('bc_token'); }
 function setToken(t) { localStorage.setItem('bc_token', t); }

@@ -62,8 +62,8 @@ h1{font-family:'Playfair Display',serif;font-weight:700;font-size:1.7rem;letter-
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
-  // Permitir API routes sem auth (Stripe Checkout)
-  if (url.pathname.startsWith('/create-checkout-session') || url.pathname.startsWith('/session/')) {
+  // Permitir API routes sem auth (Stripe Checkout + proxy conta)
+  if (url.pathname.startsWith('/create-checkout-session') || url.pathname.startsWith('/session/') || url.pathname.startsWith('/api/')) {
     return context.next();
   }
 

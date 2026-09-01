@@ -119,7 +119,8 @@
     totalEl.textContent = total.toFixed(2).replace('.',',') + ' €';
     // Event listeners
     items.querySelectorAll('[data-action]').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (ev) => {
+        ev.stopPropagation(); // o botão é re-renderizado; sem isto o listener global fecha o drawer
         const idx = parseInt(btn.dataset.idx);
         if (btn.dataset.action === 'plus') cart[idx].qty++;
         else if (btn.dataset.action === 'minus') {
@@ -130,7 +131,8 @@
       });
     });
     items.querySelectorAll('.mini-cart__remove').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
         cart.splice(parseInt(btn.dataset.idx), 1);
         save(); updateCount(); renderMini();
       });

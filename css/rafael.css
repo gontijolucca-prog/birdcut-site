@@ -83,6 +83,26 @@ body{font-family:var(--font-body);color:var(--color-ink)}
 /* ===== eyebrow FEITO PARA CRIAR (birdcut.pt) ===== */
 .bc-eyebrow{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#777;margin-bottom:.9rem}
 .esc-colhe__price{font-family:'Inter',sans-serif;font-size:1.35rem;font-weight:600;color:#111;margin:.6rem 0 .2rem;letter-spacing:-.02em}
+/* ===== TAMANHOS birdcut.pt fiel (Elementor) ===== */
+.container{max-width:1180px}
+.banner-elementor--print .container{max-width:1280px}
+.banner-elementor--print{min-height:545px;margin-top:20px;padding:0;display:flex;align-items:center}
+.banner-elementor--print .banner-elementor__in{min-height:545px;padding:90px 50px 90px 0;gap:2rem}
+@media (max-width:860px){.banner-elementor--print{min-height:auto;margin-top:0}.banner-elementor--print .banner-elementor__in{min-height:auto;padding:38px 15px 45px}}
+/* secções: 70-80px como no Elementor */
+.esc-colhe{padding:70px 0 !important}
+.destaque{padding:70px 0 !important}
+.sec-video{padding:80px 0 !important}
+.sec-internacional{padding:80px 0 42px !important}
+.sec-experiencias{padding:80px 0 !important}
+.sec-faq{padding:80px 0 !important}
+/* imagens novas: manter proporção e não esticar */
+.banner-elementor--print .comb{width:100%;max-width:320px;height:auto;object-fit:contain}
+.esc-colhe__preview img{width:100%;max-width:420px;height:auto;aspect-ratio:auto;object-fit:contain;background:#fff}
+.destaque__track figure img{aspect-ratio:4/5;object-fit:cover} /* birdcut 819x1024 vertical */
+/* logo como no WP: 400% width trick ajustado */
+.brand-editorial__logo{height:auto;max-height:92px;width:auto;max-width:420px;object-fit:contain}
+@media (max-width:640px){.brand-editorial__logo{max-width:72vw;max-height:68px}}
 /* ===== 3. HERO MODELO ===== */
 .hero-modelo{background:#fff;border-bottom:1px solid var(--color-line)}
 .hero-modelo__in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;padding:clamp(2.6rem,6vw,5rem) 0}

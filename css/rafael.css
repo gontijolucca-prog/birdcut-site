@@ -86,17 +86,17 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
   .header--editorial .burger{display:flex;position:absolute;right:.9rem;top:.9rem;z-index:5}
 }
 
-/* ===== HERO birdcut.pt fiel — 7e5dee7a ===== */
+/* ===== HERO birdcut.pt fiel — 7e5dee7a (posicionamento exacto) ===== */
 .hero-birdcut{position:relative;background-image:url("../img/birdcut-pt/ChatGPT-Image-8_07_2026-00_31_50.png");background-position:center center;background-repeat:no-repeat;background-size:cover;min-height:545px;display:flex;align-items:center;border-bottom:1px solid var(--color-line);margin-top:20px}
-.hero-birdcut::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.18);pointer-events:none}
-.hero-birdcut__in{position:relative;z-index:1;max-width:1280px;margin:0 auto;width:100%;padding:90px 50px 90px 0;display:flex;align-items:center}
-.hero-birdcut__text{max-width:560px;text-align:left}
-.hero-birdcut__title{font-family:"Montserrat",sans-serif;font-size:27px;font-weight:500;line-height:1.3;color:#222;margin-bottom:0}
-.hero-birdcut__desc{font-family:"Montserrat",sans-serif;font-size:17px;font-weight:400;color:#000;line-height:1.4;margin-top:12px}
+.hero-birdcut::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);pointer-events:none}
+.hero-birdcut__in{position:relative;z-index:1;max-width:1280px;margin:0 auto;width:100%;min-height:545px;padding:0;display:flex;align-items:center}
+.hero-birdcut__text{max-width:520px;padding:90px 50px 90px 0;margin-left:19px;display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.hero-birdcut__title{font-family:"Montserrat",sans-serif;font-size:27px;font-weight:500;line-height:1.3;color:#222;margin:0 0 0 0}
+.hero-birdcut__desc{font-family:"Montserrat",sans-serif;font-size:17px;font-weight:400;color:#000;line-height:1.35;margin:10px 0 0 3px}
 .hero-birdcut__desc strong{font-weight:600}
-.hero-birdcut__btn{display:inline-flex;margin-top:22px;padding:12px 24px;background:#fff;border:1px solid #111;color:#111;font-family:"Montserrat",sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;text-decoration:none;transition:.25s}
+.hero-birdcut__btn{display:inline-flex;margin:28px 0 0 0;padding:12px 24px;background:#fff;border:1px solid #111;color:#111;font-family:"Montserrat",sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;text-decoration:none;transition:.25s}
 .hero-birdcut__btn:hover{background:#111;color:#fff}
-@media (max-width:767px){.hero-birdcut{min-height:420px;margin-top:0;background-position:center}.hero-birdcut__in{padding:38px 15px 45px}.hero-birdcut__title{font-size:22px}.hero-birdcut__desc{font-size:15px}}
+@media (max-width:767px){.hero-birdcut{min-height:420px;margin-top:0;background-position:center}.hero-birdcut__in{min-height:420px;padding:0}.hero-birdcut__text{padding:38px 15px 45px;margin-left:0;max-width:100%}.hero-birdcut__title{font-size:22px;margin-left:9px}.hero-birdcut__desc{font-size:15px;margin-left:9px}.hero-birdcut__btn{margin-left:9px}}
 /* ===== SHOP birdcut.pt fiel — #bc-shop-selector ===== */
 #bc-shop-selector{width:100%;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#292929;padding:50px 20px 55px;box-sizing:border-box;background:#fff}
 #bc-shop-selector .bc-eyebrow{font-size:11px;font-weight:300;letter-spacing:1.5px;margin-bottom:17px}

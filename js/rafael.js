@@ -61,6 +61,25 @@
   bcColors.forEach(b=>{
     b.addEventListener('click', ()=> setActiveColor(b.dataset.color));
   });
+  // Best-selling cards: swatches trocam imagem do card
+  document.querySelectorAll('.ac-product-card').forEach(card=>{
+    const sws = card.querySelectorAll('.sw');
+    const img = card.querySelector('.ac-product-card__media img');
+    const quick = card.querySelector('.ac-product-card__quick');
+    sws.forEach(s=>{
+      s.addEventListener('click', ()=>{
+        sws.forEach(x=>x.classList.remove('active'));
+        s.classList.add('active');
+        const col = s.dataset.color || s.title;
+        if(col==='Pink' && img) img.src='img/birdcut-pt/Pente-Rosa.png';
+        else if(col==='Orange' && img) img.src='img/birdcut-pt/Pente-laranja.png';
+        if(quick){
+          quick.dataset.image = img ? img.src : quick.dataset.image;
+          // atualiza swatch visual no quick para consistência
+        }
+      });
+    });
+  });
   // init
   setActiveColor('Orange');
 

@@ -162,8 +162,8 @@
     if (cartBtn) { cartBtn.style.transform = 'scale(1.15)'; setTimeout(() => cartBtn.style.transform = '', 200); }
   }
 
-  // Botões "Comprar agora" / "Adicionar ao Carrinho" (lê qtyInput se existir)
-  document.querySelectorAll('#addToCart, .pcard__btn:not(:disabled)').forEach(btn => {
+  // Botões "Comprar agora" / "Adicionar ao Carrinho" + Best-selling quick add (lê qtyInput se existir)
+  document.querySelectorAll('#addToCart, .pcard__btn:not(:disabled), .ac-product-card__quick').forEach(btn => {
     btn.addEventListener('click', () => {
       const name = btn.dataset.name || 'CurveLine Beard Pro';
       const price = parseFloat(btn.dataset.price || '18.89');

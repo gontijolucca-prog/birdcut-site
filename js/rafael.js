@@ -55,11 +55,28 @@
     });
   }
 
-  /* ===== 4. HEADER shadow ===== */
+  /* ===== 4. HEADER shadow + FIXO compensa altura ===== */
   const header = document.getElementById('header');
+  const bar = document.getElementById('birdcut-announcement-bar');
+  function fixTopOffset(){
+    if (!header || !bar) return;
+    const barH = bar.offsetHeight || 24;
+    const headH = header.offsetHeight || 116;
+    const total = barH + headH;
+    document.body.style.paddingTop = total + 'px';
+    document.documentElement.style.scrollPaddingTop = (total + 8) + 'px';
+    const banner = document.querySelector('.banner-elementor--print');
+    if (banner) banner.style.marginTop = '0';
+  }
   if (header) {
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 10);
     }, { passive: true });
+    fixTopOffset();
+    window.addEventListener('load', fixTopOffset);
+    window.addEventListener('resize', fixTopOffset);
+    // recalcula se logo carregar tarde
+    const logo = document.getElementById('brandLogo');
+    if (logo) logo.addEventListener('load', fixTopOffset);
   }
 })();

@@ -2,8 +2,8 @@
    RAFEL MODEL v2 — fiel ao site modelo (scan 10x, 2026-08-23)
    ============================================================ */
 
-/* ===== 1. FAIXA PRETA birdcut.pt fiel (24px, #222, Helvetica, setas) ===== */
-#birdcut-announcement-bar{width:100%;height:24px;min-height:24px;display:flex;align-items:center;justify-content:space-between;background:#222222 !important;padding:0 18%;box-sizing:border-box;overflow:hidden;position:sticky;top:0;z-index:10001}
+/* ===== 1. FAIXA PRETA birdcut.pt fiel (24px, #222, Helvetica, setas) — FIXA no topo ===== */
+#birdcut-announcement-bar{width:100%;height:24px;min-height:24px;display:flex;align-items:center;justify-content:space-between;background:#222222 !important;padding:0 18%;box-sizing:border-box;overflow:hidden;position:fixed;top:0;left:0;right:0;z-index:10001}
 #birdcut-announcement-bar .bc-message-area{position:relative;flex:1;height:24px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 #birdcut-announcement-bar .bc-message{position:absolute;left:0;top:0;width:100%;height:24px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:11px !important;font-weight:300 !important;letter-spacing:.15px;line-height:24px;color:#fff !important;opacity:0;visibility:hidden;transform:translateY(2px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
 #birdcut-announcement-bar .bc-message.active{opacity:1 !important;visibility:visible !important;transform:translateY(0)}
@@ -45,9 +45,15 @@ body{font-family:var(--font-body);color:var(--color-ink)}
 .destaque__galeria figure{border:1px solid var(--color-line);border-radius:6px}
 .esc-colhe__preview img{border:1px solid var(--color-line);box-shadow:0 8px 24px rgba(31,44,51,.06)}
 
-/* ===== 2. HEADER EDITORIAL CENTRADO — sticky a 24px (abaixo da barra) ===== */
-.header--editorial{position:sticky;top:24px;z-index:10000;background:#fff !important;border-bottom:1px solid var(--color-line);display:flex;flex-direction:column;align-items:center;text-align:center}
+/* ===== 2. HEADER EDITORIAL CENTRADO — FIXO abaixo da barra ===== */
+.header--editorial{position:fixed;top:24px;left:0;right:0;z-index:10000;background:#fff !important;border-bottom:1px solid var(--color-line);display:flex;flex-direction:column;align-items:center;text-align:center}
 @media (max-width:767px){.header--editorial{top:28px}}
+/* compensa o fixed: empurra o conteúdo para baixo */
+body{padding-top:24px}
+body .banner-elementor--print{margin-top:calc(24px + 116px)} /* barra 24 + header aprox */
+@media (max-width:860px){body .banner-elementor--print{margin-top:calc(28px + 92px)}}
+html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fixo */
+@media (max-width:767px){html{scroll-padding-top:calc(28px + 102px)}}
 /* birdcut.pt Helvetica menu fiel */
 .nav--editorial{gap:34px !important;justify-content:center}
 .nav--editorial a{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:14px !important;font-weight:500 !important;letter-spacing:.15px !important;text-transform:none !important;color:#333 !important}
@@ -289,7 +295,7 @@ body{font-family:var(--font-body);color:var(--color-ink)}
 body.cursor-on{cursor:auto}
 
 /* Evitar scroll horizontal (track do carrossel) */
-html,body{overflow-x:hidden}
+html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky no Safari */
 
 /* ===== TEMA GLOBAL — TUDO PRETO E BRANCO (UI) ===== */
 .section__kicker{color:#111}

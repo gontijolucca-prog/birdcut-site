@@ -74,7 +74,7 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
 .header__tools{position:absolute;right:clamp(14px,3vw,32px);top:1.6rem;height:92px;display:flex;gap:.8rem;align-items:center;transform:none} /* alinhado com logotipo */
 @media (max-width:860px){
   .brand-editorial__logo{height:116px;max-width:72vw}
-  .header__tools{position:absolute;right:3.6rem;top:50%;transform:translateY(-50%);height:auto}
+  .header__tools{position:absolute;right:4.4rem;top:50%;transform:translateY(-50%);height:auto;gap:.6rem}
   .header__tools .icon-btn{display:flex}
   .header--editorial .burger{display:flex;position:absolute;right:1rem;top:50%;transform:translateY(-50%);z-index:5}
 }
@@ -82,7 +82,7 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
   .brand-editorial__logo{height:84px;max-width:64vw}
   .brand-editorial__title{font-size:1.45rem}
   .nav--editorial{display:none}
-  .header__tools{right:3.2rem}
+  .header__tools{right:4.2rem;gap:.5rem}
   .header--editorial .burger{right:.9rem}
 }
 

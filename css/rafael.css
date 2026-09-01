@@ -380,3 +380,6 @@ html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky 
 .ac-product-card__swatches .sw{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.15);display:inline-block;position:relative}
 .ac-product-card__swatches .sw.active{box-shadow:0 0 0 2px #fff,0 0 0 3px #111}
 /* Dots do slider da faixa preta já são brancos ✓ */
+/* ===== Correção: drawer carrinho e menu mobile acima do header fixo ===== */
+.mini-cart{z-index:20001 !important}
+.mobile-menu{z-index:20000 !important}

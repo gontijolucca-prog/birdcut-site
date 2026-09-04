@@ -127,4 +127,31 @@
     const logo = document.getElementById('brandLogo');
     if (logo) logo.addEventListener('load', fixTopOffset);
   }
+
+  /* ===== 5. FAQ DROPDOWN — fiel birdcut.pt (Inter 16px) ===== */
+  (function(){
+    const items = document.querySelectorAll('.faq-item');
+    if(!items.length) return;
+    items.forEach(item=>{
+      const btn = item.querySelector('.faq-q');
+      const panel = item.querySelector('.faq-a');
+      if(!btn || !panel) return;
+      btn.addEventListener('click', ()=>{
+        const isOpen = item.classList.contains('is-open');
+        // fecha outros (accordion)
+        items.forEach(o=>{
+          o.classList.remove('is-open');
+          const b=o.querySelector('.faq-q');
+          const p=o.querySelector('.faq-a');
+          if(b) b.setAttribute('aria-expanded','false');
+          if(p) p.hidden=true;
+        });
+        if(!isOpen){
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded','true');
+          panel.hidden=false;
+        }
+      });
+    });
+  })();
 })();

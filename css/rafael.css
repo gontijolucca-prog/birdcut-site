@@ -379,6 +379,52 @@ html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky 
 .ac-product-card__swatches{display:flex;gap:6px;margin-top:2px}
 .ac-product-card__swatches .sw{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.15);display:inline-block;position:relative}
 .ac-product-card__swatches .sw.active{box-shadow:0 0 0 2px #fff,0 0 0 3px #111}
+/* ===== INTERNATIONAL BARBERS — birdcut.pt fiel (apenas 5 imagens) ===== */
+.infl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:1.2rem}
+.infl-grid__item{background:#111;border:1px solid rgba(255,255,255,.08);overflow:hidden;aspect-ratio:819/1024;border-radius:2px}
+.infl-grid__item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.infl-grid__item:hover img{transform:scale(1.03)}
+@media (max-width:1024px){.infl-grid{grid-template-columns:repeat(3,1fr);gap:16px}}
+@media (max-width:640px){.infl-grid{grid-template-columns:repeat(2,1fr);gap:12px}.infl-grid__item:last-child{grid-column:span 2;max-width:calc(50% - 6px);justify-self:center}}
+/* legado animação desativado */
+.infl-wrap,.infl-track{display:none !important}
+
+/* ===== EXPERIÊNCIAS — Frederica Os Clientes Falam Por Nós (blocos) ===== */
+.sec-experiencias{background:#fff !important}
+.sec-experiencias .container{max-width:1180px}
+.sec-experiencias__titulo{text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-weight:600 !important;font-size:clamp(1.5rem,2.8vw,2.2rem) !important;letter-spacing:-.02em !important;color:#111 !important;margin-bottom:.6rem !important}
+.sec-experiencias__sub{text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:#777;margin:0 auto 2.2rem;max-width:640px;line-height:1.6}
+.exps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+@media (max-width:1024px){.exps-grid{grid-template-columns:repeat(2,1fr);gap:18px}}
+@media (max-width:640px){.exps-grid{grid-template-columns:1fr;gap:16px}}
+.exp-card{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:18px 18px 16px;box-shadow:0 4px 12px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px;text-align:left;transition:transform .25s,box-shadow .25s}
+.exp-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.12)}
+.exp-card__stars{color:#FFBF00;font-size:14px;letter-spacing:2px;line-height:1;margin:0;display:inline-flex}
+.exp-card__title{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;color:#111;margin:0;line-height:1.35}
+.exp-card__text{font-family:'Inter',sans-serif;font-size:13.6px;line-height:1.65;color:#333;flex:1;margin:0}
+.exp-card__foot{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;border-top:1px solid rgba(0,0,0,.07);padding-top:12px}
+.exp-card__author{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;color:#111}
+.exp-card__flag{font-size:12px;line-height:1}
+.exp-card__verified{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:10.5px;color:#108474;background:rgba(16,132,116,.09);padding:3px 8px;border-radius:999px;margin-left:auto;font-weight:500;letter-spacing:.02em}
+/* esconde legado coluna única */
+.sec-experiencias__in{max-width:none !important;display:block !important}
+.depoimento{display:none !important}
+
+/* ===== POLÍTICAS — base ===== */
+.politicas{padding:2.5rem 0 4rem}
+.politicas__in{max-width:860px;margin:0 auto}
+.politicas__toc{position:sticky;top:calc(24px + 116px + 16px);background:#fff;border:1px solid var(--color-line);border-radius:8px;padding:1rem 1.2rem;margin-bottom:2rem;display:flex;flex-wrap:wrap;gap:.6rem}
+.politicas__toc a{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#555;background:#f7f7f7;border:1px solid rgba(0,0,0,.08);padding:.45rem .8rem;border-radius:999px;text-decoration:none;transition:.2s}
+.politicas__toc a:hover{background:#111;color:#fff;border-color:#111}
+@media (max-width:860px){.politicas__toc{position:static}}
+.politica-bloco{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:1.6rem 1.6rem 1.4rem;margin-bottom:1.2rem;box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.politica-bloco h2{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:1.15rem;font-weight:600;letter-spacing:-.01em;color:#111;margin:0 0 .3rem}
+.politica-bloco h3{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:.95rem;font-weight:600;color:#222;margin:1.1rem 0 .4rem}
+.politica-bloco p,.politica-bloco li{font-family:'Inter',sans-serif;font-size:14px;line-height:1.7;color:#333}
+.politica-bloco ul{padding-left:1.1rem;margin:.4rem 0 .6rem}
+.politica-bloco li{margin-bottom:.25rem}
+.politica-bloco .meta{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:.9rem}
+
 /* Dots do slider da faixa preta já são brancos ✓ */
 /* ===== Correção: drawer carrinho e menu mobile acima do header fixo ===== */
 .mini-cart{z-index:20001 !important}

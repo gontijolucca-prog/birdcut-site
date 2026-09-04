@@ -31,31 +31,39 @@
   const swatches = document.querySelectorAll('.swatch');
   const bcColors = document.querySelectorAll('.bc-color');
   const bcCombs = document.querySelectorAll('.bc-comb-item');
+  function isYellow(color){ return color==='Amarelo' || color==='amarelo' || color==='Yellow' || color==='yellow' || color==='Pink' || color==='pink'; }
+  function isOrange(color){ return color==='Laranja' || color==='laranja' || color==='Orange' || color==='orange'; }
   function setActiveColor(color){
+    const yellow = isYellow(color);
     // compat: update hidden swatches
     swatches.forEach(x=>x.classList.remove('is-active'));
-    const sw = document.querySelector(color==='Pink' || color==='pink' ? '.swatch--amarelo' : '.swatch--laranja');
+    const sw = document.querySelector(yellow ? '.swatch--amarelo' : '.swatch--laranja');
     if(sw) sw.classList.add('is-active');
     // update bc-color active
     bcColors.forEach(b=>b.classList.remove('active'));
-    const bc = document.querySelector(`.bc-color[data-color="${color}"]`);
+    let bc = document.querySelector(`.bc-color[data-color="${color}"]`);
+    if(!bc){
+      // fallback para compat Pink/Orange
+      const fallback = yellow ? 'Amarelo' : 'Laranja';
+      bc = document.querySelector(`.bc-color[data-color="${fallback}"]`) || document.querySelector(`.bc-color[data-color="${yellow ? 'Pink' : 'Orange'}"]`);
+    }
     if(bc) bc.classList.add('active');
     // preview & cart image
     const addBtn = document.getElementById('addToCart');
-    if(color==='Pink'){
+    if(yellow){
       if(previewImg){ previewImg.src='img/birdcut-pt/Pente-Rosa.png'; previewImg.style.filter=''; }
       if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-Rosa.png';
-      bcCombs.forEach((c,i)=>{ c.style.opacity = c.dataset.comb==='Pink' ? '1' : '0.35'; c.style.transform = c.dataset.comb==='Pink' ? 'scale(1.02)' : 'scale(1)'; });
+      bcCombs.forEach((c)=>{ const isY = c.dataset.comb==='Amarelo' || c.dataset.comb==='Pink'; c.style.opacity = isY ? '1' : '0.35'; c.style.transform = isY ? 'scale(1.02)' : 'scale(1)'; });
     } else {
       if(previewImg){ previewImg.src='img/birdcut-pt/Pente-laranja.png'; previewImg.style.filter=''; }
       if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-laranja.png';
-      bcCombs.forEach((c,i)=>{ c.style.opacity = c.dataset.comb==='Orange' ? '1' : '0.35'; c.style.transform = c.dataset.comb==='Orange' ? 'scale(1.02)' : 'scale(1)'; });
+      bcCombs.forEach((c)=>{ const isO = c.dataset.comb==='Laranja' || c.dataset.comb==='Orange'; c.style.opacity = isO ? '1' : '0.35'; c.style.transform = isO ? 'scale(1.02)' : 'scale(1)'; });
     }
   }
   swatches.forEach((s) => {
     s.addEventListener('click', () => {
-      const isPink = s.classList.contains('swatch--amarelo');
-      setActiveColor(isPink ? 'Pink' : 'Orange');
+      const isYellowSw = s.classList.contains('swatch--amarelo');
+      setActiveColor(isYellowSw ? 'Amarelo' : 'Laranja');
     });
   });
   bcColors.forEach(b=>{
@@ -71,17 +79,16 @@
         sws.forEach(x=>x.classList.remove('active'));
         s.classList.add('active');
         const col = s.dataset.color || s.title;
-        if(col==='Pink' && img) img.src='img/birdcut-pt/Pente-Rosa.png';
-        else if(col==='Orange' && img) img.src='img/birdcut-pt/Pente-laranja.png';
+        if(isYellow(col) && img) img.src='img/birdcut-pt/Pente-Rosa.png';
+        else if(isOrange(col) && img) img.src='img/birdcut-pt/Pente-laranja.png';
         if(quick){
           quick.dataset.image = img ? img.src : quick.dataset.image;
-          // atualiza swatch visual no quick para consistência
         }
       });
     });
   });
   // init
-  setActiveColor('Orange');
+  setActiveColor('Laranja');
 
   /* ===== 3. QUANTIDADE ===== */
   const qtyInput = document.getElementById('qtyInput');

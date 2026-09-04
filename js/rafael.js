@@ -128,7 +128,7 @@
     if (logo) logo.addEventListener('load', fixTopOffset);
   }
 
-  /* ===== 5. FAQ DROPDOWN — fiel birdcut.pt (Inter 16px) ===== */
+  /* ===== 5. FAQ DROPDOWN — estilo Frederica ===== */
   (function(){
     const items = document.querySelectorAll('.faq-item');
     if(!items.length) return;
@@ -153,5 +153,23 @@
         }
       });
     });
+  })();
+
+  /* ===== 6. EXPERIÊNCIAS — setas passar opiniões ===== */
+  (function(){
+    const slider = document.querySelector('.exps-slider');
+    if(!slider) return;
+    const wrap = slider.querySelector('.exps-scroll-wrap');
+    if(!wrap) return;
+    const prev = slider.querySelector('.exps-arrow--prev');
+    const next = slider.querySelector('.exps-arrow--next');
+    const step = () => {
+      const card = wrap.querySelector('.exp-card');
+      const gap = getComputedStyle(wrap.querySelector('.exps-grid')).gap;
+      const gapNum = parseFloat(gap) || 20;
+      return (card ? card.offsetWidth : 360) + gapNum;
+    };
+    if(prev) prev.addEventListener('click', ()=> wrap.scrollBy({ left: -step(), behavior: 'smooth' }));
+    if(next) next.addEventListener('click', ()=> wrap.scrollBy({ left: step(), behavior: 'smooth' }));
   })();
 })();

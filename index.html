@@ -149,12 +149,15 @@
   </div>
 </section>
 
-<!-- ===== 8. EXPERIÊNCIAS DOS CRIADORES — Frederica scroll 1 linha ===== -->
+<!-- ===== 8. EXPERIÊNCIAS DOS CRIADORES — Frederica scroll 1 linha + setas ===== -->
 <section class="section sec-experiencias" id="experiencias">
   <div class="container">
     <h2 class="sec-experiencias__titulo reveal">Experiências dos Criadores.</h2>
-    <div class="exps-scroll-wrap reveal">
-      <div class="exps-grid">
+    <div class="exps-slider reveal">
+      <button type="button" class="exps-arrow exps-arrow--prev" aria-label="Opiniões anteriores">‹</button>
+      <button type="button" class="exps-arrow exps-arrow--next" aria-label="Próximas opiniões">›</button>
+      <div class="exps-scroll-wrap">
+        <div class="exps-grid">
       <article class="exp-card reveal">
         <div class="exp-card__stars" aria-label="5 estrelas">★★★★★</div>
         <h3 class="exp-card__title">Ideia excelente para todos os níveis</h3>
@@ -201,19 +204,20 @@
         </div>
       </article>
       </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ===== 9. PERGUNTAS FREQUENTES — dropdown fiel birdcut.pt ===== -->
+<!-- ===== 9. PERGUNTAS FREQUENTES — dropdown estilo Frederica ===== -->
 <section class="section sec-faq" id="faq">
   <div class="container sec-faq__in">
     <h2 class="sec-faq__titulo reveal">PERGUNTAS FREQUENTES</h2>
     <div class="sec-faq__lista reveal" role="list">
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" aria-controls="faq-a1" id="faq-q1">
-          <span>1 — O CurveLine Pro é indicado para que nível de experiência?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
+          <span class="faq-q__icon" aria-hidden="true"><span class="faq-icon--plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0H7V12H5V0Z" fill="currentColor"/><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span><span class="faq-icon--minus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span></span>
+          <span class="faq-q__heading">1 — O CurveLine Pro é indicado para que nível de experiência?</span>
         </button>
         <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden>
           <p>O CurveLine Pro é indicado para todos os níveis de experiência. Ajuda a reduzir o tempo de execução do contorno inferior da barba, mantendo a precisão e valorizando a técnica de quem o utiliza.</p>
@@ -221,8 +225,8 @@
       </div>
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" aria-controls="faq-a2" id="faq-q2">
-          <span>2 — O CurveLine Pro é adequado para destros e canhotos?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
+          <span class="faq-q__icon" aria-hidden="true"><span class="faq-icon--plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0H7V12H5V0Z" fill="currentColor"/><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span><span class="faq-icon--minus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span></span>
+          <span class="faq-q__heading">2 — O CurveLine Pro é adequado para destros e canhotos?</span>
         </button>
         <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden>
           <p>Sim. O CurveLine Pro foi desenvolvido para ser utilizado confortavelmente tanto por destros como por canhotos.</p>
@@ -230,8 +234,8 @@
       </div>
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" aria-controls="faq-a3" id="faq-q3">
-          <span>3 — Funciona em todos os tipos de barba?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
+          <span class="faq-q__icon" aria-hidden="true"><span class="faq-icon--plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0H7V12H5V0Z" fill="currentColor"/><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span><span class="faq-icon--minus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span></span>
+          <span class="faq-q__heading">3 — Funciona em todos os tipos de barba?</span>
         </button>
         <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden>
           <p>O CurveLine Pro foi concebido para funcionar na grande maioria das barbas. Em situações específicas, como barbas com redemoinhos, crescimento irregular ou determinados comprimentos, poderá ser necessário ajustar a posição do pente para obter o alinhamento pretendido antes de finalizar o contorno com a máquina.</p>
@@ -239,8 +243,8 @@
       </div>
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" aria-controls="faq-a4" id="faq-q4">
-          <span>4 — O CurveLine Pro substitui o pente tradicional?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
+          <span class="faq-q__icon" aria-hidden="true"><span class="faq-icon--plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0H7V12H5V0Z" fill="currentColor"/><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span><span class="faq-icon--minus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span></span>
+          <span class="faq-q__heading">4 — O CurveLine Pro substitui o pente tradicional?</span>
         </button>
         <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden>
           <p>Não. O CurveLine Pro é uma ferramenta complementar. Embora integre um pente tradicional para desembaraçar a barba antes do contorno, não substitui os restantes pentes da bancada. Cada pente continua a desempenhar a sua função específica durante o serviço.</p>
@@ -248,8 +252,8 @@
       </div>
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" aria-controls="faq-a5" id="faq-q5">
-          <span>5 — Vou precisar de utilizar o CurveLine Pro em todos os serviços?</span>
-          <span class="faq-icon" aria-hidden="true">+</span>
+          <span class="faq-q__icon" aria-hidden="true"><span class="faq-icon--plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0H7V12H5V0Z" fill="currentColor"/><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span><span class="faq-icon--minus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V7H0V5H12Z" fill="currentColor"/></svg></span></span>
+          <span class="faq-q__heading">5 — Vou precisar de utilizar o CurveLine Pro em todos os serviços?</span>
         </button>
         <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden>
           <p>Não. Há barbas em que o contorno pode ser feito sem recorrer ao CurveLine Pro. No entanto, em serviços mais exigentes ou quando se pretende ganhar tempo e manter maior consistência, o CurveLine Pro torna-se uma ferramenta valiosa para agilizar o trabalho e reduzir a necessidade de ajustes.</p>

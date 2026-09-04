@@ -108,6 +108,8 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
 #bc-shop-selector .bc-circle{width:27px;height:27px;display:block;border-radius:50%;border:1px solid rgba(0,0,0,.12);position:relative}
 #bc-shop-selector .bc-circle.orange{background:#f56600}
 #bc-shop-selector .bc-circle.pink{background:#f28bad}
+#bc-shop-selector .bc-circle.amarelo{background:#f4c430}
+#bc-shop-selector .bc-circle.yellow{background:#f4c430}
 #bc-shop-selector .bc-color.active .bc-circle::after{content:"";position:absolute;top:-5px;left:-5px;width:35px;height:35px;border-radius:50%;border:1px solid #292929;box-sizing:border-box}
 #bc-shop-selector .bc-color-name{font-size:12px;font-weight:300;letter-spacing:.2px}
 #bc-shop-selector .bc-cart{width:275px;max-width:100%;padding:14px 20px;background:#292929 !important;color:#fff !important;border:1px solid #292929 !important;border-radius:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;letter-spacing:.8px;cursor:pointer;box-shadow:none;transition:background .25s ease,color .25s ease}

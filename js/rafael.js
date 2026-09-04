@@ -51,8 +51,8 @@
     // preview & cart image
     const addBtn = document.getElementById('addToCart');
     if(yellow){
-      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-Rosa.png'; previewImg.style.filter=''; }
-      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-Rosa.png';
+      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-amarelo.png'; previewImg.style.filter=''; }
+      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-amarelo.png';
       bcCombs.forEach((c)=>{ const isY = c.dataset.comb==='Amarelo' || c.dataset.comb==='Pink'; c.style.opacity = isY ? '1' : '0.35'; c.style.transform = isY ? 'scale(1.02)' : 'scale(1)'; });
     } else {
       if(previewImg){ previewImg.src='img/birdcut-pt/Pente-laranja.png'; previewImg.style.filter=''; }
@@ -79,7 +79,7 @@
         sws.forEach(x=>x.classList.remove('active'));
         s.classList.add('active');
         const col = s.dataset.color || s.title;
-        if(isYellow(col) && img) img.src='img/birdcut-pt/Pente-Rosa.png';
+        if(isYellow(col) && img) img.src='img/birdcut-pt/Pente-amarelo.png';
         else if(isOrange(col) && img) img.src='img/birdcut-pt/Pente-laranja.png';
         if(quick){
           quick.dataset.image = img ? img.src : quick.dataset.image;

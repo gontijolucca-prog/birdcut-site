@@ -15,15 +15,25 @@ jobs:
     permissions:
       contents: read
       deployments: write
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Descobrir production branch do project
+        id: prod
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          BRANCH=$(curl -s -H "Authorization: Bearer ${CF_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/pages/projects/birdcut-site" | jq -r '.result.production_branch // "main"')
+          echo "production_branch=${BRANCH}" >> "$GITHUB_OUTPUT"
+          echo "Production branch: ${BRANCH}"
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
-        timeout-minutes: 5
+        timeout-minutes: 6
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=birdcut-site --branch=main
+          command: pages deploy . --project-name=birdcut-site --branch=${{ steps.prod.outputs.production_branch }}

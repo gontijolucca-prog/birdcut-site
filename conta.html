@@ -121,6 +121,7 @@
           <a href="#" onclick="showTab('dados',this);return false">👤 Dados Pessoais</a>
           <a href="#" onclick="showTab('enderecos',this);return false">📍 Endereços</a>
           <a href="#" onclick="showTab('seguranca',this);return false">🔒 Segurança</a>
+          <a href="admin.html" id="adminLink" style="display:none;color:#111;font-weight:700;border-top:1px solid var(--color-line);margin-top:.6rem;padding-top:.9rem">⚙️ Backoffice</a>
           <a href="#" onclick="doLogout();return false" style="color:var(--color-orange)">← Sair</a>
         </nav>
       </aside>
@@ -242,5 +243,15 @@
 <script src="js/main.js"></script>
 <script src="js/rafael.js"></script>
 <script src="js/conta.js"></script>
+<script>
+// Mostra link Backoffice se for admin
+(function(){
+  const ALLOW=['contacto@birdcut.pt','admin@birdcut.pt','gontijolucca@gmail.com','lucca@birdcut.pt'];
+  function isAdmin(u){ return u && (u.role==='admin' || ALLOW.includes((u.email||'').toLowerCase())); }
+  if(typeof getProfile==='function'){
+    getProfile().then(u=>{ if(isAdmin(u)) document.getElementById('adminLink').style.display=''; }).catch(()=>{});
+  }
+})();
+</script>
 </body>
 </html>

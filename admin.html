@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backoffice — Bird Cut</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="img/favicon-bw.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/rafael.css">
+<style>
+.admin-wrap{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 140px);gap:0}
+.admin-sidebar{background:#111;color:#fff;padding:1.2rem 0;position:sticky;top:calc(24px + 116px);height:calc(100vh - 24px - 116px);overflow-y:auto}
+.admin-sidebar__head{padding:0 1.2rem 1rem;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:.8rem}
+.admin-sidebar__head b{font-family:'Inter',sans-serif;font-size:1rem;display:block}
+.admin-sidebar__head span{font-size:.8rem;color:rgba(255,255,255,.6)}
+.admin-nav{display:flex;flex-direction:column;gap:2px;padding:0 .6rem}
+.admin-nav a{display:flex;align-items:center;gap:.7rem;padding:.7rem .9rem;border-radius:6px;color:rgba(255,255,255,.75);font-family:'Inter',sans-serif;font-size:.88rem;font-weight:500;text-decoration:none;transition:.2s}
+.admin-nav a:hover{background:rgba(255,255,255,.08);color:#fff}
+.admin-nav a.active{background:#fff;color:#111;font-weight:600}
+.admin-nav a small{margin-left:auto;opacity:.6;font-size:.7rem}
+.admin-main{padding:2rem clamp(18px,3vw,2rem);background:#f5f5f5}
+.admin-card{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:1.4rem 1.4rem 1.2rem;margin-bottom:1.2rem;box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.admin-card h3{font-family:'Inter',sans-serif;font-size:1.05rem;font-weight:600;margin:0 0 .9rem;color:#111}
+.admin-card h4{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:600;margin:1.2rem 0 .6rem;color:#222}
+.admin-field{display:grid;gap:.35rem;margin-bottom:1rem}
+.admin-field label{font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#555}
+.admin-field input,.admin-field textarea,.admin-field select{width:100%;padding:.7rem .9rem;border:1px solid rgba(0,0,0,.15);border-radius:6px;font-family:'Inter',sans-serif;font-size:.9rem;background:#fff;outline:none;transition:border-color .2s}
+.admin-field input:focus,.admin-field textarea:focus{border-color:#111}
+.admin-field textarea{min-height:90px;resize:vertical}
+.admin-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:860px){.admin-wrap{grid-template-columns:1fr}.admin-sidebar{position:static;height:auto}.admin-row{grid-template-columns:1fr}}
+.admin-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem}
+.admin-actions .btn{padding:.7rem 1.2rem;font-size:.82rem}
+.admin-table{width:100%;border-collapse:collapse;font-family:'Inter',sans-serif;font-size:.88rem}
+.admin-table th{ text-align:left;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#777;padding:.6rem .7rem;border-bottom:1px solid rgba(0,0,0,.1)}
+.admin-table td{padding:.7rem;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:top}
+.admin-table tr:hover td{background:rgba(0,0,0,.02)}
+.badge{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .5rem;border-radius:999px;font-weight:600}
+.badge--ok{background:rgba(46,125,50,.12);color:#2e7d32}
+.badge--pend{background:rgba(244,67,54,.1);color:#c62828}
+.admin-login{max-width:420px;margin:4rem auto;padding:2rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.06);text-align:center}
+.admin-login h2{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:.4rem}
+.admin-login p{color:#555;font-size:.9rem;margin-bottom:1.4rem}
+</style>
+</head>
+<body>
+
+<div id="birdcut-announcement-bar">
+  <button type="button" class="bc-arrow bc-prev" aria-label="Mensagem anterior">‹</button>
+  <div class="bc-message-area">
+    <div class="bc-message active">Backoffice Bird Cut — acesso restrito</div>
+    <div class="bc-message">Created for Creators</div>
+    <div class="bc-message">CurveLine Beard Pro</div>
+  </div>
+  <button type="button" class="bc-arrow bc-next" aria-label="Próxima mensagem">›</button>
+</div>
+
+<header class="header header--editorial" id="header">
+  <div class="container header__in header__in--editorial">
+    <div class="brand-editorial">
+      <a href="index.html" style="text-decoration:none"><img src="img/birdcut-pt/1200x400px-zoom.png" alt="Bird Cut" class="brand-editorial__logo" id="brandLogo" style="max-height:72px"></a>
+    </div>
+    <nav class="nav nav--editorial">
+      <a href="index.html">Ver loja</a>
+      <a href="admin.html" class="active">Backoffice</a>
+      <a href="conta.html">Área Cliente</a>
+      <a href="politicas.html">Políticas</a>
+    </nav>
+  </div>
+  <div class="header__tools">
+    <span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.8rem;color:#555;margin-right:.6rem"></span>
+    <button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+
+<!-- LOGIN -->
+<section id="adminLogin" class="section" style="display:none">
+  <div class="admin-login">
+    <img src="img/favicon-bw.png" alt="" style="width:48px;margin-bottom:1rem;opacity:.9">
+    <h2>Backoffice</h2>
+    <p>Entra com a tua conta de administrador.</p>
+    <form id="adminLoginForm" class="conta-form" style="text-align:left">
+      <div><label>E-mail</label><input type="email" id="admEmail" required placeholder="admin@birdcut.pt"></div>
+      <div><label>Palavra-passe</label><input type="password" id="admPass" required placeholder="••••••••"></div>
+      <div id="admErr" style="color:#e56d6d;font-size:.85rem;min-height:1.2em"></div>
+      <button type="submit" class="btn btn--red" style="width:100%;justify-content:center" id="admBtn">Entrar</button>
+    </form>
+    <p style="margin-top:1rem;font-size:.8rem;color:#777">Acesso restrito a: contacto@birdcut.pt, admin@birdcut.pt, gontijolucca@gmail.com</p>
+  </div>
+</section>
+
+<section id="adminDenied" class="section" style="display:none">
+  <div class="admin-login">
+    <h2>Acesso restrito</h2>
+    <p id="deniedMsg">Esta conta não tem permissões de administrador.</p>
+    <p style="font-size:.85rem;color:#777" id="deniedEmail"></p>
+    <button class="btn btn--red" onclick="logout().then(()=>location.reload())" style="margin-top:1rem">Sair</button>
+    <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a>
+  </div>
+</section>
+
+<!-- APP -->
+<div id="adminApp" class="admin-wrap" style="display:none">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar__head">
+      <b>Bird Cut — Backoffice</b>
+      <span id="adminRole">Administrador</span>
+    </div>
+    <nav class="admin-nav" id="adminNav">
+      <a href="#" data-tab="dash" class="active">📊 Dashboard</a>
+      <a href="#" data-tab="hero">🦅 Hero</a>
+      <a href="#" data-tab="prod">🪮 Produtos <small>4</small></a>
+      <a href="#" data-tab="barb">💈 Barbeiros <small>5</small></a>
+      <a href="#" data-tab="exp">⭐ Experiências <small>5</small></a>
+      <a href="#" data-tab="faq">❓ FAQ <small>5</small></a>
+      <a href="#" data-tab="orders">📦 Encomendas</a>
+      <a href="#" data-tab="clients">👥 Clientes</a>
+      <a href="#" data-tab="site">⚙️ Site</a>
+    </nav>
+    <div style="padding:1rem 1.2rem;margin-top:auto">
+      <button class="btn btn--outline" style="width:100%;justify-content:center;font-size:.78rem" onclick="window.open('index.html','_blank')">Ver loja ↗</button>
+      <button class="btn btn--red" style="width:100%;justify-content:center;font-size:.78rem;margin-top:.6rem" id="adminLogout2">Sair</button>
+    </div>
+  </aside>
+  <main class="admin-main">
+
+    <div id="tab-dash" class="admin-tab">
+      <h2 style="font-family:Inter,sans-serif;margin:0 0 1rem">Dashboard</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.2rem">
+        <div class="admin-card" style="margin:0"><h3 style="margin-bottom:.4rem">Encomendas</h3><div id="dashOrders" style="font-size:1.6rem;font-weight:700">—</div><span style="font-size:.8rem;color:#777">via /api/orders</span></div>
+        <div class="admin-card" style="margin:0"><h3 style="margin-bottom:.4rem">Produtos</h3><div id="dashProds" style="font-size:1.6rem;font-weight:700">4</div><span style="font-size:.8rem;color:#777">Laranja/Amarelo</span></div>
+        <div class="admin-card" style="margin:0"><h3 style="margin-bottom:.4rem">Clientes</h3><div id="dashClients" style="font-size:1.6rem;font-weight:700">—</div><span style="font-size:.8rem;color:#777">via /api</span></div>
+      </div>
+      <div class="admin-card">
+        <h3>Estado do site</h3>
+        <p style="font-size:.9rem;color:#555">O backoffice edita <code>data/site.json</code>. As alterações são guardadas em <code>localStorage</code> para preview instantâneo e, se o backend tiver permissão, em <code>/api/site-config</code> (KV).</p>
+        <div class="admin-actions">
+          <button class="btn btn--outline" id="btnClearPreview">Limpar preview local</button>
+          <button class="btn btn--outline" id="btnExport">Exportar JSON</button>
+          <button class="btn btn--red" id="btnSaveAll">Guardar tudo</button>
+        </div>
+        <pre id="exportBox" style="display:none;margin-top:1rem;background:#111;color:#0f0;padding:1rem;border-radius:6px;overflow:auto;max-height:300px;font-size:.75rem"></pre>
+      </div>
+    </div>
+
+    <div id="tab-hero" class="admin-tab" style="display:none">
+      <div class="admin-card">
+        <h3>Hero</h3>
+        <div class="admin-field"><label>Título</label><input id="hTitle"></div>
+        <div class="admin-field"><label>Descrição (HTML permitido)</label><textarea id="hDesc"></textarea></div>
+        <div class="admin-row">
+          <div class="admin-field"><label>Texto botão</label><input id="hBtnText"></div>
+          <div class="admin-field"><label>Link botão</label><input id="hBtnLink"></div>
+        </div>
+        <div class="admin-field"><label>Imagem de fundo (URL)</label><input id="hBg"></div>
+        <div class="admin-actions"><button class="btn btn--red" onclick="saveHero()">Guardar Hero</button></div>
+      </div>
+    </div>
+
+    <div id="tab-prod" class="admin-tab" style="display:none">
+      <div class="admin-card">
+        <h3>Best-selling — Produtos</h3>
+        <div id="prodList"></div>
+        <div class="admin-actions"><button class="btn btn--outline" onclick="addProd()">+ Adicionar produto</button><button class="btn btn--red" onclick="saveProds()">Guardar produtos</button></div>
+      </div>
+    </div>
+
+    <div id="tab-barb" class="admin-tab" style="display:none">
+      <div class="admin-card">
+        <h3>International Barbers</h3>
+        <div class="admin-field"><label>Título secção</label><input id="bTitle"></div>
+        <div id="barbList"></div>
+        <div class="admin-actions"><button class="btn btn--red" onclick="saveBarb()">Guardar barbeiros</button></div>
+      </div>
+    </div>
+
+    <div id="tab-exp" class="admin-tab" style="display:none">
+      <div class="admin-card">
+        <h3>Experiências dos Criadores</h3>
+        <div class="admin-field"><label>Título secção</label><input id="eTitle"></div>
+        <div id="expList"></div>
+        <div class="admin-actions"><button class="btn btn--outline" onclick="addExp()">+ Adicionar card</button><button class="btn btn--red" onclick="saveExp()">Guardar experiências</button></div>
+      </div>
+    </div>
+
+    <div id="tab-faq" class="admin-tab" style="display:none">
+      <div class="admin-card">
+        <h3>Perguntas Frequentes</h3>
+        <div class="admin-field"><label>Título</label><input id="fTitle"></div>
+        <div id="faqList"></div>
+        <div class="admin-actions"><button class="btn btn--outline" onclick="addFaq()">+ Adicionar pergunta</button><button class="btn btn--red" onclick="saveFaq()">Guardar FAQ</button></div>
+      </div>
+    </div>
+
+    <div id="tab-orders" class="admin-tab" style="display:none">
+      <div class="admin-card">
+        <h3>Encomendas</h3>
+        <div id="ordersAdmin"><p style="color:#777">A carregar…</p></div>
+      </div>
+    </div>
+
+    <div id="tab-clients" class="admin-tab" style="display:none">
+      <div class="admin-card">
+        <h3>Clientes</h3>
+        <div id="clientsAdmin"><p style="color:#777">A carregar…</p></div>
+      </div>
+    </div>
+
+    <div id="tab-site" class="admin-tab" style="display:none">
+      <div class="admin-card">
+        <h3>Site — JSON bruto</h3>
+        <p style="font-size:.85rem;color:#555">Edição avançada. Cuidado: JSON inválido impede o site de carregar.</p>
+        <div class="admin-field"><label>data/site.json</label><textarea id="siteRaw" style="min-height:400px;font-family:monospace;font-size:.82rem"></textarea></div>
+        <div class="admin-actions"><button class="btn btn--red" onclick="saveRaw()">Guardar JSON</button><button class="btn btn--outline" onclick="loadConfig()">Recarregar</button></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close" id="menuClose" aria-label="Fechar">×</button>
+  <a href="index.html">Ver loja</a>
+  <a href="admin.html">Backoffice</a>
+  <a href="conta.html">Área Cliente</a>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/main.js"></script>
+<script src="js/rafael.js"></script>
+<script>
+let CFG=null;
+const LS_KEY='bc_site_config_preview';
+const ALLOW=['contacto@birdcut.pt','admin@birdcut.pt','gontijolucca@gmail.com','lucca@birdcut.pt','admin@birdcut-site.com'];
+
+function isAdminUser(u){
+  if(!u) return false;
+  if(u.role==='admin') return true;
+  return ALLOW.includes((u.email||'').toLowerCase());
+}
+
+async function loadConfig(){
+  try{
+    const ls=localStorage.getItem(LS_KEY);
+    if(ls) return JSON.parse(ls);
+  }catch(e){}
+  try{
+    const r=await fetch('/api/site-config');
+    if(r.ok){ const j=await r.json(); if(j && j.hero) return j; }
+  }catch(e){}
+  const r=await fetch('data/site.json',{cache:'no-store'});
+  return await r.json();
+}
+
+function savePreview(){
+  localStorage.setItem(LS_KEY, JSON.stringify(CFG));
+}
+
+async function saveToBackend(){
+  const token=localStorage.getItem('bc_token');
+  if(!token) return {ok:false,error:'Sem token'};
+  try{
+    const r=await fetch('/api/site-config',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(CFG)});
+    const j=await r.json();
+    return j;
+  }catch(e){ return {ok:false,error:e.message} }
+}
+
+async function saveAll(){
+  savePreview();
+  const res=await saveToBackend();
+  if(res && res.ok) alert('✓ Guardado! Preview local + backend ('+(res.saved||'ok')+')');
+  else if(res && res.error) alert('Guardado localmente (preview). Backend: '+res.error+'\n\nPara persistir, configura KV BC_SITE_KV ou copia o JSON exportado.');
+  else alert('✓ Guardado em preview local. Faz refresh na loja para ver.');
+  // aplica na loja se estiver aberta
+}
+
+function renderHero(){
+  document.getElementById('hTitle').value=CFG.hero?.title||'';
+  document.getElementById('hDesc').value=CFG.hero?.desc||'';
+  document.getElementById('hBtnText').value=CFG.hero?.btnText||'';
+  document.getElementById('hBtnLink').value=CFG.hero?.btnLink||'';
+  document.getElementById('hBg').value=CFG.hero?.bgImage||'';
+}
+function saveHero(){
+  CFG.hero.title=document.getElementById('hTitle').value;
+  CFG.hero.desc=document.getElementById('hDesc').value;
+  CFG.hero.btnText=document.getElementById('hBtnText').value;
+  CFG.hero.btnLink=document.getElementById('hBtnLink').value;
+  CFG.hero.bgImage=document.getElementById('hBg').value;
+  saveAll();
+}
+
+function renderProds(){
+  const c=document.getElementById('prodList');
+  c.innerHTML=CFG.bestSelling.products.map((p,i)=>`
+    <div class="admin-card" style="background:#fafafa">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem"><b>#${i+1} ${p.name}</b><button class="btn btn--outline" style="padding:.3rem .6rem;font-size:.7rem" onclick="removeProd(${i})">Remover</button></div>
+      <div class="admin-field"><label>Nome</label><input data-k="name" data-i="${i}" value="${p.name}"></div>
+      <div class="admin-row">
+        <div class="admin-field"><label>Preço texto</label><input data-k="price" data-i="${i}" value="${p.price}"></div>
+        <div class="admin-field"><label>Preço num</label><input type="number" step="0.01" data-k="priceNum" data-i="${i}" value="${p.priceNum}"></div>
+      </div>
+      <div class="admin-field"><label>Imagem URL</label><input data-k="image" data-i="${i}" value="${p.image}"></div>
+      <div class="admin-row">
+        <div class="admin-field"><label>Cor ativa</label><select data-k="activeColor" data-i="${i}"><option ${p.activeColor==='Laranja'?'selected':''}>Laranja</option><option ${p.activeColor==='Amarelo'?'selected':''}>Amarelo</option></select></div>
+        <div class="admin-field"><label>Rating</label><input data-k="rating" data-i="${i}" value="${p.rating}"></div>
+      </div>
+    </div>`).join('');
+  c.querySelectorAll('input,select').forEach(el=>{
+    el.addEventListener('change',e=>{
+      const k=e.target.dataset.k, i=+e.target.dataset.i;
+      let v=e.target.value;
+      if(k==='priceNum') v=parseFloat(v);
+      CFG.bestSelling.products[i][k]=v;
+      if(k==='name' && v.includes('Laranja')) CFG.bestSelling.products[i].activeColor='Laranja';
+      if(k==='name' && v.includes('Amarelo')) CFG.bestSelling.products[i].activeColor='Amarelo';
+    });
+  });
+}
+function addProd(){ CFG.bestSelling.products.push({id:'p'+Date.now(),name:'CurveLine Beard Pro — Laranja',price:'18,89 €',priceNum:18.89,image:'img/birdcut-pt/Pente-laranja.png',colors:['Laranja','Amarelo'],rating:'5.0',activeColor:'Laranja'}); renderProds(); }
+function removeProd(i){ CFG.bestSelling.products.splice(i,1); renderProds(); }
+function saveProds(){ saveAll(); }
+
+function renderBarb(){
+  document.getElementById('bTitle').value=CFG.internacional.title||'';
+  const c=document.getElementById('barbList');
+  c.innerHTML=CFG.internacional.images.map((src,i)=>`
+    <div class="admin-field"><label>Imagem ${i+1}</label><div style="display:flex;gap:.6rem"><input data-bi="${i}" value="${src}" style="flex:1"><button class="btn btn--outline" style="padding:.4rem .7rem" onclick="CFG.internacional.images.splice(${i},1);renderBarb()">✕</button></div><img src="${src}" style="width:80px;height:100px;object-fit:cover;border-radius:6px;margin-top:.4rem;border:1px solid rgba(0,0,0,.08)"></div>`).join('')+`<button class="btn btn--outline" style="margin-top:.6rem" onclick="CFG.internacional.images.push('img/birdcut-pt/1-1-819x1024.png');renderBarb()">+ Adicionar imagem</button>`;
+  c.querySelectorAll('input[data-bi]').forEach(el=>{
+    el.addEventListener('change',e=>{ CFG.internacional.images[+e.target.dataset.bi]=e.target.value; });
+  });
+  document.getElementById('bTitle').onchange=e=>CFG.internacional.title=e.target.value;
+}
+function saveBarb(){ CFG.internacional.title=document.getElementById('bTitle').value; saveAll(); }
+
+function renderExp(){
+  document.getElementById('eTitle').value=CFG.experiencias.title||'';
+  const c=document.getElementById('expList');
+  c.innerHTML=CFG.experiencias.cards.map((card,i)=>`
+    <div class="admin-card" style="background:#fafafa">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b>Card ${i+1}</b><button class="btn btn--outline" style="padding:.3rem .6rem;font-size:.7rem" onclick="CFG.experiencias.cards.splice(${i},1);renderExp()">Remover</button></div>
+      <div class="admin-field"><label>Título</label><input data-ek="title" data-ei="${i}" value="${card.title}"></div>
+      <div class="admin-field"><label>Texto</label><textarea data-ek="text" data-ei="${i}">${card.text}</textarea></div>
+      <div class="admin-row">
+        <div class="admin-field"><label>Autor</label><input data-ek="author" data-ei="${i}" value="${card.author}"></div>
+        <div class="admin-field"><label>Flag</label><input data-ek="flag" data-ei="${i}" value="${card.flag}"></div>
+      </div>
+    </div>`).join('');
+  c.querySelectorAll('input,textarea').forEach(el=>{
+    el.addEventListener('change',e=>{
+      const k=e.target.dataset.ek, i=+e.target.dataset.ei;
+      CFG.experiencias.cards[i][k]=e.target.value;
+    });
+  });
+  document.getElementById('eTitle').onchange=e=>CFG.experiencias.title=e.target.value;
+}
+function addExp(){ CFG.experiencias.cards.push({id:'e'+Date.now(),title:'Novo título',text:'“Novo testemunho…”',author:'Nome',flag:'🇵🇹',verified:'Compra verificada'}); renderExp(); }
+function saveExp(){ CFG.experiencias.title=document.getElementById('eTitle').value; saveAll(); }
+
+function renderFaq(){
+  document.getElementById('fTitle').value=CFG.faq.title||'';
+  const c=document.getElementById('faqList');
+  c.innerHTML=CFG.faq.items.map((it,i)=>`
+    <div class="admin-card" style="background:#fafafa">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b>Pergunta ${i+1}</b><button class="btn btn--outline" style="padding:.3rem .6rem;font-size:.7rem" onclick="CFG.faq.items.splice(${i},1);renderFaq()">Remover</button></div>
+      <div class="admin-field"><label>Pergunta</label><input data-fk="q" data-fi="${i}" value="${it.q.replace(/"/g,'&quot;')}"></div>
+      <div class="admin-field"><label>Resposta</label><textarea data-fk="a" data-fi="${i}">${it.a}</textarea></div>
+    </div>`).join('');
+  c.querySelectorAll('input,textarea').forEach(el=>{
+    el.addEventListener('change',e=>{
+      const k=e.target.dataset.fk, i=+e.target.dataset.fi;
+      CFG.faq.items[i][k]=e.target.value;
+    });
+  });
+  document.getElementById('fTitle').onchange=e=>CFG.faq.title=e.target.value;
+}
+function addFaq(){ CFG.faq.items.push({id:'f'+Date.now(),q:'Nova pergunta?',a:'Resposta.'}); renderFaq(); }
+function saveFaq(){ CFG.faq.title=document.getElementById('fTitle').value; saveAll(); }
+
+async function loadOrdersAdmin(){
+  const el=document.getElementById('ordersAdmin');
+  try{
+    const orders=await getOrders();
+    if(!orders || !orders.length){ el.innerHTML='<p style=\"color:#777\">Sem encomendas.</p>'; return; }
+    el.innerHTML='<table class=\"admin-table\"><tr><th>ID</th><th>Data</th><th>Cliente</th><th>Total</th><th>Status</th></tr>'+orders.map(o=>`<tr><td>#${o.id||'—'}</td><td>${(o.created_at||'').slice(0,10)}</td><td>${o.customer_email||o.email||'—'}</td><td>${Number(o.total||0).toFixed(2)} €</td><td><span class=\"badge badge--pend\">${o.status||'—'}</span></td></tr>`).join('')+'</table>';
+    document.getElementById('dashOrders').textContent=orders.length;
+  }catch(e){ el.innerHTML='<p style=\"color:#c62828\">Erro: '+(e.message||'—')+'</p>'; }
+}
+async function loadClientsAdmin(){
+  const el=document.getElementById('clientsAdmin');
+  el.innerHTML='<p style=\"color:#777\">Lista de clientes disponível via <code>/api/admin/users</code> se o backend expuser. Por agora, usa a coleção de encomendas para ver e-mails.</p>';
+  try{
+    const r=await fetch('/api/admin/users',{headers:{'Authorization':'Bearer '+(localStorage.getItem('bc_token')||'')}});
+    if(r.ok){
+      const users=await r.json();
+      document.getElementById('dashClients').textContent=Array.isArray(users)?users.length:'—';
+      if(Array.isArray(users) && users.length){
+        el.innerHTML='<table class=\"admin-table\"><tr><th>E-mail</th><th>Nome</th><th>Criação</th></tr>'+users.map(u=>`<tr><td>${u.email||''}</td><td>${(u.name||'')+' '+(u.surname||'')}</td><td>${(u.created_at||'').slice(0,10)}</td></tr>`).join('')+'</table>';
+      }
+    }
+  }catch(e){}
+}
+
+async function init(){
+  // auth
+  const loginSec=document.getElementById('adminLogin');
+  const denied=document.getElementById('adminDenied');
+  const app=document.getElementById('adminApp');
+  const emailEl=document.getElementById('adminUserEmail');
+  const logoutBtn=document.getElementById('adminLogout');
+  const logoutBtn2=document.getElementById('adminLogout2');
+
+  function showLogin(){ loginSec.style.display=''; denied.style.display='none'; app.style.display='none'; }
+  function showDenied(u){ loginSec.style.display='none'; denied.style.display=''; app.style.display='none'; document.getElementById('deniedEmail').textContent=u?u.email:''; document.getElementById('deniedMsg').textContent='Esta conta ('+(u?.email||'')+') não tem permissões de administrador.'; }
+  function showApp(u){ loginSec.style.display='none'; denied.style.display='none'; app.style.display='grid'; emailEl.textContent=u.email; logoutBtn.style.display=''; }
+
+  // tab nav
+  document.getElementById('adminNav').addEventListener('click',e=>{
+    const a=e.target.closest('a[data-tab]');
+    if(!a) return;
+    e.preventDefault();
+    document.querySelectorAll('.admin-nav a').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+    document.querySelectorAll('.admin-tab').forEach(t=>t.style.display='none');
+    document.getElementById('tab-'+a.dataset.tab).style.display='';
+  });
+
+  // logout
+  logoutBtn.addEventListener('click',()=>logout().then(()=>location.reload()));
+  logoutBtn2.addEventListener('click',()=>logout().then(()=>location.reload()));
+  document.getElementById('btnClearPreview').addEventListener('click',()=>{ localStorage.removeItem(LS_KEY); alert('Preview limpo. A loja volta a ler data/site.json'); location.reload(); });
+  document.getElementById('btnExport').addEventListener('click',()=>{
+    const box=document.getElementById('exportBox');
+    box.style.display='block';
+    box.textContent=JSON.stringify(CFG,null,2);
+  });
+  document.getElementById('btnSaveAll').addEventListener('click',saveAll);
+  document.getElementById('adminLoginForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const err=document.getElementById('admErr'); err.textContent='';
+    const btn=document.getElementById('admBtn'); btn.disabled=true; btn.textContent='A entrar…';
+    try{
+      await login(document.getElementById('admEmail').value.trim(), document.getElementById('admPass').value);
+      const u=await getProfile();
+      if(isAdminUser(u)) { showApp(u); await bootData(); }
+      else showDenied(u);
+    }catch(ex){ err.textContent=ex.message||'Erro ao entrar'; }
+    finally{ btn.disabled=false; btn.textContent='Entrar'; }
+  });
+
+  // check existing session
+  try{
+    const u=await getProfile();
+    if(!u) showLogin();
+    else if(!isAdminUser(u)) showDenied(u);
+    else { showApp(u); await bootData(); }
+  }catch(e){ showLogin(); }
+
+  async function bootData(){
+    CFG=await loadConfig();
+    document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);
+    renderHero(); renderProds(); renderBarb(); renderExp(); renderFaq();
+    document.getElementById('dashProds').textContent=CFG.bestSelling.products.length;
+    loadOrdersAdmin(); loadClientsAdmin();
+  }
+  window.saveHero=saveHero; window.saveProds=saveProds; window.addProd=addProd; window.removeProd=removeProd;
+  window.saveBarb=saveBarb; window.renderBarb=renderBarb;
+  window.saveExp=saveExp; window.addExp=addExp; window.renderExp=renderExp;
+  window.saveFaq=saveFaq; window.addFaq=addFaq; window.renderFaq=renderFaq;
+  window.saveAll=saveAll;
+  window.saveRaw=()=>{ try{ CFG=JSON.parse(document.getElementById('siteRaw').value); saveAll(); }catch(e){ alert('JSON inválido: '+e.message); } };
+  window.loadConfig=async()=>{ CFG=await loadConfig(); document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2); renderHero(); renderProds(); renderBarb(); renderExp(); renderFaq(); };
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

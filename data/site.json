@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "title": "Bird Cut — CurveLine Beard Pro | Created for Creators",
+    "description": "CurveLine Beard Pro: pente de barba com 3 curvaturas para contorno perfeito. A tua técnica. Mais possibilidades à mão."
+  },
+  "announcement": {
+    "messages": [
+      "Descobre o CurveLine Beard Pro!",
+      "Primeira Edição — Limitada",
+      "Mais Possibilidades Para a tua Criatividade!"
+    ]
+  },
+  "hero": {
+    "title": "CurveLine Beard Pro.",
+    "desc": "<strong>Mais controlo. Mais precisão.</strong><br>Mais possibilidades para a tua <strong>criatividade</strong>.",
+    "btnText": "COMPRAR AGORA",
+    "btnLink": "#comprar",
+    "bgImage": "img/birdcut-pt/ChatGPT-Image-8_07_2026-00_31_50.png"
+  },
+  "bestSelling": {
+    "kicker": "Estes produtos são particularmente populares.",
+    "title": "Best-selling products.",
+    "products": [
+      {
+        "id": "p1",
+        "name": "CurveLine Beard Pro — Laranja",
+        "price": "18,89 €",
+        "priceNum": 18.89,
+        "image": "img/birdcut-pt/Pente-laranja.png",
+        "colors": ["Laranja", "Amarelo"],
+        "rating": "5.0",
+        "activeColor": "Laranja"
+      },
+      {
+        "id": "p2",
+        "name": "CurveLine Beard Pro — Amarelo",
+        "price": "18,89 €",
+        "priceNum": 18.89,
+        "image": "img/birdcut-pt/Pente-amarelo.png",
+        "colors": ["Laranja", "Amarelo"],
+        "rating": "5.0",
+        "activeColor": "Amarelo"
+      },
+      {
+        "id": "p3",
+        "name": "CurveLine Beard Pro — Laranja",
+        "price": "18,89 €",
+        "priceNum": 18.89,
+        "image": "img/birdcut-pt/Pente-laranja.png",
+        "colors": ["Laranja", "Amarelo"],
+        "rating": "5.0",
+        "activeColor": "Laranja"
+      },
+      {
+        "id": "p4",
+        "name": "CurveLine Beard Pro — Amarelo",
+        "price": "18,89 €",
+        "priceNum": 18.89,
+        "image": "img/birdcut-pt/Pente-amarelo.png",
+        "colors": ["Laranja", "Amarelo"],
+        "rating": "5.0",
+        "activeColor": "Amarelo"
+      }
+    ]
+  },
+  "internacional": {
+    "title": "INTERNATIONAL BARBERS + BIRD CUT",
+    "images": [
+      "img/birdcut-pt/5-819x1024.png",
+      "img/birdcut-pt/4-819x1024.png",
+      "img/birdcut-pt/2-819x1024.png",
+      "img/birdcut-pt/1-1-819x1024.png",
+      "img/birdcut-pt/3-819x1024.png"
+    ]
+  },
+  "experiencias": {
+    "title": "Experiências dos Criadores.",
+    "cards": [
+      {
+        "id": "e1",
+        "title": "Ideia excelente para todos os níveis",
+        "text": "“Achei a ideia excelente. Ajuda tanto quem está a começar como quem já tem experiência. Há clientes em que o contorno dá mais trabalho e acabamos por perder tempo até chegar ao resultado certo. Gostei da proposta. Ansioso para que chegue ao Brasil.”",
+        "author": "Renato Guerra",
+        "flag": "🇧🇷",
+        "verified": "Compra verificada"
+      },
+      {
+        "id": "e2",
+        "title": "Resolve um problema real",
+        "text": "“Gosto. Achei a proposta muito interessante e até engraçada. É um pente diferente, mas criado para resolver um problema real. Apesar de já ter 10 anos de experiência, esta parte curva da barba sempre me deixava um pouco tenso e, por vezes, obrigava-me a corrigir o contorno sempre. Esta foi uma ideia que fez todo o sentido para mim. Hoje, já é difícil imaginar a rotina da barbearia sem esta ferramenta.”",
+        "author": "Rafael Farias",
+        "flag": "🇵🇹",
+        "verified": "Compra verificada"
+      },
+      {
+        "id": "e3",
+        "title": "Uso todos os dias",
+        "text": "“Funciona, uso-o todos os dias e tiro mesmo proveito dele. É o que interessa. Sim, recomendo!”",
+        "author": "João M.",
+        "flag": "🇵🇹",
+        "verified": "Compra verificada"
+      },
+      {
+        "id": "e4",
+        "title": "O pente do futuro",
+        "text": "“O mais engraçado é que os clientes ficam logo curiosos quando o veem. Perguntam o que é e eu digo que é o pente do futuro. Acaba sempre por gerar conversa.”",
+        "author": "Miguel A.",
+        "flag": "🇵🇹",
+        "verified": "Compra verificada"
+      },
+      {
+        "id": "e5",
+        "title": "Faz sentido ter na bancada",
+        "text": "“Ao início tinha as minhas dúvidas, mas tem dado mesmo muito jeito, sobretudo em barbas mais curtas e pescoços com uma curva mais fechada. É daquelas ferramentas que faz sentido ter na bancada.”",
+        "author": "Rodrigo Almeida",
+        "flag": "🇵🇹",
+        "verified": "Compra verificada"
+      }
+    ]
+  },
+  "faq": {
+    "title": "PERGUNTAS FREQUENTES",
+    "items": [
+      {
+        "id": "f1",
+        "q": "1 — O CurveLine Pro é indicado para que nível de experiência?",
+        "a": "O CurveLine Pro é indicado para todos os níveis de experiência. Ajuda a reduzir o tempo de execução do contorno inferior da barba, mantendo a precisão e valorizando a técnica de quem o utiliza."
+      },
+      {
+        "id": "f2",
+        "q": "2 — O CurveLine Pro é adequado para destros e canhotos?",
+        "a": "Sim. O CurveLine Pro foi desenvolvido para ser utilizado confortavelmente tanto por destros como por canhotos."
+      },
+      {
+        "id": "f3",
+        "q": "3 — Funciona em todos os tipos de barba?",
+        "a": "O CurveLine Pro foi concebido para funcionar na grande maioria das barbas. Em situações específicas, como barbas com redemoinhos, crescimento irregular ou determinados comprimentos, poderá ser necessário ajustar a posição do pente para obter o alinhamento pretendido antes de finalizar o contorno com a máquina."
+      },
+      {
+        "id": "f4",
+        "q": "4 — O CurveLine Pro substitui o pente tradicional?",
+        "a": "Não. O CurveLine Pro é uma ferramenta complementar. Embora integre um pente tradicional para desembaraçar a barba antes do contorno, não substitui os restantes pentes da bancada. Cada pente continua a desempenhar a sua função específica durante o serviço."
+      },
+      {
+        "id": "f5",
+        "q": "5 — Vou precisar de utilizar o CurveLine Pro em todos os serviços?",
+        "a": "Não. Há barbas em que o contorno pode ser feito sem recorrer ao CurveLine Pro. No entanto, em serviços mais exigentes ou quando se pretende ganhar tempo e manter maior consistência, o CurveLine Pro torna-se uma ferramenta valiosa para agilizar o trabalho e reduzir a necessidade de ajustes.\n\nTer a ferramenta certa disponível permite decidir quando faz sentido utilizá-la."
+      }
+    ]
+  },
+  "footer": {
+    "about": "Criado para criadores. Ferramentas que incentivam o ato de criar — com precisão, técnica e liberdade.",
+    "contact": {
+      "email": "contacto@birdcut.pt",
+      "phone": "+351 XXX XXX XXX",
+      "instagram": "@birdcutpt",
+      "instagramUrl": "https://www.instagram.com/birdcutpt/"
+    },
+    "aviso": "Por motivos de higiene, apenas aceitamos devoluções de produtos que não apresentem quaisquer sinais de utilização."
+  }
+}

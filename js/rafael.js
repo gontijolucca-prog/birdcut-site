@@ -155,7 +155,7 @@
     });
   })();
 
-  /* ===== 6. EXPERIÊNCIAS — setas passar opiniões ===== */
+  /* ===== 6. EXPERIÊNCIAS — setas loop infinito entre os 5 ===== */
   (function(){
     const slider = document.querySelector('.exps-slider');
     if(!slider) return;
@@ -169,7 +169,14 @@
       const gapNum = parseFloat(gap) || 20;
       return (card ? card.offsetWidth : 360) + gapNum;
     };
-    if(prev) prev.addEventListener('click', ()=> wrap.scrollBy({ left: -step(), behavior: 'smooth' }));
-    if(next) next.addEventListener('click', ()=> wrap.scrollBy({ left: step(), behavior: 'smooth' }));
+    const maxScroll = () => wrap.scrollWidth - wrap.clientWidth;
+    if(prev) prev.addEventListener('click', ()=>{
+      if(wrap.scrollLeft <= 4) wrap.scrollTo({ left: maxScroll(), behavior: 'smooth' });
+      else wrap.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    if(next) next.addEventListener('click', ()=>{
+      if(wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 4) wrap.scrollTo({ left: 0, behavior: 'smooth' });
+      else wrap.scrollBy({ left: step(), behavior: 'smooth' });
+    });
   })();
 })();

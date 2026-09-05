@@ -26,7 +26,7 @@
         "name": "CurveLine Beard Pro — Laranja",
         "price": "18,89 €",
         "priceNum": 18.89,
-        "image": "img/birdcut-pt/Pente-laranja.png",
+        "image": "img/birdcut-pt/Pente-CurveLine-Laranja.png",
         "colors": ["Laranja", "Amarelo"],
         "rating": "5.0",
         "activeColor": "Laranja"
@@ -36,11 +36,28 @@
         "name": "CurveLine Beard Pro — Amarelo",
         "price": "18,89 €",
         "priceNum": 18.89,
-        "image": "img/birdcut-pt/Pente-amarelo.png",
+        "image": "img/birdcut-pt/Pente-CurveLine-Amarelo.png",
         "colors": ["Laranja", "Amarelo"],
         "rating": "5.0",
         "activeColor": "Amarelo"
       }
+    ]
+  },
+  "tecnica": {
+    "title": "A tua técnica. Mais possibilidades à mão.",
+    "image": "img/birdcut-pt/Captura-A-tecnica.png",
+    "imageAlt": "CurveLine — Classic, Slim e Wide",
+    "btnText": "Comprar agora",
+    "btnLink": "#comprar",
+    "paragraphs": [
+      "O CurveLine foi pensado para tornar a definição do contorno <strong>mais rápida, consistente e precisa</strong>, sem limitar a técnica ou a criatividade de quem a utiliza.",
+      "Além de um pente tradicional, o conjunto inclui três curvaturas — <strong>Classic, Slim e Wide</strong> — para diferentes anatomias, linhas e formas de trabalhar.",
+      "<strong>Classic</strong><br>Equilibrada e versátil, adapta-se à maioria dos contornos com uma curva natural e consistente.",
+      "<strong>Slim</strong><br>Para pescoços mais estreitos, curvas fechadas e contornos angulados, onde encontrar a linha certa exige maior controlo.",
+      "<strong>Wide</strong><br>Para pescoços mais largos e contornos abertos, permitindo estabelecer a linha inicial de forma rápida e uniforme.",
+      "Na parte traseira, uma curva adicional facilita a ligação entre o centro e as laterais da barba, ajudando a conseguir uma transição mais fluida.",
+      "<strong>Nem todas as barbas seguem a mesma curva — e não têm de seguir.</strong> Reposiciona, adapta ou finaliza à tua maneira.",
+      "A CurveLine <strong>não substitui a técnica — dá-lhe uma referência precisa quando faz diferença</strong>. Mais <strong>controlo, rapidez e consistência</strong> na bancada. A decisão final continua a ser tua."
     ]
   },
   "internacional": {

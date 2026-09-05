@@ -51,12 +51,12 @@
     // preview & cart image
     const addBtn = document.getElementById('addToCart');
     if(yellow){
-      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-amarelo.png'; previewImg.style.filter=''; }
-      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-amarelo.png';
+      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-CurveLine-Amarelo.png'; previewImg.style.filter=''; }
+      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-CurveLine-Amarelo.png';
       bcCombs.forEach((c)=>{ const isY = c.dataset.comb==='Amarelo' || c.dataset.comb==='Pink'; c.style.opacity = isY ? '1' : '0.35'; c.style.transform = isY ? 'scale(1.02)' : 'scale(1)'; });
     } else {
-      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-laranja.png'; previewImg.style.filter=''; }
-      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-laranja.png';
+      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-CurveLine-Laranja.png'; previewImg.style.filter=''; }
+      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-CurveLine-Laranja.png';
       bcCombs.forEach((c)=>{ const isO = c.dataset.comb==='Laranja' || c.dataset.comb==='Orange'; c.style.opacity = isO ? '1' : '0.35'; c.style.transform = isO ? 'scale(1.02)' : 'scale(1)'; });
     }
   }
@@ -79,8 +79,8 @@
         sws.forEach(x=>x.classList.remove('active'));
         s.classList.add('active');
         const col = s.dataset.color || s.title;
-        if(isYellow(col) && img) img.src='img/birdcut-pt/Pente-amarelo.png';
-        else if(isOrange(col) && img) img.src='img/birdcut-pt/Pente-laranja.png';
+        if(isYellow(col) && img) img.src='img/birdcut-pt/Pente-CurveLine-Amarelo.png';
+        else if(isOrange(col) && img) img.src='img/birdcut-pt/Pente-CurveLine-Laranja.png';
         if(quick){
           quick.dataset.image = img ? img.src : quick.dataset.image;
         }

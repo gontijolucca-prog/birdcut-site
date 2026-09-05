@@ -65,13 +65,32 @@
           </div>`).join('');
       }
     }
-    // Internacional
+    // Tecnica (A tua técnica)
+    if(cfg.tecnica){
+      const sec=document.querySelector('.sec-tecnica');
+      if(sec){
+        const h3=sec.querySelector('.sec-tecnica__text h3');
+        if(h3 && cfg.tecnica.title) h3.textContent=cfg.tecnica.title;
+        const img=sec.querySelector('.sec-tecnica__media img');
+        if(img && cfg.tecnica.image){ img.src=cfg.tecnica.image; if(cfg.tecnica.imageAlt) img.alt=cfg.tecnica.imageAlt; }
+        const btn=sec.querySelector('.sec-tecnica__btn');
+        if(btn && cfg.tecnica.btnText) btn.textContent=cfg.tecnica.btnText;
+        if(btn && cfg.tecnica.btnLink) btn.href=cfg.tecnica.btnLink;
+      }
+    }
+    // Internacional (suporta grid e track scrolling)
     if(cfg.internacional){
       const tit = document.querySelector('.sec-internacional__titulo');
       if(tit && cfg.internacional.title) tit.textContent = cfg.internacional.title;
       const grid = document.querySelector('.infl-grid');
+      const track = document.querySelector('.infl-track');
       if(grid && Array.isArray(cfg.internacional.images)){
         grid.innerHTML = cfg.internacional.images.map(src=>`<figure class="infl-grid__item"><img src="${src}" alt="International Barbers + Bird Cut" loading="lazy" width="819" height="1024"></figure>`).join('');
+      }
+      if(track && Array.isArray(cfg.internacional.images)){
+        const cards=cfg.internacional.images.map(src=>`<div class="infl-card"><div class="infl-card__media"><img src="${src}" alt="International Barbers + Bird Cut" loading="lazy" width="819" height="1024"></div></div>`).join('');
+        const dup=cfg.internacional.images.map(src=>`<div class="infl-card" aria-hidden="true"><div class="infl-card__media"><img src="${src}" alt="" loading="lazy" width="819" height="1024"></div></div>`).join('');
+        track.innerHTML=cards+dup;
       }
     }
     // Experiencias

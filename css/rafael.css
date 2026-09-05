@@ -453,6 +453,66 @@ html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky 
 .politica-bloco li{margin-bottom:.25rem}
 .politica-bloco .meta{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:.9rem}
 
+/* ===== 100% MOBILE & RESPONSIVE — compatibilidade total (320 → 2560) ===== */
+*{box-sizing:border-box}
+img,video{max-width:100%;height:auto}
+html{scroll-behavior:smooth}
+/* Evita zoom inesperado em inputs iOS */
+input,textarea,select{font-size:16px}
+/* Touch targets */
+button,a{ -webkit-tap-highlight-color: transparent }
+.btn,.faq-q,.ac-product-card__quick,.exps-arrow,.icon-btn,.burger{min-height:44px;min-width:44px}
+/* Hero ultra-small */
+@media (max-width:480px){
+  .hero-birdcut__in{padding:22px 14px 28px 10px}
+  .hero-birdcut__title{font-size:19px !important;line-height:1.25}
+  .hero-birdcut__desc{font-size:14px !important}
+  .hero-birdcut__btn{width:100%;justify-content:center;text-align:center;padding:14px 16px}
+}
+@media (max-width:360px){
+  .hero-birdcut{min-height:380px}
+  .hero-birdcut__in{min-height:380px}
+}
+/* Best-selling: 1 coluna em ecrãs muito pequenos */
+@media (max-width:480px){
+  .best-selling__grid{grid-template-columns:1fr !important;gap:16px !important}
+  .ac-product-card__media{aspect-ratio:1.15}
+}
+/* Internacional: 1 coluna em 360 */
+@media (max-width:380px){
+  .infl-grid{grid-template-columns:1fr !important}
+  .infl-grid__item:last-child{grid-column:auto !important;max-width:none !important}
+}
+/* Experiencias: garante scroll suave em todos os tamanhos */
+@media (max-width:480px){
+  .exps-grid{gap:12px !important}
+  .exp-card{flex:0 0 84vw !important;width:84vw !important}
+}
+/* FAQ: padding confortável em mobile */
+@media (max-width:480px){
+  .sec-faq{padding:48px 0 !important}
+  .faq-q{font-size:14px !important;padding:16px 12px !important}
+  .faq-a{font-size:13.5px !important;padding:12px !important}
+}
+/* Footer: evita overflow em mobile */
+@media (max-width:480px){
+  .footer__grid--cinco{gap:1.2rem}
+  .footer__pay{flex-wrap:wrap}
+}
+/* Admin: 100% mobile */
+@media (max-width:860px){
+  .admin-main{padding:1.2rem 14px}
+  .admin-card{padding:1rem}
+  .admin-table{font-size:.82rem}
+  .admin-table th,.admin-table td{padding:.5rem .4rem}
+}
+@media (max-width:480px){
+  .admin-sidebar__head{padding:0 1rem .8rem}
+  .admin-nav a{padding:.6rem .7rem;font-size:.82rem}
+}
+/* Evita scroll horizontal fantasma em qualquer largura */
+body{overflow-x:hidden}
+.container{width:100%}
 /* Dots do slider da faixa preta já são brancos ✓ */
 /* ===== Correção: drawer carrinho e menu mobile acima do header fixo ===== */
 .mini-cart{z-index:20001 !important}

@@ -65,11 +65,11 @@
           </div>`).join('');
       }
     }
-    // Tecnica (A tua técnica)
+    // Tecnica (A tua técnica) — título centrado fora da grid, imagem alinhada com início do texto
     if(cfg.tecnica){
       const sec=document.querySelector('.sec-tecnica');
       if(sec){
-        const h3=sec.querySelector('.sec-tecnica__text h3');
+        const h3=sec.querySelector('.sec-tecnica__title');
         if(h3 && cfg.tecnica.title) h3.textContent=cfg.tecnica.title;
         const img=sec.querySelector('.sec-tecnica__media img');
         if(img && cfg.tecnica.image){ img.src=cfg.tecnica.image; if(cfg.tecnica.imageAlt) img.alt=cfg.tecnica.imageAlt; }

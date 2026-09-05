@@ -129,7 +129,8 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
 .destaque{padding:70px 0 !important}
 .sec-video{padding:80px 0 !important}
 .sec-tecnica{padding:70px 0 !important;background:#fff !important}
-.sec-tecnica__in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,3rem);align-items:center;max-width:1180px;margin:0 auto}
+.sec-tecnica__title{font-family:"Montserrat",Sans-serif;font-size:22px;font-weight:600;line-height:1.25;color:#222;text-align:center;margin:0 0 2rem}
+.sec-tecnica__in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,3rem);align-items:start}
 .sec-tecnica__media img{width:100%;height:auto;display:block;object-fit:contain}
 .sec-tecnica__text h3{font-family:"Montserrat",Sans-serif;font-size:22px;font-weight:600;line-height:1.25;color:#222;margin:0 0 1rem}
 .sec-tecnica__text p{font-family:'Inter',sans-serif;font-size:16px;font-weight:400;line-height:1.65;color:#555;margin:0 0 1em}

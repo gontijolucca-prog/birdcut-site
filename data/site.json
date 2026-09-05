@@ -40,26 +40,6 @@
         "colors": ["Laranja", "Amarelo"],
         "rating": "5.0",
         "activeColor": "Amarelo"
-      },
-      {
-        "id": "p3",
-        "name": "CurveLine Beard Pro — Laranja",
-        "price": "18,89 €",
-        "priceNum": 18.89,
-        "image": "img/birdcut-pt/Pente-laranja.png",
-        "colors": ["Laranja", "Amarelo"],
-        "rating": "5.0",
-        "activeColor": "Laranja"
-      },
-      {
-        "id": "p4",
-        "name": "CurveLine Beard Pro — Amarelo",
-        "price": "18,89 €",
-        "priceNum": 18.89,
-        "image": "img/birdcut-pt/Pente-amarelo.png",
-        "colors": ["Laranja", "Amarelo"],
-        "rating": "5.0",
-        "activeColor": "Amarelo"
       }
     ]
   },

@@ -3,13 +3,13 @@
    ============================================================ */
 
 /* ===== 1. FAIXA PRETA birdcut.pt fiel (24px, #222, Helvetica, setas) — FIXA no topo ===== */
-#birdcut-announcement-bar{width:100%;height:24px;min-height:24px;display:flex;align-items:center;justify-content:space-between;background:#222222 !important;padding:0 18%;box-sizing:border-box;overflow:hidden;position:fixed;top:0;left:0;right:0;z-index:10001}
-#birdcut-announcement-bar .bc-message-area{position:relative;flex:1;height:24px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-#birdcut-announcement-bar .bc-message{position:absolute;left:0;top:0;width:100%;height:24px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:11px !important;font-weight:300 !important;letter-spacing:.15px;line-height:24px;color:#fff !important;opacity:0;visibility:hidden;transform:translateY(2px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
+#birdcut-announcement-bar{width:100%;height:20px;min-height:20px;display:flex;align-items:center;justify-content:space-between;background:#222222 !important;padding:0 18%;box-sizing:border-box;overflow:hidden;position:fixed;top:0;left:0;right:0;z-index:10001}
+#birdcut-announcement-bar .bc-message-area{position:relative;flex:1;height:20px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#birdcut-announcement-bar .bc-message{position:absolute;left:0;top:0;width:100%;height:20px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:11px !important;font-weight:300 !important;letter-spacing:.15px;line-height:20px;color:#fff !important;opacity:0;visibility:hidden;transform:translateY(2px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
 #birdcut-announcement-bar .bc-message.active{opacity:1 !important;visibility:visible !important;transform:translateY(0)}
-#birdcut-announcement-bar .bc-arrow{appearance:none !important;width:28px;height:24px;flex:0 0 28px;border:none !important;outline:none !important;background:transparent !important;color:#fff !important;box-shadow:none !important;font-family:Arial,sans-serif;font-size:22px !important;font-weight:200;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 !important;margin:0 !important;opacity:.75;transition:opacity .2s ease,transform .2s ease}
+#birdcut-announcement-bar .bc-arrow{appearance:none !important;width:28px;height:20px;flex:0 0 28px;border:none !important;outline:none !important;background:transparent !important;color:#fff !important;box-shadow:none !important;font-family:Arial,sans-serif;font-size:22px !important;font-weight:200;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 !important;margin:0 !important;opacity:.75;transition:opacity .2s ease,transform .2s ease}
 #birdcut-announcement-bar .bc-arrow:hover,#birdcut-announcement-bar .bc-arrow:focus,#birdcut-announcement-bar .bc-arrow:active{background:transparent !important;color:#fff !important;opacity:1;transform:scale(1.08)}
-@media (max-width:767px){#birdcut-announcement-bar{height:28px;min-height:28px;padding:0 6px}#birdcut-announcement-bar .bc-message-area{height:28px}#birdcut-announcement-bar .bc-message{height:28px;line-height:28px}#birdcut-announcement-bar .bc-arrow{width:25px;height:28px;flex:0 0 25px;font-size:20px !important}}
+@media (max-width:767px){#birdcut-announcement-bar{height:24px;min-height:24px;padding:0 6px}#birdcut-announcement-bar .bc-message-area{height:24px}#birdcut-announcement-bar .bc-message{height:24px;line-height:24px}#birdcut-announcement-bar .bc-arrow{width:25px;height:24px;flex:0 0 25px;font-size:20px !important}}
 /* legado slider removido, mantido para compatibilidade */
 .announce--slider,.slider-frases,.frase,.slider-dots{display:none !important}
 
@@ -46,20 +46,20 @@ body{font-family:var(--font-body);color:var(--color-ink)}
 .esc-colhe__preview img{border:1px solid var(--color-line);box-shadow:0 8px 24px rgba(31,44,51,.06)}
 
 /* ===== 2. HEADER EDITORIAL CENTRADO — FIXO abaixo da barra ===== */
-.header--editorial{position:fixed;top:24px;left:0;right:0;z-index:10000;background:#fff !important;border-bottom:1px solid var(--color-line);display:flex;flex-direction:column;align-items:center;text-align:center}
-@media (max-width:767px){.header--editorial{top:28px}}
+.header--editorial{position:fixed;top:20px;left:0;right:0;z-index:10000;background:#fff !important;border-bottom:1px solid var(--color-line);display:flex;flex-direction:column;align-items:center;text-align:center}
+@media (max-width:767px){.header--editorial{top:24px}}
 /* compensa o fixed: empurra o conteúdo para baixo */
-body{padding-top:24px}
-body .banner-elementor--print{margin-top:calc(24px + 116px)} /* barra 24 + header aprox */
-@media (max-width:860px){body .banner-elementor--print{margin-top:calc(28px + 92px)}}
-html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fixo */
-@media (max-width:767px){html{scroll-padding-top:calc(28px + 102px)}}
+body{padding-top:20px}
+body .banner-elementor--print{margin-top:calc(20px + 100px)} /* barra 20 + header aprox */
+@media (max-width:860px){body .banner-elementor--print{margin-top:calc(24px + 80px)}}
+html{scroll-padding-top:calc(20px + 112px)} /* ancora não fica sob o header fixo */
+@media (max-width:767px){html{scroll-padding-top:calc(24px + 90px)}}
 /* birdcut.pt Helvetica menu fiel */
 .nav--editorial{gap:34px !important;justify-content:center}
-.nav--editorial a{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:14px !important;font-weight:500 !important;letter-spacing:.15px !important;text-transform:none !important;color:#333 !important}
+.nav--editorial a{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:12px !important;font-weight:400 !important;letter-spacing:.15px !important;text-transform:none !important;color:#333 !important}
 .nav--editorial a::after{background:#333 !important;height:1px !important}
 @media (max-width:767px){.nav--editorial{gap:17px !important}}
-.header__in--editorial{position:relative;flex-direction:column;height:auto;gap:.35rem;padding:1.6rem clamp(18px,4vw,40px) 1rem;justify-content:center}
+.header__in--editorial{position:relative;flex-direction:column;height:auto;gap:.25rem;padding:1.1rem clamp(18px,4vw,40px) .7rem;justify-content:center}
 .brand-symbol{display:none}
 .brand-editorial{display:flex;flex-direction:column;align-items:center;gap:.1rem}
 .brand-editorial__logo{height:168px;width:auto;max-width:min(94vw,860px);object-fit:contain;margin-bottom:.15rem}
@@ -67,11 +67,11 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
 .brand-editorial__tag{font-family:var(--font-body);font-size:.82rem;color:#444;letter-spacing:.02em;margin-top:.3rem}
 .brand-editorial__tag u{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 .brand-editorial__title--footer{font-size:1.7rem;color:#fff;margin-bottom:.8rem;text-align:left}
-.nav--editorial{display:flex;gap:2.4rem;margin-top:.85rem}
-.nav--editorial a{font-family:var(--font-display);font-size:.88rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#444;position:relative;padding:.15rem 0}
+.nav--editorial{display:flex;gap:2rem;margin-top:.5rem}
+.nav--editorial a{font-family:var(--font-display);font-size:.78rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:#444;position:relative;padding:.15rem 0}
 .nav--editorial a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:#111;transition:width .3s var(--ease)}
 .nav--editorial a:hover::after{width:100%}
-.header__tools{position:absolute;right:clamp(14px,3vw,32px);top:1.6rem;height:92px;display:flex;gap:.8rem;align-items:center;transform:none} /* alinhado com logotipo */
+.header__tools{position:absolute;right:clamp(14px,3vw,32px);top:1.1rem;height:64px;display:flex;gap:.8rem;align-items:center;transform:none} /* alinhado com logotipo */
 @media (max-width:860px){
   .brand-editorial__logo{height:116px;max-width:72vw}
   .header__tools{position:absolute;right:4.4rem;top:50%;transform:translateY(-50%);height:auto;gap:.6rem}
@@ -152,8 +152,8 @@ html{scroll-padding-top:calc(24px + 128px)} /* ancora não fica sob o header fix
 .esc-colhe__preview img{width:100%;max-width:420px;height:auto;aspect-ratio:auto;object-fit:contain;background:#fff}
 .destaque__track figure img{aspect-ratio:4/5;object-fit:cover} /* birdcut 819x1024 vertical */
 /* logo como no WP: 400% width trick ajustado */
-.brand-editorial__logo{height:auto;max-height:92px;width:auto;max-width:420px;object-fit:contain}
-@media (max-width:640px){.brand-editorial__logo{max-width:72vw;max-height:68px}}
+.brand-editorial__logo{height:auto;max-height:64px;width:auto;max-width:320px;object-fit:contain}
+@media (max-width:640px){.brand-editorial__logo{max-width:72vw;max-height:52px}}
 /* ===== 3. HERO MODELO ===== */
 .hero-modelo{background:#fff;border-bottom:1px solid var(--color-line)}
 .hero-modelo__in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;padding:clamp(2.6rem,6vw,5rem) 0}

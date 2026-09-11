@@ -172,6 +172,8 @@
       <div class="admin-card">
         <h3>International Barbers</h3>
         <div class="admin-field"><label>Título secção</label><input id="bTitle"></div>
+        <div class="admin-field"><label>Subtítulo (ex: Cria. Partilha. Marca-nos.)</label><input id="bSubMain"></div>
+        <div class="admin-field"><label>Handle (ex: @birdcut.pt)</label><input id="bSubHandle"></div>
         <div id="barbList"></div>
         <div class="admin-actions"><button class="btn btn--red" onclick="saveBarb()">Guardar barbeiros</button></div>
       </div>
@@ -327,6 +329,8 @@ function saveProds(){ saveAll(); }
 
 function renderBarb(){
   document.getElementById('bTitle').value=CFG.internacional.title||'';
+  document.getElementById('bSubMain').value=CFG.internacional.subtitleMain||'';
+  document.getElementById('bSubHandle').value=CFG.internacional.subtitleHandle||'';
   const c=document.getElementById('barbList');
   c.innerHTML=CFG.internacional.images.map((src,i)=>`
     <div class="admin-field"><label>Imagem ${i+1}</label><div style="display:flex;gap:.6rem"><input data-bi="${i}" value="${src}" style="flex:1"><button class="btn btn--outline" style="padding:.4rem .7rem" onclick="CFG.internacional.images.splice(${i},1);renderBarb()">✕</button></div><img src="${src}" style="width:80px;height:100px;object-fit:cover;border-radius:6px;margin-top:.4rem;border:1px solid rgba(0,0,0,.08)"></div>`).join('')+`<button class="btn btn--outline" style="margin-top:.6rem" onclick="CFG.internacional.images.push('img/birdcut-pt/1-1-819x1024.png');renderBarb()">+ Adicionar imagem</button>`;
@@ -334,8 +338,10 @@ function renderBarb(){
     el.addEventListener('change',e=>{ CFG.internacional.images[+e.target.dataset.bi]=e.target.value; });
   });
   document.getElementById('bTitle').onchange=e=>CFG.internacional.title=e.target.value;
+  document.getElementById('bSubMain').onchange=e=>CFG.internacional.subtitleMain=e.target.value;
+  document.getElementById('bSubHandle').onchange=e=>CFG.internacional.subtitleHandle=e.target.value;
 }
-function saveBarb(){ CFG.internacional.title=document.getElementById('bTitle').value; saveAll(); }
+function saveBarb(){ CFG.internacional.title=document.getElementById('bTitle').value; CFG.internacional.subtitleMain=document.getElementById('bSubMain').value; CFG.internacional.subtitleHandle=document.getElementById('bSubHandle').value; saveAll(); }
 
 function renderExp(){
   document.getElementById('eTitle').value=CFG.experiencias.title||'';

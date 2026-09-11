@@ -82,6 +82,10 @@
     if(cfg.internacional){
       const tit = document.querySelector('.sec-internacional__titulo');
       if(tit && cfg.internacional.title) tit.textContent = cfg.internacional.title;
+      const subMain = document.querySelector('.sec-internacional__sub-main');
+      if(subMain && cfg.internacional.subtitleMain) subMain.textContent = cfg.internacional.subtitleMain;
+      const subHandle = document.querySelector('.sec-internacional__sub-handle');
+      if(subHandle && cfg.internacional.subtitleHandle) subHandle.textContent = cfg.internacional.subtitleHandle;
       const grid = document.querySelector('.infl-grid');
       const track = document.querySelector('.infl-track');
       if(grid && Array.isArray(cfg.internacional.images)){

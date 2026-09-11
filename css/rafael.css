@@ -409,7 +409,11 @@ html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky 
 /* ===== INTERNATIONAL BARBERS — birdcut.pt fiel (apenas 5 imagens) + scrolling + cantos quase oval ===== */
 .sec-internacional{border-radius:40px !important;margin:0 clamp(18px,4vw,40px) !important;overflow:hidden}
 @media (max-width:640px){.sec-internacional{border-radius:28px !important;margin:0 12px !important}}
-.sec-internacional__titulo{font-family:"Montserrat",Sans-serif !important;font-size:25px !important;font-weight:600 !important;line-height:1.3 !important;letter-spacing:0 !important;color:#fff !important;text-align:left !important;max-width:none !important;margin:0 0 26px 11px !important}
+.sec-internacional__titulo{font-family:"Montserrat",Sans-serif !important;font-size:24px !important;font-weight:400 !important;line-height:1.3 !important;letter-spacing:0 !important;color:#fff !important;text-align:left !important;max-width:none !important;margin:0 0 26px 11px !important}
+.sec-internacional__sub{font-family:"Inter Tight",Inter,Sans-serif !important;font-size:15px;font-weight:600;color:#fff !important;text-align:right !important;margin:-10px 83px 0 0 !important;line-height:1.4}
+.sec-internacional__sub-main{font-size:17px !important;font-weight:400 !important}
+.sec-internacional__sub-handle{font-size:29px !important;font-weight:500 !important;margin-left:18px !important}
+@media (max-width:767px){.sec-internacional__titulo{font-size:20px !important;margin:0 0 18px 4px !important}.sec-internacional__sub{margin:8px 16px 0 0 !important}.sec-internacional__sub-main{font-size:14px !important}.sec-internacional__sub-handle{font-size:22px !important;margin-left:12px !important}}
 .infl-grid{display:none !important}
 .infl-wrap{position:relative;overflow:hidden;margin-top:.8rem}
 .infl-track{display:flex;gap:18px;width:max-content;animation:infl-scroll 28s linear infinite;padding:.6rem 0 1.2rem}

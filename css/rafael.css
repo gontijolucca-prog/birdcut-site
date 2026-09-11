@@ -414,7 +414,7 @@ html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky 
 .sec-internacional__sub{font-family:"Inter Tight",Inter,Sans-serif !important;font-size:15px;font-weight:600;color:#fff !important;text-align:right !important;text-transform:none !important;letter-spacing:normal !important;margin:-10px 83px 0 0 !important;line-height:1.4}
 .sec-internacional__sub-main{font-size:17px !important;font-weight:400 !important}
 .sec-internacional__sub-handle{font-size:29px !important;font-weight:500 !important;margin-left:18px !important}
-@media (max-width:767px){.sec-internacional__titulo{font-size:20px !important;margin:0 0 18px 4px !important}.sec-internacional__sub{margin:8px 16px 0 0 !important}.sec-internacional__sub-main{font-size:14px !important}.sec-internacional__sub-handle{font-size:22px !important;margin-left:12px !important}}
+@media (max-width:767px){.sec-internacional__titulo{font-size:20px !important;margin:0 0 18px 4px !important}.sec-internacional__sub{margin:8px 16px 0 0 !important}.sec-internacional__sub-main{font-size:13px !important}.sec-internacional__sub-handle{font-size:20px !important;margin-left:10px !important}}
 .infl-grid{display:none !important}
 .infl-wrap{position:relative;overflow:hidden;margin-top:.8rem}
 .infl-track{display:flex;gap:18px;width:max-content;animation:infl-scroll 28s linear infinite;padding:.6rem 0 1.2rem}

@@ -92,7 +92,7 @@ html{scroll-padding-top:calc(20px + 112px)} /* ancora não fica sob o header fix
 .hero-birdcut__title{font-family:"Montserrat",Sans-serif;font-size:27px;font-weight:500;line-height:1.3;color:#222;margin:0 0 18px;max-width:560px}
 .hero-birdcut__desc{font-family:'Inter',sans-serif;font-size:16px;font-weight:400;line-height:1.65;color:#000;margin:0 0 41px;max-width:360px}
 .hero-birdcut__desc strong{font-weight:700}
-.hero-birdcut__btn{display:inline-block;background:#fff;border:1px solid #111;color:#111;font-family:"Montserrat",Sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;padding:12px 24px;margin:0;text-decoration:none;transition:.25s}
+.hero-birdcut__btn{display:inline-block;background:#292929;border:1px solid #111;color:#fff;font-family:"Montserrat",Sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;padding:12px 24px;margin:0;text-decoration:none;transition:.25s}
 .hero-birdcut__btn:hover{background:#111;color:#fff;border-color:#111}
 @media (max-width:767px){.hero-birdcut{max-width:100%;min-height:420px;margin-top:0}.hero-birdcut__in{min-height:420px;padding:28px 16px 40px 9px}.hero-birdcut__title{font-size:22px;margin-bottom:12px}.hero-birdcut__desc{font-size:15px;margin-bottom:30px;max-width:100%}}
 /* ===== SHOP birdcut.pt fiel — #bc-shop-selector ===== */

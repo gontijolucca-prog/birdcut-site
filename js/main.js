@@ -58,14 +58,12 @@
   mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mm.classList.remove('open')));
 })();
 
-/* ===== CARRINHO ===== */
+/* ===== CARRINHO + TRACKING ===== */
 (function(){
-  // Auth state — atualizar UI
   if (typeof onAuthChange === 'function') {
     onAuthChange(user => {
       const contaLink = document.querySelector('a[href="conta.html"]');
       const accountLabel = contaLink?.querySelector('span');
-      // A home usa apenas o ícone; páginas internas também podem mostrar o texto.
       if (accountLabel) accountLabel.textContent = user?.email?.split('@')[0] || 'Conta';
     });
   }
@@ -74,7 +72,6 @@
   const cartCount = document.querySelector('.cart-count');
   const cartBtn = document.querySelector('.icon-btn--cart');
 
-  // Mini-carrinho HTML
   const miniCart = document.createElement('div');
   miniCart.className = 'mini-cart';
   miniCart.innerHTML = `
@@ -87,7 +84,10 @@
   `;
   document.body.appendChild(miniCart);
 
-  function save(){ localStorage.setItem('birdcut-cart', JSON.stringify(cart)); }
+  function save(){
+    localStorage.setItem('birdcut-cart', JSON.stringify(cart));
+    if(window.BC_cartTrack) try{ window.BC_cartTrack(cart); }catch(e){}
+  }
   function updateCount(){
     const total = cart.reduce((s,i) => s + i.qty, 0);
     if (cartCount) cartCount.textContent = total;
@@ -117,10 +117,9 @@
     `).join('');
     const total = cart.reduce((s,i) => s + i.priceNum * i.qty, 0);
     totalEl.textContent = total.toFixed(2).replace('.',',') + ' €';
-    // Event listeners
     items.querySelectorAll('[data-action]').forEach(btn => {
       btn.addEventListener('click', (ev) => {
-        ev.stopPropagation(); // o botão é re-renderizado; sem isto o listener global fecha o drawer
+        ev.stopPropagation();
         const idx = parseInt(btn.dataset.idx);
         if (btn.dataset.action === 'plus') cart[idx].qty++;
         else if (btn.dataset.action === 'minus') {
@@ -139,7 +138,6 @@
     });
   }
 
-  // Abrir/fechar mini-carrinho
   if (cartBtn) cartBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     renderMini();
@@ -150,19 +148,19 @@
     if (!miniCart.contains(e.target) && !cartBtn.contains(e.target)) miniCart.classList.remove('open');
   });
 
-  // Adicionar ao carrinho (suporta qtyInput)
   function addToCart(name, priceNum, image, qtyAdd){
     qtyAdd = parseInt(qtyAdd || 1, 10);
     if (qtyAdd < 1) qtyAdd = 1;
     const key = name + '|' + priceNum + '|' + image;
     const existing = cart.find(i => (i.name + '|' + i.priceNum + '|' + i.image) === key);
+    const itemData = {name, priceNum, image, qty: qtyAdd};
     if (existing) existing.qty += qtyAdd;
     else cart.push({ name, price: priceNum.toFixed(2).replace('.',','), priceNum, image, qty: qtyAdd });
     save(); updateCount();
+    if(window.BC_addToCartTrack) try{ window.BC_addToCartTrack(itemData, cart); }catch(e){}
     if (cartBtn) { cartBtn.style.transform = 'scale(1.15)'; setTimeout(() => cartBtn.style.transform = '', 200); }
   }
 
-  // Botões "Comprar agora" / "Adicionar ao Carrinho" + Best-selling quick add (lê qtyInput se existir)
   document.querySelectorAll('#addToCart, .pcard__btn:not(:disabled), .ac-product-card__quick').forEach(btn => {
     btn.addEventListener('click', () => {
       const name = btn.dataset.name || 'CurveLine Beard Pro';
@@ -177,9 +175,9 @@
     });
   });
 
-  // Checkout Stripe
   miniCart.querySelector('.mini-cart__checkout').addEventListener('click', async () => {
     const btn = miniCart.querySelector('.mini-cart__checkout');
+    if(window.BC_beginCheckoutTrack) try{ window.BC_beginCheckoutTrack(cart); }catch(e){}
     btn.textContent = 'A redirecionar...';
     btn.disabled = true;
     try {
@@ -200,64 +198,6 @@
   });
 
   updateCount();
-})();
-
-/* ===== INFLUENCER SLIDER (autoplay contínuo) ===== */
-(function(){
-  // O carrossel é CSS-only (animation marquee). Nenhum JS necessário.
-})();
-
-/* ===== CURSOR FOLLOW (pássaro Bird Cut) ===== */
-(function(){
-  if (window.matchMedia('(hover: none)').matches) return;
-  const bird = document.createElement('img');
-  bird.className = 'cursor-bird';
-  bird.src = 'img/logo-green.png';
-  bird.alt = '';
-  document.body.appendChild(bird);
-  document.body.classList.add('cursor-on');
-
-  let mx = -100, my = -100, bx = -100, by = -100;
-  window.addEventListener('mousemove', (e) => {
-    mx = e.clientX; my = e.clientY;
-  }, {passive:true});
-
-  (function loop(){
-    bx += (mx - bx) * 0.35;
-    by += (my - by) * 0.35;
-    bird.style.transform = `translate(${bx}px,${by}px) translate(-50%,-50%)`;
-    requestAnimationFrame(loop);
-  })();
-
-  document.querySelectorAll('a, button, .pcard, .handle, .ig-item, .mini-cart').forEach(el => {
-    el.addEventListener('mouseenter', () => bird.classList.add('hover'));
-    el.addEventListener('mouseleave', () => bird.classList.remove('hover'));
-  });
-})();
-
-/* ===== NEWSLETTER ===== */
-document.querySelectorAll('form.newsletter-form').forEach(form => {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('button');
-    const old = btn.textContent;
-    btn.textContent = '✓ Obrigado!';
-    const input = form.querySelector('input');
-    if (input) input.value = '';
-    setTimeout(() => btn.textContent = old, 2200);
-  });
-});
-
-/* ===== CONTACT FORM ===== */
-(function(){
-  const form = document.getElementById('contactForm');
-  if (!form) return;
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('button');
-    btn.textContent = '✓ Mensagem enviada!';
-    btn.disabled = true;
-    form.querySelectorAll('input, textarea').forEach(i => i.value = '');
-    setTimeout(() => { btn.textContent = 'Enviar Mensagem'; btn.disabled = false; }, 2500);
-  });
+  // sync inicial se carrinho já tinha itens
+  if(cart.length && window.BC_cartTrack) try{ window.BC_cartTrack(cart); }catch(e){}
 })();

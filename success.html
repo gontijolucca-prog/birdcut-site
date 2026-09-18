@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&family=Caveat:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/rafael.css">
+<script src="js/analytics.js"></script>
 <script>
   if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   (function(){
@@ -80,7 +81,7 @@
   const sessionId = params.get('session_id');
   if (!sessionId) {
     document.getElementById('status').textContent = 'Pago';
-    document.getElementById('amount').textContent = '24,99 €';
+    document.getElementById('amount').textContent = '18,89 €';
     document.getElementById('orderId').textContent = '—';
     return;
   }
@@ -88,22 +89,23 @@
     const res = await fetch('/session/' + sessionId);
     const d = await res.json();
     document.getElementById('status').textContent = d.status === 'paid' ? '✅ Pago' : d.status || 'Pago';
-    document.getElementById('amount').textContent = d.amount ? (d.amount / 100).toFixed(2) + ' €' : '24,99 €';
-
-    // Guardar pedido no Firestore
-    // No auth needed for guest orders
+    document.getElementById('amount').textContent = d.amount ? (d.amount / 100).toFixed(2).replace('.',',') + ' €' : '18,89 €';
+    const cartSnapshot = (()=>{ try{ return JSON.parse(localStorage.getItem('birdcut-cart')||'[]'); }catch(e){ return []; } })();
     const orderData = {
       email: d.customer_email || 'guest',
       stripeSession: sessionId,
-      items: [{ name: 'CurveLine Beard Pro', price: 24.99, quantity: 1, image: 'img/produto-hero.jpg' }],
-      total: d.amount ? d.amount / 100 : 24.99,
+      items: cartSnapshot.length ? cartSnapshot.map(i=>({name:i.name, priceNum:i.priceNum, quantity:i.qty, image:i.image})) : [{ name: 'CurveLine Beard Pro', priceNum: 18.89, quantity: 1, image: 'img/birdcut-pt/Pente-CurveLine-Laranja.png' }],
+      total: d.amount ? d.amount / 100 : cartSnapshot.reduce((s,i)=>s+(i.priceNum||0)*(i.qty||1),0) || 18.89,
       status: 'processamento',
+      sessionId: (window.BC_sid || localStorage.getItem('bc_sid') || '')
     };
     const docRef = await createGuestOrder(orderData);
     document.getElementById('orderId').textContent = '#' + docRef.id;
+    if(window.BC_purchaseTrack) try{ window.BC_purchaseTrack(orderData); }catch(e){}
+    try{ localStorage.removeItem('birdcut-cart'); }catch(e){}
   } catch(e) {
     document.getElementById('status').textContent = 'Pago';
-    document.getElementById('amount').textContent = '24,99 €';
+    document.getElementById('amount').textContent = '18,89 €';
     console.log('order save:', e.message);
   }
 })();

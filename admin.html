@@ -9,456 +9,602 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/rafael.css">
+<script src="js/analytics.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-.admin-wrap{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 140px);gap:0}
-.admin-sidebar{background:#111;color:#fff;padding:1.2rem 0;position:sticky;top:calc(24px + 116px);height:calc(100vh - 24px - 116px);overflow-y:auto}
-.admin-sidebar__head{padding:0 1.2rem 1rem;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:.8rem}
-.admin-sidebar__head b{font-family:'Inter',sans-serif;font-size:1rem;display:block}
-.admin-sidebar__head span{font-size:.8rem;color:rgba(255,255,255,.6)}
-.admin-nav{display:flex;flex-direction:column;gap:2px;padding:0 .6rem}
-.admin-nav a{display:flex;align-items:center;gap:.7rem;padding:.7rem .9rem;border-radius:6px;color:rgba(255,255,255,.75);font-family:'Inter',sans-serif;font-size:.88rem;font-weight:500;text-decoration:none;transition:.2s}
+.admin-wrap{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 150px)}
+.admin-sidebar{background:#111;color:#fff;padding:1rem 0;position:sticky;top:calc(24px + 118px);height:calc(100vh - 24px - 118px);overflow-y:auto;display:flex;flex-direction:column}
+.admin-sidebar__head{padding:0 1rem 1rem;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:.6rem}
+.admin-sidebar__head b{font-family:'Inter',sans-serif;font-size:.95rem;display:block}
+.admin-sidebar__head span{font-size:.75rem;color:rgba(255,255,255,.55)}
+.admin-nav{display:flex;flex-direction:column;gap:2px;padding:0 .5rem}
+.admin-nav a{display:flex;align-items:center;gap:.6rem;padding:.62rem .8rem;border-radius:7px;color:rgba(255,255,255,.72);font-family:'Inter',sans-serif;font-size:.82rem;font-weight:500;text-decoration:none;transition:.2s}
 .admin-nav a:hover{background:rgba(255,255,255,.08);color:#fff}
 .admin-nav a.active{background:#fff;color:#111;font-weight:600}
-.admin-nav a small{margin-left:auto;opacity:.6;font-size:.7rem}
-.admin-main{padding:2rem clamp(18px,3vw,2rem);background:#f5f5f5}
-.admin-card{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:1.4rem 1.4rem 1.2rem;margin-bottom:1.2rem;box-shadow:0 4px 16px rgba(0,0,0,.04)}
-.admin-card h3{font-family:'Inter',sans-serif;font-size:1.05rem;font-weight:600;margin:0 0 .9rem;color:#111}
-.admin-card h4{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:600;margin:1.2rem 0 .6rem;color:#222}
-.admin-field{display:grid;gap:.35rem;margin-bottom:1rem}
-.admin-field label{font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#555}
-.admin-field input,.admin-field textarea,.admin-field select{width:100%;padding:.7rem .9rem;border:1px solid rgba(0,0,0,.15);border-radius:6px;font-family:'Inter',sans-serif;font-size:.9rem;background:#fff;outline:none;transition:border-color .2s}
-.admin-field input:focus,.admin-field textarea:focus{border-color:#111}
-.admin-field textarea{min-height:90px;resize:vertical}
-.admin-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-@media(max-width:860px){.admin-wrap{grid-template-columns:1fr}.admin-sidebar{position:static;height:auto}.admin-row{grid-template-columns:1fr}}
-.admin-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem}
-.admin-actions .btn{padding:.7rem 1.2rem;font-size:.82rem}
-.admin-table{width:100%;border-collapse:collapse;font-family:'Inter',sans-serif;font-size:.88rem}
-.admin-table th{ text-align:left;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#777;padding:.6rem .7rem;border-bottom:1px solid rgba(0,0,0,.1)}
-.admin-table td{padding:.7rem;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:top}
-.admin-table tr:hover td{background:rgba(0,0,0,.02)}
-.badge{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .5rem;border-radius:999px;font-weight:600}
-.badge--ok{background:rgba(46,125,50,.12);color:#2e7d32}
-.badge--pend{background:rgba(244,67,54,.1);color:#c62828}
-.admin-login{max-width:420px;margin:4rem auto;padding:2rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.06);text-align:center}
-.admin-login h2{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:.4rem}
-.admin-login p{color:#555;font-size:.9rem;margin-bottom:1.4rem}
+.admin-nav a small{margin-left:auto;opacity:.6;font-size:.7rem;background:rgba(255,255,255,.15);padding:.15rem .4rem;border-radius:99px}
+.admin-nav a.active small{background:rgba(0,0,0,.08);color:#111}
+.admin-main{padding:1.6rem clamp(14px,2.5vw,1.8rem);background:#f3f3f3;min-width:0}
+.admin-card{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:1.2rem;margin-bottom:1rem;box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.admin-card h3{font-family:'Inter',sans-serif;font-size:.95rem;font-weight:600;margin:0 0 .8rem;color:#111}
+.admin-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.9rem;margin-bottom:1rem}
+.admin-kpi{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:1rem 1.1rem;box-shadow:0 4px 16px rgba(0,0,0,.03)}
+.admin-kpi b{font-family:'Inter',sans-serif;font-size:1.55rem;font-weight:700;color:#111;display:block;line-height:1}
+.admin-kpi span{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#777;font-weight:600}
+.admin-kpi small{display:block;font-size:.78rem;color:#555;margin-top:.2rem}
+.admin-kpi.ok b{color:#1a7a2e}.admin-kpi.warn b{color:#c58800}.admin-kpi.bad b{color:#c62828}
+.admin-table-wrap{overflow:auto;border:1px solid rgba(0,0,0,.08);border-radius:10px;background:#fff}
+.admin-table{width:100%;border-collapse:collapse;font-family:'Inter',sans-serif;font-size:.84rem;min-width:640px}
+.admin-table th{text-align:left;font-size:.71rem;letter-spacing:.07em;text-transform:uppercase;color:#777;padding:.65rem .7rem;border-bottom:1px solid rgba(0,0,0,.08);white-space:nowrap;background:#fafafa}
+.admin-table td{padding:.62rem .7rem;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:middle}
+.admin-table tr:hover td{background:rgba(0,0,0,.015)}
+.admin-field{display:grid;gap:.32rem;margin-bottom:.9rem}
+.admin-field label{font-family:'Inter',sans-serif;font-size:.71rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#555}
+.admin-field input,.admin-field textarea,.admin-field select{width:100%;padding:.62rem .8rem;border:1px solid rgba(0,0,0,.16);border-radius:8px;font-family:'Inter',sans-serif;font-size:.86rem;background:#fff;outline:none}
+.admin-field input:focus,.admin-field textarea:focus,.admin-field select:focus{border-color:#111}
+.admin-field textarea{min-height:84px;resize:vertical}
+.admin-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.admin-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+.admin-actions .btn{padding:.58rem 1rem;font-size:.8rem}
+.badge{font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:.28rem .52rem;border-radius:999px;font-weight:700;display:inline-flex;align-items:center}
+.badge--ok{background:rgba(26,122,46,.12);color:#1a7a2e}.badge--warn{background:rgba(197,136,0,.15);color:#8a5f00}.badge--bad{background:rgba(198,40,40,.11);color:#c62828}.badge--muted{background:rgba(0,0,0,.07);color:#555}
+.chart-box{position:relative;height:260px}
+.chart-box.sm{height:220px}
+.funnel{display:flex;gap:.6rem;flex-wrap:wrap}
+.funnel-step{flex:1;min-width:140px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:.9rem;text-align:center}
+.funnel-step b{font-size:1.35rem;display:block}
+.funnel-step span{font-size:.71rem;letter-spacing:.06em;text-transform:uppercase;color:#777;font-weight:600}
+.funnel-arrow{align-self:center;font-size:1.2rem;color:#aaa}
+.admin-login{max-width:420px;margin:3.5rem auto;padding:2rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.06);text-align:center}
+.admin-login h2{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.3rem}
+@media(max-width:860px){.admin-wrap{grid-template-columns:1fr}.admin-sidebar{position:static;height:auto}.admin-row{grid-template-columns:1fr}.admin-kpis{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-
 <div id="birdcut-announcement-bar">
   <button type="button" class="bc-arrow bc-prev" aria-label="Mensagem anterior">‹</button>
-  <div class="bc-message-area">
-    <div class="bc-message active">Backoffice Bird Cut — acesso restrito</div>
-    <div class="bc-message">Created for Creators</div>
-    <div class="bc-message">CurveLine Beard Pro</div>
-  </div>
+  <div class="bc-message-area"><div class="bc-message active">Backoffice Bird Cut — acesso restrito</div><div class="bc-message">Created for Creators</div><div class="bc-message">CurveLine Beard Pro</div></div>
   <button type="button" class="bc-arrow bc-next" aria-label="Próxima mensagem">›</button>
 </div>
-
 <header class="header header--editorial" id="header">
   <div class="container header__in header__in--editorial">
-    <div class="brand-editorial">
-      <a href="index.html" style="text-decoration:none"><img src="img/birdcut-pt/logo-birdcut.png" alt="Bird Cut" class="brand-editorial__logo" id="brandLogo" style="max-height:54px"></a>
-    </div>
-    <nav class="nav nav--editorial">
-      <a href="index.html">Ver loja</a>
-      <a href="admin.html" class="active">Backoffice</a>
-      <a href="conta.html">Área Cliente</a>
-      <a href="politicas.html">Políticas</a>
-    </nav>
+    <div class="brand-editorial"><a href="index.html" style="text-decoration:none"><img src="img/birdcut-pt/logo-birdcut.png" alt="Bird Cut" class="brand-editorial__logo" style="max-height:46px"></a></div>
+    <nav class="nav nav--editorial"><a href="index.html">Ver loja</a><a href="admin.html" class="active">Backoffice</a><a href="conta.html">Área Cliente</a><a href="politicas.html">Políticas</a></nav>
   </div>
-  <div class="header__tools">
-    <span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.8rem;color:#555;margin-right:.6rem"></span>
-    <button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button>
-  </div>
+  <div class="header__tools"><span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.78rem;color:#555;margin-right:.5rem"></span><button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button></div>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
-
-<!-- LOGIN -->
-<section id="adminLogin" class="section" style="display:none">
-  <div class="admin-login">
-    <img src="img/favicon-bw.png" alt="" style="width:48px;margin-bottom:1rem;opacity:.9">
-    <h2>Backoffice</h2>
-    <p>Entra com a tua conta de administrador.</p>
-    <form id="adminLoginForm" class="conta-form" style="text-align:left">
-      <div><label>E-mail</label><input type="email" id="admEmail" required placeholder="admin@birdcut.pt"></div>
-      <div><label>Palavra-passe</label><input type="password" id="admPass" required placeholder="••••••••"></div>
-      <div id="admErr" style="color:#e56d6d;font-size:.85rem;min-height:1.2em"></div>
-      <button type="submit" class="btn btn--red" style="width:100%;justify-content:center" id="admBtn">Entrar</button>
-    </form>
-    <p style="margin-top:1rem;font-size:.8rem;color:#777">Acesso restrito a: contacto@birdcut.pt, admin@birdcut.pt, gontijolucca@gmail.com</p>
-  </div>
-</section>
-
-<section id="adminDenied" class="section" style="display:none">
-  <div class="admin-login">
-    <h2>Acesso restrito</h2>
-    <p id="deniedMsg">Esta conta não tem permissões de administrador.</p>
-    <p style="font-size:.85rem;color:#777" id="deniedEmail"></p>
-    <button class="btn btn--red" onclick="logout().then(()=>location.reload())" style="margin-top:1rem">Sair</button>
-    <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a>
-  </div>
-</section>
-
-<!-- APP -->
+<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>E-mail</label><input type="email" id="admEmail" required placeholder="admin@birdcut.pt"></div><div class="admin-field"><label>Palavra-passe</label><input type="password" id="admPass" required placeholder="••••••••"></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso: contacto@birdcut.pt · admin@birdcut.pt · gontijolucca@gmail.com<br>Pass inicial: <code>BirdCut2026!</code></p></div></section>
+<section id="adminDenied" class="section" style="display:none"><div class="admin-login"><h2>Acesso restrito</h2><p id="deniedMsg">Esta conta não tem permissões de administrador.</p><p style="font-size:.82rem;color:#777" id="deniedEmail"></p><button class="btn" style="margin-top:1rem;background:#111;color:#fff" onclick="logout().then(()=>location.reload())">Sair</button> <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a></div></section>
 <div id="adminApp" class="admin-wrap" style="display:none">
   <aside class="admin-sidebar">
-    <div class="admin-sidebar__head">
-      <b>Bird Cut — Backoffice</b>
-      <span id="adminRole">Administrador</span>
-    </div>
+    <div class="admin-sidebar__head"><b>Bird Cut — Backoffice</b><span id="adminRole">Administrador</span></div>
     <nav class="admin-nav" id="adminNav">
       <a href="#" data-tab="dash" class="active">📊 Dashboard</a>
-      <a href="#" data-tab="hero">🦅 Hero</a>
-      <a href="#" data-tab="prod">🪮 Produtos <small>4</small></a>
-      <a href="#" data-tab="barb">💈 Barbeiros <small>5</small></a>
-      <a href="#" data-tab="exp">⭐ Experiências <small>5</small></a>
-      <a href="#" data-tab="faq">❓ FAQ <small>5</small></a>
-      <a href="#" data-tab="orders">📦 Encomendas</a>
-      <a href="#" data-tab="clients">👥 Clientes</a>
-      <a href="#" data-tab="site">⚙️ Site</a>
+      <a href="#" data-tab="orders">📦 Encomendas <small id="countOrders">—</small></a>
+      <a href="#" data-tab="clients">👥 Clientes <small id="countClients">—</small></a>
+      <a href="#" data-tab="carts">🛒 Carrinhos <small id="countCarts">—</small></a>
+      <a href="#" data-tab="products">🪮 Produtos / Stock</a>
+      <a href="#" data-tab="analytics">📈 Analytics</a>
+      <a href="#" data-tab="content">🎨 Conteúdo</a>
+      <a href="#" data-tab="settings">⚙️ Definições</a>
     </nav>
-    <div style="padding:1rem 1.2rem;margin-top:auto">
-      <button class="btn btn--outline" style="width:100%;justify-content:center;font-size:.78rem" onclick="window.open('index.html','_blank')">Ver loja ↗</button>
-      <button class="btn btn--red" style="width:100%;justify-content:center;font-size:.78rem;margin-top:.6rem" id="adminLogout2">Sair</button>
+    <div style="padding:.8rem .6rem;margin-top:auto;display:grid;gap:.5rem">
+      <button class="btn btn--outline" style="width:100%;justify-content:center;font-size:.76rem;color:#fff;border-color:rgba(255,255,255,.2)" onclick="window.open('index.html','_blank')">Ver loja ↗</button>
+      <button class="btn" style="width:100%;justify-content:center;font-size:.76rem;background:rgba(255,255,255,.12);color:#fff" id="adminLogout2">Sair</button>
     </div>
   </aside>
   <main class="admin-main">
-
     <div id="tab-dash" class="admin-tab">
-      <h2 style="font-family:Inter,sans-serif;margin:0 0 1rem">Dashboard</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.2rem">
-        <div class="admin-card" style="margin:0"><h3 style="margin-bottom:.4rem">Encomendas</h3><div id="dashOrders" style="font-size:1.6rem;font-weight:700">—</div><span style="font-size:.8rem;color:#777">via /api/orders</span></div>
-        <div class="admin-card" style="margin:0"><h3 style="margin-bottom:.4rem">Produtos</h3><div id="dashProds" style="font-size:1.6rem;font-weight:700">4</div><span style="font-size:.8rem;color:#777">Laranja/Amarelo</span></div>
-        <div class="admin-card" style="margin:0"><h3 style="margin-bottom:.4rem">Clientes</h3><div id="dashClients" style="font-size:1.6rem;font-weight:700">—</div><span style="font-size:.8rem;color:#777">via /api</span></div>
+      <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.2rem">Dashboard</h2><span id="dashRange" style="font-size:.78rem;color:#777"></span><button class="btn btn--outline" style="margin-left:auto;padding:.4rem .8rem;font-size:.75rem" id="btnRefreshDash">⟳ Atualizar</button></div>
+      <div class="admin-kpis" id="kpiGrid">
+        <div class="admin-kpi"><span>Receita (30d)</span><b id="kpiRevenue">—</b><small id="kpiRevenueSub">—</small></div>
+        <div class="admin-kpi"><span>Encomendas (30d)</span><b id="kpiOrders">—</b><small id="kpiAOV">—</small></div>
+        <div class="admin-kpi"><span>Conversão</span><b id="kpiConv">—</b><small id="kpiConvSub">visitantes → compra</small></div>
+        <div class="admin-kpi"><span>Clientes</span><b id="kpiCustomers">—</b><small>total registados</small></div>
+        <div class="admin-kpi"><span>Visitantes (30d)</span><b id="kpiVisitors">—</b><small id="kpiPageviews">— pageviews</small></div>
+        <div class="admin-kpi"><span>Carrinhos ativos</span><b id="kpiActive">—</b><small id="kpiAbandoned">— abandonados</small></div>
+        <div class="admin-kpi warn"><span>Stock baixo</span><b id="kpiLow">—</b><small>≤ 15 unidades</small></div>
+        <div class="admin-kpi"><span>Ticket médio</span><b id="kpiAOV2">—</b><small>carrinho → checkout</small></div>
       </div>
-      <div class="admin-card">
-        <h3>Estado do site</h3>
-        <p style="font-size:.9rem;color:#555">O backoffice edita <code>data/site.json</code>. As alterações são guardadas em <code>localStorage</code> para preview instantâneo e, se o backend tiver permissão, em <code>/api/site-config</code> (KV).</p>
-        <div class="admin-actions">
-          <button class="btn btn--outline" id="btnClearPreview">Limpar preview local</button>
-          <button class="btn btn--outline" id="btnExport">Exportar JSON</button>
-          <button class="btn btn--red" id="btnSaveAll">Guardar tudo</button>
-        </div>
-        <pre id="exportBox" style="display:none;margin-top:1rem;background:#111;color:#0f0;padding:1rem;border-radius:6px;overflow:auto;max-height:300px;font-size:.75rem"></pre>
+      <div style="display:grid;grid-template-columns:1.6fr .9fr;gap:1rem;margin-bottom:1rem">
+        <div class="admin-card"><h3>Receita & Encomendas — 14 dias</h3><div class="chart-box"><canvas id="chartDaily"></canvas></div></div>
+        <div class="admin-card"><h3>Tráfego — 14 dias <small style="font-weight:400;color:#777">visitantes vs pageviews</small></h3><div class="chart-box"><canvas id="chartTraffic"></canvas></div></div>
       </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:1rem">
+        <div class="admin-card"><h3>Funil — 30 dias</h3><div id="funnelBox" class="funnel"></div><p style="font-size:.78rem;color:#777;margin-top:.8rem">Visitantes → Add to cart → Checkout → Compra. Cada barra = sessões únicas (exceto compra = encomendas).</p></div>
+        <div class="admin-card"><h3>Top produtos — 30 dias</h3><div id="topProducts">—</div></div>
+        <div class="admin-card"><h3>Stock crítico ≤ 15</h3><div id="lowStockList">—</div></div>
+      </div>
+      <div class="admin-card"><h3>Encomendas recentes</h3><div id="recentOrders">—</div><div style="margin-top:.8rem"><a href="#" data-goto="orders" style="font-size:.82rem">Ver todas →</a></div></div>
     </div>
 
-    <div id="tab-hero" class="admin-tab" style="display:none">
-      <div class="admin-card">
-        <h3>Hero</h3>
-        <div class="admin-field"><label>Título</label><input id="hTitle"></div>
-        <div class="admin-field"><label>Descrição (HTML permitido)</label><textarea id="hDesc"></textarea></div>
-        <div class="admin-row">
-          <div class="admin-field"><label>Texto botão</label><input id="hBtnText"></div>
-          <div class="admin-field"><label>Link botão</label><input id="hBtnLink"></div>
-        </div>
-        <div class="admin-field"><label>Imagem de fundo (URL)</label><input id="hBg"></div>
-        <div class="admin-actions"><button class="btn btn--red" onclick="saveHero()">Guardar Hero</button></div>
-      </div>
-    </div>
-
-    <div id="tab-prod" class="admin-tab" style="display:none">
-      <div class="admin-card">
-        <h3>Best-selling — Produtos</h3>
-        <div id="prodList"></div>
-        <div class="admin-actions"><button class="btn btn--outline" onclick="addProd()">+ Adicionar produto</button><button class="btn btn--red" onclick="saveProds()">Guardar produtos</button></div>
-      </div>
-    </div>
-
-    <div id="tab-barb" class="admin-tab" style="display:none">
-      <div class="admin-card">
-        <h3>International Barbers</h3>
-        <div class="admin-field"><label>Título secção</label><input id="bTitle"></div>
-        <div class="admin-field"><label>Subtítulo (ex: Cria. Partilha. Marca-nos.)</label><input id="bSubMain"></div>
-        <div class="admin-field"><label>Handle (ex: @birdcut.pt)</label><input id="bSubHandle"></div>
-        <div id="barbList"></div>
-        <div class="admin-actions"><button class="btn btn--red" onclick="saveBarb()">Guardar barbeiros</button></div>
-      </div>
-    </div>
-
-    <div id="tab-exp" class="admin-tab" style="display:none">
-      <div class="admin-card">
-        <h3>Experiências dos Criadores</h3>
-        <div class="admin-field"><label>Título secção</label><input id="eTitle"></div>
-        <div id="expList"></div>
-        <div class="admin-actions"><button class="btn btn--outline" onclick="addExp()">+ Adicionar card</button><button class="btn btn--red" onclick="saveExp()">Guardar experiências</button></div>
-      </div>
-    </div>
-
-    <div id="tab-faq" class="admin-tab" style="display:none">
-      <div class="admin-card">
-        <h3>Perguntas Frequentes</h3>
-        <div class="admin-field"><label>Título</label><input id="fTitle"></div>
-        <div id="faqList"></div>
-        <div class="admin-actions"><button class="btn btn--outline" onclick="addFaq()">+ Adicionar pergunta</button><button class="btn btn--red" onclick="saveFaq()">Guardar FAQ</button></div>
-      </div>
+    <div id="tab-products" class="admin-tab" style="display:none">
+      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.15rem">Produtos & Stock</h2><button class="btn" style="margin-left:auto;background:#111;color:#fff;font-size:.78rem" id="btnNewProd">+ Novo produto</button><button class="btn btn--outline" style="font-size:.78rem" id="btnRefreshProd">⟳ Atualizar</button></div>
+      <div id="productForm" class="admin-card" style="display:none"><h3 id="productFormTitle">Novo produto</h3><div class="admin-row"><div class="admin-field"><label>ID (p3…)</label><input id="p_id" placeholder="p3"></div><div class="admin-field"><label>SKU</label><input id="p_sku" placeholder="BC-CL-…"></div></div><div class="admin-field"><label>Nome</label><input id="p_name" placeholder="CurveLine Beard Pro — …"></div><div class="admin-row"><div class="admin-field"><label>Preço € (num)</label><input id="p_price_num" type="number" step="0.01" placeholder="18.89"></div><div class="admin-field"><label>Stock</label><input id="p_stock" type="number" step="1" placeholder="50"></div></div><div class="admin-field"><label>Imagem URL</label><input id="p_image" placeholder="img/birdcut-pt/…png"></div><div class="admin-row"><div class="admin-field"><label>Cores (vírgula)</label><input id="p_colors" placeholder="Laranja, Amarelo"></div><div class="admin-field"><label>Rating</label><input id="p_rating" placeholder="5.0"></div></div><div class="admin-row"><div class="admin-field"><label>Ativo</label><select id="p_active"><option value="1">Sim</option><option value="0">Não</option></select></div><div class="admin-field"><label>Motivo stock (opcional)</label><input id="p_reason" placeholder="reposição / correção"></div></div><div class="admin-actions"><button class="btn" style="background:#111;color:#fff" id="btnSaveProd">Guardar</button><button class="btn btn--outline" id="btnCancelProd">Cancelar</button></div></div>
+      <div class="admin-table-wrap"><table class="admin-table" id="productsTable"><thead><tr><th>SKU</th><th>Produto</th><th>Preço</th><th>Stock</th><th>Ativo</th><th style="min-width:180px">Ações</th></tr></thead><tbody id="productsBody"><tr><td colspan="6" style="text-align:center;color:#777;padding:2rem">A carregar…</td></tr></tbody></table></div>
+      <div class="admin-card" style="margin-top:1rem"><h3>Histórico stock (últimos 40 movimentos)</h3><div id="stockMoves">—</div></div>
     </div>
 
     <div id="tab-orders" class="admin-tab" style="display:none">
-      <div class="admin-card">
-        <h3>Encomendas</h3>
-        <div id="ordersAdmin"><p style="color:#777">A carregar…</p></div>
-      </div>
+      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.15rem">Encomendas</h2><input id="ordersSearch" placeholder="Filtrar por e-mail…" style="margin-left:auto;max-width:220px;padding:.5rem .7rem;border:1px solid rgba(0,0,0,.15);border-radius:8px;font-size:.82rem"><select id="ordersStatus" style="padding:.5rem .7rem;border:1px solid rgba(0,0,0,.15);border-radius:8px;font-size:.82rem"><option value="">Todos estados</option><option value="processamento">processamento</option><option value="enviado">enviado</option><option value="entregue">entregue</option><option value="cancelado">cancelado</option></select><button class="btn btn--outline" style="font-size:.78rem" id="btnExportOrders">⬇ CSV</button><button class="btn btn--outline" style="font-size:.78rem" id="btnRefreshOrders">⟳</button></div>
+      <div class="admin-table-wrap"><table class="admin-table" id="ordersTable"><thead><tr><th>#</th><th>Data</th><th>Cliente</th><th>Itens</th><th>Total</th><th>Estado</th><th></th></tr></thead><tbody id="ordersBody"><tr><td colspan="7" style="text-align:center;color:#777;padding:2rem">A carregar…</td></tr></tbody></table></div>
+      <div id="orderDetail" class="admin-card" style="display:none"></div>
     </div>
 
     <div id="tab-clients" class="admin-tab" style="display:none">
-      <div class="admin-card">
-        <h3>Clientes</h3>
-        <div id="clientsAdmin"><p style="color:#777">A carregar…</p></div>
+      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.15rem">Clientes</h2><input id="clientsSearch" placeholder="Procurar e-mail / nome…" style="margin-left:auto;max-width:240px;padding:.5rem .7rem;border:1px solid rgba(0,0,0,.15);border-radius:8px;font-size:.82rem"><button class="btn btn--outline" style="font-size:.78rem" id="btnRefreshClients">⟳</button></div>
+      <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>E-mail</th><th>Nome</th><th>Encomendas</th><th>Gasto</th><th>Registo</th><th>Role</th></tr></thead><tbody id="clientsBody"><tr><td colspan="6" style="text-align:center;color:#777;padding:2rem">A carregar…</td></tr></tbody></table></div>
+    </div>
+
+    <div id="tab-carts" class="admin-tab" style="display:none">
+      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.15rem">Carrinhos</h2><select id="cartsStatus" style="margin-left:auto;padding:.5rem .7rem;border:1px solid rgba(0,0,0,.15);border-radius:8px;font-size:.82rem"><option value="all">Todos</option><option value="active">Ativos (&lt;45 min)</option><option value="abandoned" selected>Abandonados</option><option value="converted">Convertidos</option></select><button class="btn btn--outline" style="font-size:.78rem" id="btnRefreshCarts">⟳</button></div>
+      <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Sessão</th><th>E-mail</th><th>Itens</th><th>Total</th><th>Última atividade</th><th>Estado</th><th></th></tr></thead><tbody id="cartsBody"><tr><td colspan="7" style="text-align:center;color:#777;padding:2rem">A carregar…</td></tr></tbody></table></div>
+      <div class="admin-card"><h3>Como recuperar</h3><p style="font-size:.84rem;color:#555;margin:0">Carrinhos ficam <b>abandonados</b> após 45 min sem atividade. Usa o botão <code>Copiar</code> para copiar o detalhe e enviar por WhatsApp/e-mail ao cliente (se tiver e-mail). Futuro: automação com e-mail/WhatsApp via n8n.</p></div>
+    </div>
+
+    <div id="tab-analytics" class="admin-tab" style="display:none">
+      <h2 style="font-family:Inter,sans-serif;margin:0 0 .8rem;font-size:1.15rem">Analytics</h2>
+      <div class="admin-kpis" style="margin-bottom:1rem">
+        <div class="admin-kpi"><span>Pageviews 14d</span><b id="aPageviews">—</b></div>
+        <div class="admin-kpi"><span>Visitantes únicos 14d</span><b id="aVisitors">—</b></div>
+        <div class="admin-kpi"><span>Add to cart 30d</span><b id="aAdd">—</b></div>
+        <div class="admin-kpi"><span>Checkout iniciado 30d</span><b id="aCheckout">—</b></div>
+      </div>
+      <div class="admin-card"><h3>Visitantes vs Pageviews — 14 dias</h3><div class="chart-box"><canvas id="chartAnalyticsDaily"></canvas></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div class="admin-card"><h3>Eventos — 30 dias</h3><div class="chart-box sm"><canvas id="chartEvents"></canvas></div><div id="eventsTable" style="margin-top:.8rem"></div></div>
+        <div class="admin-card"><h3>Funil de conversão — 30 dias</h3><div class="chart-box sm"><canvas id="chartFunnel"></canvas></div><p style="font-size:.78rem;color:#777;margin-top:.6rem">visitantes (pageview único) → add_to_cart → begin_checkout → purchase (encomendas).</p></div>
       </div>
     </div>
 
-    <div id="tab-site" class="admin-tab" style="display:none">
-      <div class="admin-card">
-        <h3>Site — JSON bruto</h3>
-        <p style="font-size:.85rem;color:#555">Edição avançada. Cuidado: JSON inválido impede o site de carregar.</p>
-        <div class="admin-field"><label>data/site.json</label><textarea id="siteRaw" style="min-height:400px;font-family:monospace;font-size:.82rem"></textarea></div>
-        <div class="admin-actions"><button class="btn btn--red" onclick="saveRaw()">Guardar JSON</button><button class="btn btn--outline" onclick="loadConfig()">Recarregar</button></div>
+    <div id="tab-content" class="admin-tab" style="display:none">
+      <h2 style="font-family:Inter,sans-serif;margin:0 0 .8rem;font-size:1.15rem">Conteúdo da loja</h2>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem">
+        <button class="btn btn--outline" id="btnClearPreview">Limpar preview local</button>
+        <button class="btn btn--outline" id="btnExport">Exportar JSON</button>
+        <button class="btn" style="background:#111;color:#fff" id="btnSaveAll">Guardar tudo (preview + backend)</button>
       </div>
+      <div id="contentSections"></div>
+      <div class="admin-card"><h3>Site — JSON bruto</h3><p style="font-size:.82rem;color:#555">Edição avançada. JSON inválido impede o site.</p><div class="admin-field"><textarea id="siteRaw" style="min-height:360px;font-family:monospace;font-size:.8rem"></textarea></div><div class="admin-actions"><button class="btn" style="background:#111;color:#fff" onclick="saveRaw()">Guardar JSON</button><button class="btn btn--outline" onclick="loadConfig().then(c=>{CFG=c;document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);renderContent()})">Recarregar</button></div><pre id="exportBox" style="display:none;margin-top:1rem;background:#111;color:#0f0;padding:1rem;border-radius:8px;overflow:auto;max-height:260px;font-size:.72rem"></pre></div>
     </div>
 
+    <div id="tab-settings" class="admin-tab" style="display:none">
+      <h2 style="font-family:Inter,sans-serif;margin:0 0 .8rem;font-size:1.15rem">Definições</h2>
+      <div class="admin-card"><h3>Loja</h3><p style="font-size:.84rem;color:#555">Domínio oficial: <b>birdcut.pt</b> (DNS Dominios.pt → Pages <code>birdcut-site.pages.dev</code> — ver instruções no chat).<br>Pagamentos: Stripe Checkout (preço <code>STRIPE_PRICE_ID</code> em Pages Env Vars). Sucesso → <code>/success.html?session_id=</code> cria encomenda via <code>/api/orders/guest</code>.</p><p style="font-size:.84rem;color:#555">API: <code>https://media.pontofinal.site/bcapi</code> → <code>127.0.0.1:3001</code> (PM2 <code>birdcut-api</code>). Health: <code id="healthCheck">—</code></p></div>
+      <div class="admin-card"><h3>Administradores</h3><p style="font-size:.84rem;color:#555">Acesso restrito a e-mails com <code>role=admin</code> ou allow-list: <code>contacto@birdcut.pt, admin@birdcut.pt, gontijolucca@gmail.com, lucca@birdcut.pt, jrafa.farias@hotmail.com</code>.<br>Pass inicial definido no seed: <code>BirdCut2026!</code> — muda em <code>conta.html</code> se quiseres.</p></div>
+      <div class="admin-card"><h3>Atalhos</h3><div style="display:flex;gap:.6rem;flex-wrap:wrap"><a href="index.html" class="btn btn--outline">Ver loja</a><a href="conta.html" class="btn btn--outline">Área cliente</a><button class="btn btn--outline" onclick="localStorage.removeItem('bc_site_config_preview');alert('Preview limpo')">Limpar preview</button></div></div>
+    </div>
   </main>
 </div>
-
-<div class="mobile-menu" id="mobileMenu">
-  <button class="close" id="menuClose" aria-label="Fechar">×</button>
-  <a href="index.html">Ver loja</a>
-  <a href="admin.html">Backoffice</a>
-  <a href="conta.html">Área Cliente</a>
-</div>
-
+<div class="mobile-menu" id="mobileMenu"><button class="close" id="menuClose" aria-label="Fechar">×</button><a href="index.html">Ver loja</a><a href="admin.html">Backoffice</a><a href="conta.html">Área Cliente</a></div>
 <script src="js/api.js"></script>
 <script src="js/main.js"></script>
 <script src="js/rafael.js"></script>
 <script>
 let CFG=null;
 const LS_KEY='bc_site_config_preview';
-const ALLOW=['contacto@birdcut.pt','admin@birdcut.pt','gontijolucca@gmail.com','lucca@birdcut.pt','admin@birdcut-site.com'];
+const ALLOW=['contacto@birdcut.pt','admin@birdcut.pt','gontijolucca@gmail.com','lucca@birdcut.pt','admin@birdcut-site.com','jrafa.farias@hotmail.com'];
+function isAdminUser(u){ if(!u) return false; if(u.role==='admin') return true; return ALLOW.includes((u.email||'').toLowerCase()); }
+async function loadConfig(){ try{ const ls=localStorage.getItem(LS_KEY); if(ls) return JSON.parse(ls);}catch(e){} try{ const r=await fetch('/api/site-config'); if(r.ok){ const j=await r.json(); if(j&&j.hero) return j; }}catch(e){} const r=await fetch('data/site.json',{cache:'no-store'}); return await r.json(); }
+function savePreview(){ localStorage.setItem(LS_KEY, JSON.stringify(CFG)); }
+async function saveToBackend(){ const t=localStorage.getItem('bc_token'); if(!t) return {ok:false,error:'Sem token'}; try{ const r=await fetch('/api/site-config',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify(CFG)}); return await r.json(); }catch(e){ return {ok:false,error:e.message} } }
+async function saveAll(){ savePreview(); const res=await saveToBackend(); if(res&&res.ok) alert('✓ Guardado! '+(res.saved||'ok')); else if(res&&res.error) alert('Guardado localmente. Backend: '+res.error+'\n(Se não tens KV BC_SITE_KV é normal — fica em preview local)'); else alert('✓ Guardado em preview local.'); }
 
-function isAdminUser(u){
-  if(!u) return false;
-  if(u.role==='admin') return true;
-  return ALLOW.includes((u.email||'').toLowerCase());
+// ---- API admin helpers ----
+function authHeaders(){ const t=localStorage.getItem('bc_token'); return {'Content-Type':'application/json','Authorization':'Bearer '+(t||'')}; }
+async function adminGet(path){ const r=await fetch(path,{headers:authHeaders()}); if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.error||('HTTP '+r.status)); } return await r.json(); }
+async function adminPost(path,body){ const r=await fetch(path,{method:'POST',headers:authHeaders(),body:JSON.stringify(body)}); const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||('HTTP '+r.status)); return j; }
+async function adminPut(path,body){ const r=await fetch(path,{method:'PUT',headers:authHeaders(),body:JSON.stringify(body)}); const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||('HTTP '+r.status)); return j; }
+
+// ---- charts ----
+let chartDaily=null, chartTraffic=null, chartAnalyticsDaily=null, chartEvents=null, chartFunnel=null;
+
+function fmtMoney(n){ return (Number(n)||0).toFixed(2).replace('.',',')+' €'; }
+function fmtInt(n){ return (Number(n)||0).toLocaleString('pt-PT'); }
+
+async function loadDashboard(){
+  const data=await adminGet('/api/admin/stats');
+  const k=data.kpis;
+  document.getElementById('kpiRevenue').textContent=fmtMoney(k.totalRevenue);
+  document.getElementById('kpiRevenueSub').textContent=k.totalOrders+' encomendas · ticket '+fmtMoney(k.avgOrder);
+  document.getElementById('kpiOrders').textContent=fmtInt(k.totalOrders);
+  document.getElementById('kpiAOV').textContent='ticket '+fmtMoney(k.avgOrder);
+  document.getElementById('kpiCustomers').textContent=fmtInt(k.totalCustomers);
+  document.getElementById('kpiVisitors').textContent=fmtInt(k.visitors);
+  document.getElementById('kpiPageviews').textContent=fmtInt(k.pageviews)+' pageviews';
+  document.getElementById('kpiActive').textContent=fmtInt(k.activeCarts);
+  document.getElementById('kpiAbandoned').textContent=fmtInt(k.abandoned)+' abandonados';
+  document.getElementById('kpiLow').textContent=fmtInt(k.lowStock);
+  document.getElementById('kpiAOV2').textContent=fmtMoney(k.avgOrder);
+  document.getElementById('countOrders').textContent=fmtInt(k.totalOrders);
+  document.getElementById('countClients').textContent=fmtInt(k.totalCustomers);
+  document.getElementById('countCarts').textContent=fmtInt(k.abandoned+k.activeCarts);
+  document.getElementById('dashRange').textContent='· últimos 30 dias';
+  // funnel
+  const funnel=data.dailyTraffic ? null : null;
+  const box=document.getElementById('funnelBox');
+  const f=await adminGet('/api/admin/analytics?days=30').then(d=>d.funnel).catch(()=>({visitors:k.visitors,addToCart:0,beginCheckout:0,purchase:k.totalOrders}));
+  const steps=[{label:'Visitantes',v:f.visitors},{label:'Add to cart',v:f.addToCart},{label:'Checkout',v:f.beginCheckout},{label:'Compra',v:f.purchase}];
+  box.innerHTML=steps.map((s,i)=>'<div class="funnel-step"><b>'+fmtInt(s.v)+'</b><span>'+s.label+'</span>'+(i<steps.length-1?'<div style="font-size:.7rem;color:#999;margin-top:.2rem">'+(s.v? Math.round(steps[i+1].v/Math.max(1,s.v)*100)+'% →':'')+'</div>':'')+'</div>'+(i<steps.length-1?'<div class="funnel-arrow">→</div>':'')).join('');
+  // daily chart
+  const labels=(data.daily||[]).map(d=>d.d.slice(5));
+  const revs=(data.daily||[]).map(d=>d.revenue);
+  const ordersDaily=(data.daily||[]).map(d=>d.orders);
+  if(chartDaily) chartDaily.destroy();
+  chartDaily=new Chart(document.getElementById('chartDaily'),{type:'bar',data:{labels, datasets:[{label:'Receita €', data:revs, yAxisID:'y', backgroundColor:'rgba(17,17,17,.85)', borderRadius:6, barPercentage:.7},{label:'Encomendas', data:ordersDaily, yAxisID:'y1', type:'line', borderColor:'#c58800', backgroundColor:'rgba(197,136,0,.15)', tension:.35, pointRadius:3}]}, options:{responsive:true,maintainAspectRatio:false, scales:{ y:{position:'left', grid:{color:'rgba(0,0,0,.06)'}}, y1:{position:'right', grid:{display:false}}}}});
+  const tLabels=(data.dailyTraffic||[]).map(d=>d.d.slice(5));
+  const pv=(data.dailyTraffic||[]).map(d=>d.pageviews);
+  const vis=(data.dailyTraffic||[]).map(d=>d.visitors);
+  if(chartTraffic) chartTraffic.destroy();
+  chartTraffic=new Chart(document.getElementById('chartTraffic'),{type:'line',data:{labels:tLabels, datasets:[{label:'Pageviews', data:pv, borderColor:'#111', backgroundColor:'rgba(17,17,17,.06)', fill:true, tension:.35},{label:'Visitantes', data:vis, borderColor:'#1a7a2e', backgroundColor:'rgba(26,122,46,.10)', fill:true, tension:.35}]}, options:{responsive:true,maintainAspectRatio:false, scales:{ y:{grid:{color:'rgba(0,0,0,.06)'}}}}});
+  // top products
+  document.getElementById('topProducts').innerHTML=(data.topProducts&&data.topProducts.length)? '<table class="admin-table" style="min-width:0"><tr><th>Produto</th><th>Qtd</th></tr>'+data.topProducts.map(p=>'<tr><td>'+p.name+'</td><td><b>'+p.qty+'</b></td></tr>').join('')+'</table>' : '<p style="color:#777;font-size:.84rem">Sem vendas nos últimos 30 dias.</p>';
+  document.getElementById('lowStockList').innerHTML=(data.lowStockList&&data.lowStockList.length)? '<table class="admin-table" style="min-width:0"><tr><th>SKU</th><th>Stock</th></tr>'+data.lowStockList.map(p=>'<tr><td>'+p.name+' <small style="color:#777">'+p.id+'</small></td><td><span class="badge '+(p.stock<=5?'badge--bad':p.stock<=10?'badge--bad':'badge--warn')+'">'+p.stock+'</span></td></tr>').join('')+'</table>' : '<p style="color:#777;font-size:.84rem">Stock OK.</p>';
+  document.getElementById('recentOrders').innerHTML=(data.recent&&data.recent.length)? '<div class="admin-table-wrap"><table class="admin-table"><tr><th>#</th><th>Data</th><th>Cliente</th><th>Total</th><th>Estado</th></tr>'+data.recent.map(o=>'<tr><td>#'+o.id+'</td><td>'+(o.created_at||'').slice(0,16).replace('T',' ')+'</td><td>'+(o.email||'—')+'</td><td>'+fmtMoney(o.total)+'</td><td><span class="badge badge--muted">'+(o.status||'—')+'</span></td></tr>').join('')+'</table></div>' : '<p style="color:#777">Sem encomendas.</p>';
 }
 
-async function loadConfig(){
+// ---- PRODUCTS ----
+let productsCache=[];
+async function loadProducts(){
   try{
-    const ls=localStorage.getItem(LS_KEY);
-    if(ls) return JSON.parse(ls);
-  }catch(e){}
+    const rows=await adminGet('/api/admin/products');
+    productsCache=rows;
+    const tb=document.getElementById('productsBody');
+    if(!rows.length){ tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:#777;padding:2rem">Sem produtos.</td></tr>'; return; }
+    tb.innerHTML=rows.map(p=>`
+      <tr>
+        <td><small style="font-family:monospace">${p.sku||'—'}</small></td>
+        <td><div style="display:flex;gap:.6rem;align-items:center"><img src="${p.image}" alt="" style="width:42px;height:42px;object-fit:contain;border:1px solid rgba(0,0,0,.08);border-radius:6px;background:#fafafa"><div><b style="display:block">${p.name}</b><small style="color:#777">${p.id} · ${Array.isArray(p.colors)?p.colors.join(', '):''} · ★ ${p.rating||''}</small></div></div></td>
+        <td>${p.price_text||fmtMoney(p.price_num)}</td>
+        <td><span class="badge ${p.stock<=5?'badge--bad':p.stock<=10?'badge--warn':p.stock<=15?'badge--warn':'badge--ok'}">${p.stock}</span></td>
+        <td>${p.active?'<span class="badge badge--ok">ativo</span>':'<span class="badge badge--muted">inativo</span>'}</td>
+        <td><div style="display:flex;gap:.4rem;flex-wrap:wrap"><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem" onclick="openEditProd('${p.id}')">Editar</button><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem" onclick="adjustStockPrompt('${p.id}')">Stock</button><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem;color:#c62828;border-color:rgba(198,40,40,.2)" onclick="deleteProd('${p.id}')">✕</button></div></td>
+      </tr>`).join('');
+    loadStockMoves();
+  }catch(e){ document.getElementById('productsBody').innerHTML='<tr><td colspan="6" style="color:#c62828;padding:1rem">Erro: '+e.message+'</td></tr>'; }
+}
+async function loadStockMoves(){
   try{
-    const r=await fetch('/api/site-config');
-    if(r.ok){ const j=await r.json(); if(j && j.hero) return j; }
-  }catch(e){}
-  const r=await fetch('data/site.json',{cache:'no-store'});
-  return await r.json();
+    const all=productsCache;
+    let html='<div class="admin-table-wrap"><table class="admin-table"><tr><th>Data</th><th>Produto</th><th>Δ</th><th>Motivo</th></tr>';
+    // fetch via admin stats? we don't have dedicated moves endpoint — reuse products stock_moves via direct query not exposed, so skip detailed history and show placeholder from backend not yet exposed
+    // we keep stock_moves in DB but need endpoint; fallback to show stock current only
+    html+='<tr><td colspan="4" style="text-align:center;color:#777;padding:1rem">Histórico detalhado em breve — stock atual acima. Ajustes via botão Stock adicionam motivo.</td></tr></table></div>';
+    document.getElementById('stockMoves').innerHTML=html;
+  }catch(e){ document.getElementById('stockMoves').textContent='—'; }
 }
-
-function savePreview(){
-  localStorage.setItem(LS_KEY, JSON.stringify(CFG));
+function openNewProd(){
+  document.getElementById('productFormTitle').textContent='Novo produto';
+  document.getElementById('p_id').value=''; document.getElementById('p_sku').value=''; document.getElementById('p_name').value=''; document.getElementById('p_price_num').value=''; document.getElementById('p_stock').value=''; document.getElementById('p_image').value=''; document.getElementById('p_colors').value='Laranja, Amarelo'; document.getElementById('p_rating').value='5.0'; document.getElementById('p_active').value='1'; document.getElementById('p_reason').value='criação';
+  document.getElementById('productForm').style.display='';
+  document.getElementById('productForm').dataset.editing='';
 }
-
-async function saveToBackend(){
-  const token=localStorage.getItem('bc_token');
-  if(!token) return {ok:false,error:'Sem token'};
+function openEditProd(id){
+  const p=productsCache.find(x=>x.id===id); if(!p) return;
+  document.getElementById('productFormTitle').textContent='Editar '+p.id;
+  document.getElementById('p_id').value=p.id; document.getElementById('p_sku').value=p.sku||''; document.getElementById('p_name').value=p.name; document.getElementById('p_price_num').value=p.price_num; document.getElementById('p_stock').value=p.stock; document.getElementById('p_image').value=p.image||''; document.getElementById('p_colors').value=(Array.isArray(p.colors)?p.colors.join(', '):p.colors||''); document.getElementById('p_rating').value=p.rating||''; document.getElementById('p_active').value=p.active?'1':'0'; document.getElementById('p_reason').value='';
+  document.getElementById('productForm').style.display='';
+  document.getElementById('productForm').dataset.editing=id;
+  document.getElementById('productForm').scrollIntoView({behavior:'smooth'});
+}
+async function deleteProd(id){ if(!confirm('Apagar produto '+id+'?')) return; try{ await fetch('/api/admin/products/'+id,{method:'DELETE',headers:authHeaders()}); await loadProducts(); loadDashboard().catch(()=>{});}catch(e){ alert('Erro: '+e.message);} }
+async function adjustStockPrompt(id){
+  const p=productsCache.find(x=>x.id===id); if(!p) return;
+  const v=prompt('Stock atual '+p.stock+' — novo stock para '+p.name+' (inteiro):', String(p.stock));
+  if(v===null) return; const n=parseInt(v,10); if(Number.isNaN(n)) return alert('Valor inválido');
+  const reason=prompt('Motivo (ex: reposição, inventário, quebra):','ajuste manual')||'ajuste manual';
+  try{ await adminPut('/api/admin/products/'+id,{stock:n, reason}); await loadProducts(); }catch(e){ alert('Erro: '+e.message); }
+}
+async function saveProdForm(){
+  const editing=document.getElementById('productForm').dataset.editing;
+  const body={
+    id: document.getElementById('p_id').value.trim()||undefined,
+    sku: document.getElementById('p_sku').value.trim(),
+    name: document.getElementById('p_name').value.trim(),
+    price_num: parseFloat(document.getElementById('p_price_num').value),
+    price_text: parseFloat(document.getElementById('p_price_num').value).toFixed(2).replace('.',',')+' €',
+    image: document.getElementById('p_image').value.trim(),
+    stock: parseInt(document.getElementById('p_stock').value,10),
+    colors: document.getElementById('p_colors').value.split(',').map(s=>s.trim()).filter(Boolean),
+    rating: document.getElementById('p_rating').value.trim()||'5.0',
+    active: document.getElementById('p_active').value==='1',
+    reason: document.getElementById('p_reason').value.trim()||'admin'
+  };
+  if(!body.name || !body.price_num) return alert('Nome e preço obrigatórios');
   try{
-    const r=await fetch('/api/site-config',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(CFG)});
-    const j=await r.json();
-    return j;
-  }catch(e){ return {ok:false,error:e.message} }
+    if(editing){ await adminPut('/api/admin/products/'+editing, body); }
+    else { await adminPost('/api/admin/products', body); }
+    document.getElementById('productForm').style.display='none';
+    await loadProducts(); await loadDashboard().catch(()=>{});
+  }catch(e){ alert('Erro: '+e.message); }
 }
 
-async function saveAll(){
-  savePreview();
-  const res=await saveToBackend();
-  if(res && res.ok) alert('✓ Guardado! Preview local + backend ('+(res.saved||'ok')+')');
-  else if(res && res.error) alert('Guardado localmente (preview). Backend: '+res.error+'\n\nPara persistir, configura KV BC_SITE_KV ou copia o JSON exportado.');
-  else alert('✓ Guardado em preview local. Faz refresh na loja para ver.');
-  // aplica na loja se estiver aberta
+// ---- ORDERS ----
+let ordersCache=[];
+async function loadOrders(){
+  try{
+    const rows=await adminGet('/api/admin/orders');
+    ordersCache=rows;
+    renderOrders();
+  }catch(e){ document.getElementById('ordersBody').innerHTML='<tr><td colspan="7" style="color:#c62828;padding:1rem">Erro: '+e.message+'</td></tr>'; }
 }
-
-function renderHero(){
-  document.getElementById('hTitle').value=CFG.hero?.title||'';
-  document.getElementById('hDesc').value=CFG.hero?.desc||'';
-  document.getElementById('hBtnText').value=CFG.hero?.btnText||'';
-  document.getElementById('hBtnLink').value=CFG.hero?.btnLink||'';
-  document.getElementById('hBg').value=CFG.hero?.bgImage||'';
-}
-function saveHero(){
-  CFG.hero.title=document.getElementById('hTitle').value;
-  CFG.hero.desc=document.getElementById('hDesc').value;
-  CFG.hero.btnText=document.getElementById('hBtnText').value;
-  CFG.hero.btnLink=document.getElementById('hBtnLink').value;
-  CFG.hero.bgImage=document.getElementById('hBg').value;
-  saveAll();
-}
-
-function renderProds(){
-  const c=document.getElementById('prodList');
-  c.innerHTML=CFG.bestSelling.products.map((p,i)=>`
-    <div class="admin-card" style="background:#fafafa">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem"><b>#${i+1} ${p.name}</b><button class="btn btn--outline" style="padding:.3rem .6rem;font-size:.7rem" onclick="removeProd(${i})">Remover</button></div>
-      <div class="admin-field"><label>Nome</label><input data-k="name" data-i="${i}" value="${p.name}"></div>
-      <div class="admin-row">
-        <div class="admin-field"><label>Preço texto</label><input data-k="price" data-i="${i}" value="${p.price}"></div>
-        <div class="admin-field"><label>Preço num</label><input type="number" step="0.01" data-k="priceNum" data-i="${i}" value="${p.priceNum}"></div>
-      </div>
-      <div class="admin-field"><label>Imagem URL</label><input data-k="image" data-i="${i}" value="${p.image}"></div>
-      <div class="admin-row">
-        <div class="admin-field"><label>Cor ativa</label><select data-k="activeColor" data-i="${i}"><option ${p.activeColor==='Laranja'?'selected':''}>Laranja</option><option ${p.activeColor==='Amarelo'?'selected':''}>Amarelo</option></select></div>
-        <div class="admin-field"><label>Rating</label><input data-k="rating" data-i="${i}" value="${p.rating}"></div>
-      </div>
-    </div>`).join('');
-  c.querySelectorAll('input,select').forEach(el=>{
-    el.addEventListener('change',e=>{
-      const k=e.target.dataset.k, i=+e.target.dataset.i;
-      let v=e.target.value;
-      if(k==='priceNum') v=parseFloat(v);
-      CFG.bestSelling.products[i][k]=v;
-      if(k==='name' && v.includes('Laranja')) CFG.bestSelling.products[i].activeColor='Laranja';
-      if(k==='name' && v.includes('Amarelo')) CFG.bestSelling.products[i].activeColor='Amarelo';
+function renderOrders(){
+  const q=(document.getElementById('ordersSearch').value||'').toLowerCase();
+  const st=(document.getElementById('ordersStatus').value||'');
+  let rows=ordersCache.slice();
+  if(q) rows=rows.filter(o=>String(o.email||'').toLowerCase().includes(q) || String(o.id).includes(q));
+  if(st) rows=rows.filter(o=>(o.status||'')===st);
+  const tb=document.getElementById('ordersBody');
+  if(!rows.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:#777;padding:2rem">Sem encomendas para este filtro.</td></tr>'; return; }
+  tb.innerHTML=rows.slice(0,200).map(o=>{
+    const items=Array.isArray(o.items)? o.items : [];
+    const itemsTxt=items.length? items.map(i=> (i.name||i.id||'?')+' ×'+(i.qty||i.quantity||1)).join(', ').slice(0,90) : (o.stripe_session? 'Stripe '+o.stripe_session.slice(0,12)+'…' : '—');
+    return `<tr>
+      <td><b>#${o.id}</b></td>
+      <td>${(o.created_at||'').slice(0,16).replace('T',' ')}</td>
+      <td><div style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${o.email||'—'}</div><small style="color:#777">${o.user_id? 'user #'+o.user_id : 'guest'}</small></td>
+      <td><small style="color:#555">${itemsTxt}</small></td>
+      <td><b>${fmtMoney(o.total)}</b></td>
+      <td><select data-order-status="${o.id}" style="padding:.35rem .4rem;border:1px solid rgba(0,0,0,.15);border-radius:6px;font-size:.78rem"><option ${o.status==='processamento'?'selected':''} value="processamento">processamento</option><option ${o.status==='enviado'?'selected':''} value="enviado">enviado</option><option ${o.status==='entregue'?'selected':''} value="entregue">entregue</option><option ${o.status==='cancelado'?'selected':''} value="cancelado">cancelado</option></select></td>
+      <td><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem" onclick="viewOrder(${o.id})">Ver</button></td>
+    </tr>`;
+  }).join('');
+  tb.querySelectorAll('select[data-order-status]').forEach(sel=>{
+    sel.addEventListener('change', async e=>{
+      const id=e.target.getAttribute('data-order-status');
+      const status=e.target.value;
+      try{ await adminPut('/api/admin/orders/'+id, {status}); const o=ordersCache.find(x=>String(x.id)===String(id)); if(o) o.status=status; }catch(err){ alert('Erro: '+err.message); }
     });
   });
 }
-function addProd(){ CFG.bestSelling.products.push({id:'p'+Date.now(),name:'CurveLine Beard Pro — Laranja',price:'18,89 €',priceNum:18.89,image:'img/birdcut-pt/Pente-laranja.png',colors:['Laranja','Amarelo'],rating:'5.0',activeColor:'Laranja'}); renderProds(); }
-function removeProd(i){ CFG.bestSelling.products.splice(i,1); renderProds(); }
-function saveProds(){ saveAll(); }
+function viewOrder(id){
+  const o=ordersCache.find(x=>String(x.id)===String(id)); if(!o) return;
+  const el=document.getElementById('orderDetail');
+  const items=Array.isArray(o.items)?o.items:[];
+  el.style.display='';
+  el.innerHTML='<h3>Encomenda #'+o.id+' <span class="badge badge--muted">'+(o.status||'')+'</span></h3><p style="font-size:.84rem;color:#555">Data '+(o.created_at||'')+' · '+(o.email||'')+' · Stripe '+(o.stripe_session||'—')+'</p><div class="admin-table-wrap"><table class="admin-table"><tr><th>Produto</th><th>Qtd</th><th>Preço</th></tr>'+items.map(i=>'<tr><td>'+(i.name||i.id||'?')+'</td><td>'+(i.qty||i.quantity||1)+'</td><td>'+(i.price!=null? i.price : (i.priceNum!=null? fmtMoney(i.priceNum):'—'))+'</td></tr>').join('')+'</table></div><p style="margin-top:.6rem"><b>Total: '+fmtMoney(o.total)+'</b></p><div class="admin-actions"><button class="btn btn--outline" onclick="document.getElementById(\'orderDetail\').style.display=\'none\'">Fechar</button></div>';
+  el.scrollIntoView({behavior:'smooth'});
+}
+function exportOrdersCSV(){
+  if(!ordersCache.length) return alert('Sem encomendas');
+  const rows=[['id','created_at','email','total','status','items']].concat(ordersCache.map(o=>[o.id, o.created_at||'', o.email||'', String(o.total).replace('.',','), o.status||'', JSON.stringify(o.items||[]) ]));
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='birdcut-encomendas.csv'; a.click(); URL.revokeObjectURL(url);
+}
 
-function renderBarb(){
-  document.getElementById('bTitle').value=CFG.internacional.title||'';
-  document.getElementById('bSubMain').value=CFG.internacional.subtitleMain||'';
-  document.getElementById('bSubHandle').value=CFG.internacional.subtitleHandle||'';
-  const c=document.getElementById('barbList');
-  c.innerHTML=CFG.internacional.images.map((src,i)=>`
-    <div class="admin-field"><label>Imagem ${i+1}</label><div style="display:flex;gap:.6rem"><input data-bi="${i}" value="${src}" style="flex:1"><button class="btn btn--outline" style="padding:.4rem .7rem" onclick="CFG.internacional.images.splice(${i},1);renderBarb()">✕</button></div><img src="${src}" style="width:80px;height:100px;object-fit:cover;border-radius:6px;margin-top:.4rem;border:1px solid rgba(0,0,0,.08)"></div>`).join('')+`<button class="btn btn--outline" style="margin-top:.6rem" onclick="CFG.internacional.images.push('img/birdcut-pt/1-1-819x1024.png');renderBarb()">+ Adicionar imagem</button>`;
-  c.querySelectorAll('input[data-bi]').forEach(el=>{
-    el.addEventListener('change',e=>{ CFG.internacional.images[+e.target.dataset.bi]=e.target.value; });
-  });
-  document.getElementById('bTitle').onchange=e=>CFG.internacional.title=e.target.value;
-  document.getElementById('bSubMain').onchange=e=>CFG.internacional.subtitleMain=e.target.value;
-  document.getElementById('bSubHandle').onchange=e=>CFG.internacional.subtitleHandle=e.target.value;
+// ---- CLIENTS ----
+let clientsCache=[];
+async function loadClients(){
+  try{
+    const rows=await adminGet('/api/admin/users');
+    clientsCache=rows;
+    renderClients();
+  }catch(e){ document.getElementById('clientsBody').innerHTML='<tr><td colspan="6" style="color:#c62828;padding:1rem">Erro: '+e.message+'</td></tr>'; }
+}
+function renderClients(){
+  const q=(document.getElementById('clientsSearch').value||'').toLowerCase();
+  let rows=clientsCache.slice();
+  if(q) rows=rows.filter(u=> String(u.email||'').toLowerCase().includes(q) || String(u.name||'').toLowerCase().includes(q));
+  const tb=document.getElementById('clientsBody');
+  if(!rows.length){ tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:#777;padding:2rem">Sem clientes.</td></tr>'; return; }
+  tb.innerHTML=rows.slice(0,200).map(u=>`
+    <tr>
+      <td>${u.email||''}</td>
+      <td>${(u.name||'')+' '+(u.surname||'')}</td>
+      <td><b>${u.orders||0}</b></td>
+      <td>${fmtMoney(u.spent||0)}</td>
+      <td>${(u.created_at||'').slice(0,10)}</td>
+      <td><span class="badge ${u.role==='admin'?'badge--ok':'badge--muted'}">${u.role||'user'}</span></td>
+    </tr>`).join('');
+}
+
+// ---- CARTS ----
+async function loadCarts(){
+  try{
+    const status=document.getElementById('cartsStatus').value||'abandoned';
+    const rows=await adminGet('/api/admin/carts?status='+encodeURIComponent(status));
+    const tb=document.getElementById('cartsBody');
+    if(!rows.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:#777;padding:2rem">Sem carrinhos ('+status+').</td></tr>'; return; }
+    tb.innerHTML=rows.map(c=>{
+      const items=Array.isArray(c.items)?c.items:[];
+      const preview=items.length? items.slice(0,2).map(i=> (i.name||i.id||'?')+' ×'+(i.qty||1)).join(', ')+(items.length>2?' + '+(items.length-2)+' mais':'') : '—';
+      const age=c.last_activity||c.created_at||'';
+      return `<tr>
+        <td><small style="font-family:monospace">${String(c.session_id||'').slice(0,10)}…</small></td>
+        <td>${c.email||'—'}<br><small style="color:#777">${c.user_id? 'user #'+c.user_id : ''}</small></td>
+        <td><small>${preview}</small></td>
+        <td><b>${fmtMoney(c.total)}</b></td>
+        <td>${(age||'').slice(0,16).replace('T',' ')}</td>
+        <td><span class="badge ${c.status==='abandoned'?'badge--bad':c.status==='active'?'badge--warn':c.status==='converted'?'badge--ok':'badge--muted'}">${c.status}</span></td>
+        <td><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem" onclick="copyCart(${c.id})">Copiar</button></td>
+      </tr>`;
+    }).join('');
+    window._cartsCache=rows;
+  }catch(e){ document.getElementById('cartsBody').innerHTML='<tr><td colspan="7" style="color:#c62828;padding:1rem">Erro: '+e.message+'</td></tr>'; }
+}
+function copyCart(id){
+  const c=(window._cartsCache||[]).find(x=>x.id===id); if(!c) return;
+  const txt='Carrinho Bird Cut — sessão '+c.session_id+'\nCliente: '+(c.email||'(sem e-mail)')+'\nTotal: '+fmtMoney(c.total)+'\nItens: '+JSON.stringify(c.items,null,2)+'\nÚltima atividade: '+(c.last_activity||'');
+  navigator.clipboard.writeText(txt).then(()=>alert('Detalhe copiado para recuperar por WhatsApp/e-mail.')).catch(()=>prompt('Copia:',txt));
+}
+window.copyCart=copyCart;
+
+// ---- ANALYTICS ----
+async function loadAnalytics(){
+  try{
+    const data=await adminGet('/api/admin/analytics?days=14');
+    document.getElementById('aPageviews').textContent=fmtInt((data.daily||[]).reduce((s,d)=>s+d.pageviews,0));
+    document.getElementById('aVisitors').textContent=fmtInt((data.daily||[]).reduce((s,d)=>s+d.visitors,0));
+    const byMap={}; (data.byEvent||[]).forEach(e=>byMap[e.event_type]=e.c);
+    document.getElementById('aAdd').textContent=fmtInt(byMap['add_to_cart']||byMap['cart_update']||0);
+    document.getElementById('aCheckout').textContent=fmtInt(byMap['begin_checkout']||0);
+    // daily
+    const labels=(data.daily||[]).map(d=>d.d.slice(5));
+    const pv=(data.daily||[]).map(d=>d.pageviews);
+    const vis=(data.daily||[]).map(d=>d.visitors);
+    if(chartAnalyticsDaily) chartAnalyticsDaily.destroy();
+    chartAnalyticsDaily=new Chart(document.getElementById('chartAnalyticsDaily'),{type:'line',data:{labels, datasets:[{label:'Pageviews',data:pv,borderColor:'#111',backgroundColor:'rgba(17,17,17,.06)',fill:true,tension:.35},{label:'Visitantes',data:vis,borderColor:'#1a7a2e',backgroundColor:'rgba(26,122,46,.08)',fill:true,tension:.35}]}, options:{responsive:true,maintainAspectRatio:false, scales:{y:{grid:{color:'rgba(0,0,0,.06)'}}}}});
+    // events pie
+    const evLabels=(data.byEvent||[]).map(e=>e.event_type);
+    const evVals=(data.byEvent||[]).map(e=>e.c);
+    if(chartEvents) chartEvents.destroy();
+    chartEvents=new Chart(document.getElementById('chartEvents'),{type:'doughnut',data:{labels:evLabels, datasets:[{data:evVals, backgroundColor:['#111','#1a7a2e','#c58800','#c62828','#888','#555']} ]}, options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}}});
+    document.getElementById('eventsTable').innerHTML='<table class="admin-table" style="min-width:0"><tr><th>Evento</th><th>Qtd</th></tr>'+(data.byEvent||[]).map(e=>'<tr><td>'+e.event_type+'</td><td><b>'+e.c+'</b></td></tr>').join('')+'</table>';
+    // funnel
+    const f=data.funnel||{visitors:0,addToCart:0,beginCheckout:0,purchase:0};
+    const funnelLabels=['Visitantes','Add to cart','Checkout','Compra'];
+    const funnelVals=[f.visitors, f.addToCart, f.beginCheckout, f.purchase];
+    if(chartFunnel) chartFunnel.destroy();
+    chartFunnel=new Chart(document.getElementById('chartFunnel'),{type:'bar',data:{labels:funnelLabels, datasets:[{label:'Sessões / Encomendas', data:funnelVals, backgroundColor:['#111','#1a7a2e','#c58800','#c62828']}]}, options:{indexAxis:'y', responsive:true, maintainAspectRatio:false, scales:{x:{grid:{color:'rgba(0,0,0,.06)'}}}}});
+  }catch(e){
+    console.error(e);
+  }
+}
+
+// ---- CONTENT (site.json) ----
+function renderContent(){
+  const host=document.getElementById('contentSections');
+  if(!CFG) { host.innerHTML='<p style="color:#777">A carregar CFG…</p>'; return; }
+  const esc=s=>String(s||'').replace(/</g,'&lt;');
+  host.innerHTML=`
+    <div class="admin-card"><h3>Hero</h3>
+      <div class="admin-field"><label>Título</label><input id="hTitle" value="${esc(CFG.hero?.title)}"></div>
+      <div class="admin-field"><label>Descrição (HTML)</label><textarea id="hDesc">${CFG.hero?.desc||''}</textarea></div>
+      <div class="admin-row"><div class="admin-field"><label>Texto botão</label><input id="hBtnText" value="${esc(CFG.hero?.btnText)}"></div><div class="admin-field"><label>Link botão</label><input id="hBtnLink" value="${esc(CFG.hero?.btnLink)}"></div></div>
+      <div class="admin-field"><label>Imagem fundo URL</label><input id="hBg" value="${esc(CFG.hero?.bgImage)}"></div>
+      <div class="admin-actions"><button class="btn" style="background:#111;color:#fff" onclick="saveHero()">Guardar Hero</button></div>
+    </div>
+    <div class="admin-card"><h3>Best-selling</h3>
+      <div class="admin-field"><label>Kicker</label><input id="bsKicker" value="${esc(CFG.bestSelling?.kicker)}"></div>
+      <div class="admin-field"><label>Título</label><input id="bsTitle" value="${esc(CFG.bestSelling?.title)}"></div>
+      <div id="bsProducts"></div>
+      <div class="admin-actions"><button class="btn btn--outline" onclick="addBsProd()">+ Produto (site)</button><button class="btn" style="background:#111;color:#fff" onclick="saveBs()">Guardar Best-selling</button></div>
+    </div>
+    <div class="admin-card"><h3>Internacional</h3>
+      <div class="admin-field"><label>Título</label><input id="bTitle" value="${esc(CFG.internacional?.title)}"></div>
+      <div class="admin-row"><div class="admin-field"><label>Subtítulo main</label><input id="bSubMain" value="${esc(CFG.internacional?.subtitleMain)}"></div><div class="admin-field"><label>Handle</label><input id="bSubHandle" value="${esc(CFG.internacional?.subtitleHandle)}"></div></div>
+      <div id="barbList"></div>
+      <div class="admin-actions"><button class="btn" style="background:#111;color:#fff" onclick="saveBarb()">Guardar Internacional</button></div>
+    </div>
+    <div class="admin-card"><h3>Experiências</h3>
+      <div class="admin-field"><label>Título secção</label><input id="eTitle" value="${esc(CFG.experiencias?.title)}"></div>
+      <div id="expList"></div>
+      <div class="admin-actions"><button class="btn btn--outline" onclick="addExp()">+ Card</button><button class="btn" style="background:#111;color:#fff" onclick="saveExp()">Guardar Experiências</button></div>
+    </div>
+    <div class="admin-card"><h3>FAQ</h3>
+      <div class="admin-field"><label>Título</label><input id="fTitle" value="${esc(CFG.faq?.title)}"></div>
+      <div id="faqList"></div>
+      <div class="admin-actions"><button class="btn btn--outline" onclick="addFaq()">+ Pergunta</button><button class="btn" style="background:#111;color:#fff" onclick="saveFaq()">Guardar FAQ</button></div>
+    </div>`;
+  // populate dynamic lists
+  renderBsProducts(); renderBarbList(); renderExpList(); renderFaqList();
+}
+function renderBsProducts(){
+  const c=document.getElementById('bsProducts'); if(!c) return;
+  c.innerHTML=(CFG.bestSelling.products||[]).map((p,i)=>`
+    <div style="border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:.8rem;margin-bottom:.6rem;background:#fafafa">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem"><b>#${i+1} ${p.name}</b><button class="btn btn--outline" style="padding:.3rem .5rem;font-size:.7rem" onclick="CFG.bestSelling.products.splice(${i},1);renderBsProducts()">Remover</button></div>
+      <div class="admin-field"><label>Nome</label><input data-bsk="name" data-bsi="${i}" value="${String(p.name).replace(/"/g,'&quot;')}"></div>
+      <div class="admin-row"><div class="admin-field"><label>Preço texto</label><input data-bsk="price" data-bsi="${i}" value="${p.price}"></div><div class="admin-field"><label>Preço num</label><input type="number" step="0.01" data-bsk="priceNum" data-bsi="${i}" value="${p.priceNum}"></div></div>
+      <div class="admin-field"><label>Imagem</label><input data-bsk="image" data-bsi="${i}" value="${p.image}"></div>
+    </div>`).join('');
+  c.querySelectorAll('input').forEach(el=>el.addEventListener('change',e=>{
+    const k=e.target.dataset.bsk, i=+e.target.dataset.bsi; let v=e.target.value; if(k==='priceNum') v=parseFloat(v); CFG.bestSelling.products[i][k]=v;
+  }));
+}
+function addBsProd(){ CFG.bestSelling.products.push({id:'p'+Date.now(), name:'CurveLine Beard Pro — Novo', price:'18,89 €', priceNum:18.89, image:'img/birdcut-pt/Pente-CurveLine-Laranja.png', colors:['Laranja','Amarelo'], rating:'5.0', activeColor:'Laranja'}); renderBsProducts(); }
+function saveBs(){ CFG.bestSelling.kicker=document.getElementById('bsKicker').value; CFG.bestSelling.title=document.getElementById('bsTitle').value; saveAll(); }
+function renderBarbList(){
+  const c=document.getElementById('barbList'); if(!c) return;
+  c.innerHTML=(CFG.internacional.images||[]).map((src,i)=>`
+    <div class="admin-field"><label>Imagem ${i+1}</label><div style="display:flex;gap:.5rem"><input data-bi="${i}" value="${src}" style="flex:1"><button class="btn btn--outline" style="padding:.4rem .6rem" onclick="CFG.internacional.images.splice(${i},1);renderBarbList()">✕</button></div><img src="${src}" alt="" style="width:72px;height:90px;object-fit:cover;border-radius:6px;margin-top:.3rem;border:1px solid rgba(0,0,0,.08)" onerror="this.style.display='none'"></div>`).join('')+ `<button class="btn btn--outline" style="margin-top:.4rem" onclick="CFG.internacional.images.push('img/birdcut-pt/1-1-819x1024.png');renderBarbList()">+ Adicionar imagem</button>`;
+  c.querySelectorAll('input[data-bi]').forEach(el=>el.addEventListener('change',e=>{ CFG.internacional.images[+e.target.dataset.bi]=e.target.value; }));
+  const bT=document.getElementById('bTitle'); if(bT) bT.onchange=e=>CFG.internacional.title=e.target.value;
+  const bM=document.getElementById('bSubMain'); if(bM) bM.onchange=e=>CFG.internacional.subtitleMain=e.target.value;
+  const bH=document.getElementById('bSubHandle'); if(bH) bH.onchange=e=>CFG.internacional.subtitleHandle=e.target.value;
 }
 function saveBarb(){ CFG.internacional.title=document.getElementById('bTitle').value; CFG.internacional.subtitleMain=document.getElementById('bSubMain').value; CFG.internacional.subtitleHandle=document.getElementById('bSubHandle').value; saveAll(); }
-
-function renderExp(){
-  document.getElementById('eTitle').value=CFG.experiencias.title||'';
-  const c=document.getElementById('expList');
-  c.innerHTML=CFG.experiencias.cards.map((card,i)=>`
-    <div class="admin-card" style="background:#fafafa">
-      <div style="display:flex;justify-content:space-between;align-items:center"><b>Card ${i+1}</b><button class="btn btn--outline" style="padding:.3rem .6rem;font-size:.7rem" onclick="CFG.experiencias.cards.splice(${i},1);renderExp()">Remover</button></div>
-      <div class="admin-field"><label>Título</label><input data-ek="title" data-ei="${i}" value="${card.title}"></div>
+function renderExpList(){
+  const c=document.getElementById('expList'); if(!c) return;
+  c.innerHTML=(CFG.experiencias.cards||[]).map((card,i)=>`
+    <div style="border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:.8rem;margin-bottom:.6rem;background:#fafafa">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b>Card ${i+1}</b><button class="btn btn--outline" style="padding:.3rem .5rem;font-size:.7rem" onclick="CFG.experiencias.cards.splice(${i},1);renderExpList()">Remover</button></div>
+      <div class="admin-field"><label>Título</label><input data-ek="title" data-ei="${i}" value="${String(card.title).replace(/"/g,'&quot;')}"></div>
       <div class="admin-field"><label>Texto</label><textarea data-ek="text" data-ei="${i}">${card.text}</textarea></div>
-      <div class="admin-row">
-        <div class="admin-field"><label>Autor</label><input data-ek="author" data-ei="${i}" value="${card.author}"></div>
-        <div class="admin-field"><label>Flag</label><input data-ek="flag" data-ei="${i}" value="${card.flag}"></div>
-      </div>
+      <div class="admin-row"><div class="admin-field"><label>Autor</label><input data-ek="author" data-ei="${i}" value="${card.author}"></div><div class="admin-field"><label>Flag</label><input data-ek="flag" data-ei="${i}" value="${card.flag}"></div></div>
     </div>`).join('');
-  c.querySelectorAll('input,textarea').forEach(el=>{
-    el.addEventListener('change',e=>{
-      const k=e.target.dataset.ek, i=+e.target.dataset.ei;
-      CFG.experiencias.cards[i][k]=e.target.value;
-    });
-  });
-  document.getElementById('eTitle').onchange=e=>CFG.experiencias.title=e.target.value;
+  c.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('change',e=>{ const k=e.target.dataset.ek, i=+e.target.dataset.ei; CFG.experiencias.cards[i][k]=e.target.value; }));
+  const et=document.getElementById('eTitle'); if(et) et.onchange=e=>CFG.experiencias.title=e.target.value;
 }
-function addExp(){ CFG.experiencias.cards.push({id:'e'+Date.now(),title:'Novo título',text:'“Novo testemunho…”',author:'Nome',flag:'🇵🇹',verified:'Compra verificada'}); renderExp(); }
+function addExp(){ CFG.experiencias.cards.push({id:'e'+Date.now(), title:'Novo título', text:'“Novo testemunho…”', author:'Nome', flag:'🇵🇹', verified:'Compra verificada'}); renderExpList(); }
 function saveExp(){ CFG.experiencias.title=document.getElementById('eTitle').value; saveAll(); }
-
-function renderFaq(){
-  document.getElementById('fTitle').value=CFG.faq.title||'';
-  const c=document.getElementById('faqList');
-  c.innerHTML=CFG.faq.items.map((it,i)=>`
-    <div class="admin-card" style="background:#fafafa">
-      <div style="display:flex;justify-content:space-between;align-items:center"><b>Pergunta ${i+1}</b><button class="btn btn--outline" style="padding:.3rem .6rem;font-size:.7rem" onclick="CFG.faq.items.splice(${i},1);renderFaq()">Remover</button></div>
-      <div class="admin-field"><label>Pergunta</label><input data-fk="q" data-fi="${i}" value="${it.q.replace(/"/g,'&quot;')}"></div>
+function renderFaqList(){
+  const c=document.getElementById('faqList'); if(!c) return;
+  c.innerHTML=(CFG.faq.items||[]).map((it,i)=>`
+    <div style="border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:.8rem;margin-bottom:.6rem;background:#fafafa">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b>Pergunta ${i+1}</b><button class="btn btn--outline" style="padding:.3rem .5rem;font-size:.7rem" onclick="CFG.faq.items.splice(${i},1);renderFaqList()">Remover</button></div>
+      <div class="admin-field"><label>Pergunta</label><input data-fk="q" data-fi="${i}" value="${String(it.q).replace(/"/g,'&quot;')}"></div>
       <div class="admin-field"><label>Resposta</label><textarea data-fk="a" data-fi="${i}">${it.a}</textarea></div>
     </div>`).join('');
-  c.querySelectorAll('input,textarea').forEach(el=>{
-    el.addEventListener('change',e=>{
-      const k=e.target.dataset.fk, i=+e.target.dataset.fi;
-      CFG.faq.items[i][k]=e.target.value;
-    });
-  });
-  document.getElementById('fTitle').onchange=e=>CFG.faq.title=e.target.value;
+  c.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('change',e=>{ const k=e.target.dataset.fk, i=+e.target.dataset.fi; CFG.faq.items[i][k]=e.target.value; }));
+  const ft=document.getElementById('fTitle'); if(ft) ft.onchange=e=>CFG.faq.title=e.target.value;
 }
-function addFaq(){ CFG.faq.items.push({id:'f'+Date.now(),q:'Nova pergunta?',a:'Resposta.'}); renderFaq(); }
+function addFaq(){ CFG.faq.items.push({id:'f'+Date.now(), q:'Nova pergunta?', a:'Resposta.'}); renderFaqList(); }
 function saveFaq(){ CFG.faq.title=document.getElementById('fTitle').value; saveAll(); }
+function saveHero(){ CFG.hero.title=document.getElementById('hTitle').value; CFG.hero.desc=document.getElementById('hDesc').value; CFG.hero.btnText=document.getElementById('hBtnText').value; CFG.hero.btnLink=document.getElementById('hBtnLink').value; CFG.hero.bgImage=document.getElementById('hBg').value; saveAll(); }
+window.saveHero=saveHero; window.saveBs=saveBs; window.addBsProd=addBsProd; window.saveBarb=saveBarb; window.saveExp=saveExp; window.addExp=addExp; window.saveFaq=saveFaq; window.addFaq=addFaq;
+window.saveRaw=()=>{ try{ CFG=JSON.parse(document.getElementById('siteRaw').value); saveAll(); }catch(e){ alert('JSON inválido: '+e.message); } };
 
-async function loadOrdersAdmin(){
-  const el=document.getElementById('ordersAdmin');
-  try{
-    const orders=await getOrders();
-    if(!orders || !orders.length){ el.innerHTML='<p style=\"color:#777\">Sem encomendas.</p>'; return; }
-    el.innerHTML='<table class=\"admin-table\"><tr><th>ID</th><th>Data</th><th>Cliente</th><th>Total</th><th>Status</th></tr>'+orders.map(o=>`<tr><td>#${o.id||'—'}</td><td>${(o.created_at||'').slice(0,10)}</td><td>${o.customer_email||o.email||'—'}</td><td>${Number(o.total||0).toFixed(2)} €</td><td><span class=\"badge badge--pend\">${o.status||'—'}</span></td></tr>`).join('')+'</table>';
-    document.getElementById('dashOrders').textContent=orders.length;
-  }catch(e){ el.innerHTML='<p style=\"color:#c62828\">Erro: '+(e.message||'—')+'</p>'; }
-}
-async function loadClientsAdmin(){
-  const el=document.getElementById('clientsAdmin');
-  el.innerHTML='<p style=\"color:#777\">Lista de clientes disponível via <code>/api/admin/users</code> se o backend expuser. Por agora, usa a coleção de encomendas para ver e-mails.</p>';
-  try{
-    const r=await fetch('/api/admin/users',{headers:{'Authorization':'Bearer '+(localStorage.getItem('bc_token')||'')}});
-    if(r.ok){
-      const users=await r.json();
-      document.getElementById('dashClients').textContent=Array.isArray(users)?users.length:'—';
-      if(Array.isArray(users) && users.length){
-        el.innerHTML='<table class=\"admin-table\"><tr><th>E-mail</th><th>Nome</th><th>Criação</th></tr>'+users.map(u=>`<tr><td>${u.email||''}</td><td>${(u.name||'')+' '+(u.surname||'')}</td><td>${(u.created_at||'').slice(0,10)}</td></tr>`).join('')+'</table>';
-      }
-    }
-  }catch(e){}
-}
-
+// ---- INIT ----
 async function init(){
-  // auth
   const loginSec=document.getElementById('adminLogin');
   const denied=document.getElementById('adminDenied');
   const app=document.getElementById('adminApp');
   const emailEl=document.getElementById('adminUserEmail');
   const logoutBtn=document.getElementById('adminLogout');
   const logoutBtn2=document.getElementById('adminLogout2');
-
   function showLogin(){ loginSec.style.display=''; denied.style.display='none'; app.style.display='none'; }
   function showDenied(u){ loginSec.style.display='none'; denied.style.display=''; app.style.display='none'; document.getElementById('deniedEmail').textContent=u?u.email:''; document.getElementById('deniedMsg').textContent='Esta conta ('+(u?.email||'')+') não tem permissões de administrador.'; }
-  function showApp(u){ loginSec.style.display='none'; denied.style.display='none'; app.style.display='grid'; emailEl.textContent=u.email; logoutBtn.style.display=''; }
+  function showApp(u){ loginSec.style.display='none'; denied.style.display='none'; app.style.display='grid'; emailEl.textContent=u.email; logoutBtn.style.display=''; document.getElementById('adminRole').textContent=u.role||'Administrador'; }
 
-  // tab nav
   document.getElementById('adminNav').addEventListener('click',e=>{
-    const a=e.target.closest('a[data-tab]');
-    if(!a) return;
-    e.preventDefault();
-    document.querySelectorAll('.admin-nav a').forEach(x=>x.classList.remove('active'));
-    a.classList.add('active');
+    const a=e.target.closest('a[data-tab]'); if(!a) return; e.preventDefault();
+    document.querySelectorAll('.admin-nav a').forEach(x=>x.classList.remove('active')); a.classList.add('active');
     document.querySelectorAll('.admin-tab').forEach(t=>t.style.display='none');
-    document.getElementById('tab-'+a.dataset.tab).style.display='';
+    const id='tab-'+a.dataset.tab; const el=document.getElementById(id); if(el) el.style.display='';
+    if(a.dataset.tab==='analytics') loadAnalytics();
+    if(a.dataset.tab==='carts') loadCarts();
+    if(a.dataset.tab==='products') loadProducts();
+    if(a.dataset.tab==='orders') loadOrders();
+    if(a.dataset.tab==='clients') loadClients();
   });
-
-  // logout
+  document.querySelectorAll('[data-goto]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const t=a.getAttribute('data-goto'); const nav=document.querySelector('.admin-nav a[data-tab="'+t+'"]'); if(nav) nav.click(); }));
   logoutBtn.addEventListener('click',()=>logout().then(()=>location.reload()));
   logoutBtn2.addEventListener('click',()=>logout().then(()=>location.reload()));
-  document.getElementById('btnClearPreview').addEventListener('click',()=>{ localStorage.removeItem(LS_KEY); alert('Preview limpo. A loja volta a ler data/site.json'); location.reload(); });
-  document.getElementById('btnExport').addEventListener('click',()=>{
-    const box=document.getElementById('exportBox');
-    box.style.display='block';
-    box.textContent=JSON.stringify(CFG,null,2);
-  });
-  document.getElementById('btnSaveAll').addEventListener('click',saveAll);
+  const btnClearPreview=document.getElementById('btnClearPreview');
+  if(btnClearPreview) btnClearPreview.addEventListener('click',()=>{ localStorage.removeItem(LS_KEY); alert('Preview limpo. A loja volta a ler data/site.json'); location.reload(); });
+  const btnExport=document.getElementById('btnExport');
+  if(btnExport) btnExport.addEventListener('click',()=>{ const box=document.getElementById('exportBox'); box.style.display='block'; box.textContent=JSON.stringify(CFG,null,2); });
+  const btnSaveAll=document.getElementById('btnSaveAll');
+  if(btnSaveAll) btnSaveAll.addEventListener('click',saveAll);
   document.getElementById('adminLoginForm').addEventListener('submit',async e=>{
-    e.preventDefault();
-    const err=document.getElementById('admErr'); err.textContent='';
-    const btn=document.getElementById('admBtn'); btn.disabled=true; btn.textContent='A entrar…';
-    try{
-      await login(document.getElementById('admEmail').value.trim(), document.getElementById('admPass').value);
-      const u=await getProfile();
-      if(isAdminUser(u)) { showApp(u); await bootData(); }
-      else showDenied(u);
-    }catch(ex){ err.textContent=ex.message||'Erro ao entrar'; }
-    finally{ btn.disabled=false; btn.textContent='Entrar'; }
+    e.preventDefault(); const err=document.getElementById('admErr'); err.textContent=''; const btn=document.getElementById('admBtn'); btn.disabled=true; btn.textContent='A entrar…';
+    try{ await login(document.getElementById('admEmail').value.trim(), document.getElementById('admPass').value); const u=await getProfile(); if(isAdminUser(u)){ showApp(u); await bootData(); } else showDenied(u); }catch(ex){ err.textContent=ex.message||'Erro ao entrar'; } finally{ btn.disabled=false; btn.textContent='Entrar'; }
   });
+  document.getElementById('btnRefreshDash').addEventListener('click',()=>loadDashboard().catch(e=>alert(e.message)));
+  document.getElementById('btnRefreshProd').addEventListener('click',loadProducts);
+  document.getElementById('btnNewProd').addEventListener('click',openNewProd);
+  document.getElementById('btnSaveProd').addEventListener('click',saveProdForm);
+  document.getElementById('btnCancelProd').addEventListener('click',()=>document.getElementById('productForm').style.display='none');
+  document.getElementById('btnRefreshOrders').addEventListener('click',loadOrders);
+  document.getElementById('btnExportOrders').addEventListener('click',exportOrdersCSV);
+  document.getElementById('ordersSearch').addEventListener('input',renderOrders);
+  document.getElementById('ordersStatus').addEventListener('change',renderOrders);
+  document.getElementById('btnRefreshClients').addEventListener('click',loadClients);
+  document.getElementById('clientsSearch').addEventListener('input',renderClients);
+  document.getElementById('btnRefreshCarts').addEventListener('click',loadCarts);
+  document.getElementById('cartsStatus').addEventListener('change',loadCarts);
 
-  // check existing session
   try{
     const u=await getProfile();
     if(!u) showLogin();
@@ -469,17 +615,17 @@ async function init(){
   async function bootData(){
     CFG=await loadConfig();
     document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);
-    renderHero(); renderProds(); renderBarb(); renderExp(); renderFaq();
-    document.getElementById('dashProds').textContent=CFG.bestSelling.products.length;
-    loadOrdersAdmin(); loadClientsAdmin();
+    renderContent();
+    try{ await loadDashboard(); }catch(e){ console.error('dash',e); }
+    // preload others async
+    loadProducts().catch(()=>{});
+    loadOrders().catch(()=>{});
+    loadClients().catch(()=>{});
+    loadCarts().catch(()=>{});
+    // health
+    fetch('/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time:'erro').catch(()=>document.getElementById('healthCheck').textContent='offline (usa bcapi direto)');
+    fetch('https://media.pontofinal.site/bcapi/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time+' (bcapi)':'—').catch(()=>{});
   }
-  window.saveHero=saveHero; window.saveProds=saveProds; window.addProd=addProd; window.removeProd=removeProd;
-  window.saveBarb=saveBarb; window.renderBarb=renderBarb;
-  window.saveExp=saveExp; window.addExp=addExp; window.renderExp=renderExp;
-  window.saveFaq=saveFaq; window.addFaq=addFaq; window.renderFaq=renderFaq;
-  window.saveAll=saveAll;
-  window.saveRaw=()=>{ try{ CFG=JSON.parse(document.getElementById('siteRaw').value); saveAll(); }catch(e){ alert('JSON inválido: '+e.message); } };
-  window.loadConfig=async()=>{ CFG=await loadConfig(); document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2); renderHero(); renderProds(); renderBarb(); renderExp(); renderFaq(); };
 }
 document.addEventListener('DOMContentLoaded', init);
 </script>

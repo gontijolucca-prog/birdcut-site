@@ -2,14 +2,11 @@
    RAFEL MODEL v2 — fiel ao site modelo (scan 10x, 2026-08-23)
    ============================================================ */
 
-/* ===== 1. FAIXA PRETA birdcut.pt fiel (24px, #222, Helvetica, setas) — FIXA no topo ===== */
-#birdcut-announcement-bar{width:100%;height:20px;min-height:20px;display:flex;align-items:center;justify-content:space-between;background:#222222 !important;padding:0 18%;box-sizing:border-box;overflow:hidden;position:fixed;top:0;left:0;right:0;z-index:10001}
-#birdcut-announcement-bar .bc-message-area{position:relative;flex:1;height:20px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-#birdcut-announcement-bar .bc-message{position:absolute;left:0;top:0;width:100%;height:20px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:11px !important;font-weight:300 !important;letter-spacing:.15px;line-height:20px;color:#fff !important;opacity:0;visibility:hidden;transform:translateY(2px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
-#birdcut-announcement-bar .bc-message.active{opacity:1 !important;visibility:visible !important;transform:translateY(0)}
-#birdcut-announcement-bar .bc-arrow{appearance:none !important;width:28px;height:20px;flex:0 0 28px;border:none !important;outline:none !important;background:transparent !important;color:#fff !important;box-shadow:none !important;font-family:Arial,sans-serif;font-size:22px !important;font-weight:200;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 !important;margin:0 !important;opacity:.75;transition:opacity .2s ease,transform .2s ease}
-#birdcut-announcement-bar .bc-arrow:hover,#birdcut-announcement-bar .bc-arrow:focus,#birdcut-announcement-bar .bc-arrow:active{background:transparent !important;color:#fff !important;opacity:1;transform:scale(1.08)}
-@media (max-width:767px){#birdcut-announcement-bar{height:24px;min-height:24px;padding:0 6px}#birdcut-announcement-bar .bc-message-area{height:24px}#birdcut-announcement-bar .bc-message{height:24px;line-height:24px}#birdcut-announcement-bar .bc-arrow{width:25px;height:24px;flex:0 0 25px;font-size:20px !important}}
+#birdcut-announcement-bar{width:100%;height:24px;min-height:24px;display:flex;align-items:center;justify-content:space-between;background:#222222 !important;padding:0 18%;box-sizing:border-box;overflow:hidden;position:fixed;top:0;left:0;right:0;z-index:10001}
+#birdcut-announcement-bar .bc-message-area{position:relative;flex:1;height:24px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#birdcut-announcement-bar .bc-message{position:absolute;left:0;top:0;width:100%;height:24px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:11px !important;font-weight:300 !important;letter-spacing:.15px;line-height:24px;color:#fff !important;opacity:0;visibility:hidden;transform:translateY(2px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
+#birdcut-announcement-bar .bc-arrow{appearance:none !important;width:28px;height:24px;flex:0 0 28px;border:none !important;outline:none !important;background:transparent !important;color:#fff !important;box-shadow:none !important;font-family:Arial,sans-serif;font-size:22px !important;font-weight:200;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 !important;margin:0 !important;opacity:.75;transition:opacity .2s ease,transform .2s ease}
+@media (max-width:767px){#birdcut-announcement-bar{height:28px;min-height:28px;padding:0 6px}#birdcut-announcement-bar .bc-message-area{height:28px}#birdcut-announcement-bar .bc-message{height:28px;line-height:28px}#birdcut-announcement-bar .bc-arrow{width:25px;height:28px;flex:0 0 25px;font-size:20px !important}}
 /* legado slider removido, mantido para compatibilidade */
 .announce--slider,.slider-frases,.frase,.slider-dots{display:none !important}
 
@@ -46,17 +43,19 @@ body{font-family:var(--font-body);color:var(--color-ink)}
 .esc-colhe__preview img{border:1px solid var(--color-line);box-shadow:0 8px 24px rgba(31,44,51,.06)}
 
 /* ===== 2. HEADER EDITORIAL CENTRADO — FIXO abaixo da barra ===== */
-.header--editorial{position:fixed;top:20px;left:0;right:0;z-index:10000;background:#fff !important;border-bottom:1px solid var(--color-line);display:flex;flex-direction:column;align-items:center;text-align:center}
-@media (max-width:767px){.header--editorial{top:24px}}
+.header--editorial{position:fixed;top:24px;left:0;right:0;z-index:10000;background:#fff !important;border-bottom:1px solid var(--color-line);display:flex;flex-direction:column;align-items:center;text-align:center}
+@media (max-width:767px){.header--editorial{top:28px}}
 /* compensa o fixed: empurra o conteúdo para baixo */
-body{padding-top:20px}
+body{padding-top:24px}
+/* compensa o fixed: empurra o conteúdo para baixo */
 body .banner-elementor--print{margin-top:calc(20px + 100px)} /* barra 20 + header aprox */
 @media (max-width:860px){body .banner-elementor--print{margin-top:calc(24px + 80px)}}
 html{scroll-padding-top:calc(20px + 112px)} /* ancora não fica sob o header fixo */
 @media (max-width:767px){html{scroll-padding-top:calc(24px + 90px)}}
 /* birdcut.pt Helvetica menu fiel */
+/* birdcut.pt Helvetica menu fiel — medida live 14px/500 gap34 */
 .nav--editorial{gap:34px !important;justify-content:center}
-.nav--editorial a{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:12px !important;font-weight:400 !important;letter-spacing:.15px !important;text-transform:none !important;color:#333 !important}
+.nav--editorial a{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-size:14px !important;font-weight:500 !important;letter-spacing:.15px !important;text-transform:none !important;color:#333 !important}
 .nav--editorial a::after{background:#333 !important;height:1px !important}
 @media (max-width:767px){.nav--editorial{gap:17px !important}}
 .header__in--editorial{position:relative;flex-direction:column;height:auto;gap:.25rem;padding:1.1rem clamp(18px,4vw,40px) .7rem;justify-content:center}
@@ -85,16 +84,13 @@ html{scroll-padding-top:calc(20px + 112px)} /* ancora não fica sob o header fix
   .header__tools{right:4.2rem;gap:.5rem}
   .header--editorial .burger{right:.9rem}
 }
-
-/* ===== HERO birdcut.pt fiel — 7e5dee7a (posição visual do screenshot de referência, sem margens negivas) ===== */
+/* ===== HERO birdcut.pt fiel — 7e5dee7a (tipografia 100% fiel, legibilidade optimizada) ===== */
 .hero-birdcut{position:relative;background-image:url("../img/birdcut-pt/ChatGPT-Image-8_07_2026-00_31_50.jpg");background-position:right center;background-repeat:no-repeat;background-size:contain;background-color:#fff;max-width:1280px;min-height:545px;margin:20px auto 0;box-sizing:border-box}
-.hero-birdcut__in{min-height:545px;box-sizing:border-box;padding:51px 40px 60px 18px}
-.hero-birdcut__title{font-family:"Montserrat",Sans-serif;font-size:27px;font-weight:500;line-height:1.3;color:#222;margin:0 0 18px;max-width:560px}
-.hero-birdcut__desc{font-family:'Inter',sans-serif;font-size:16px;font-weight:400;line-height:1.65;color:#000;margin:0 0 41px;max-width:360px}
+.hero-birdcut__in{min-height:545px;box-sizing:border-box;padding:90px 50px 90px 19px}
+.hero-birdcut__title{font-family:"Montserrat",Sans-serif;font-size:27px;font-weight:500;line-height:1.3;color:#222;margin:0 0 14px;max-width:560px}
+.hero-birdcut__desc{font-family:'Inter',sans-serif;font-size:15px;font-weight:400;line-height:1.65;color:#000;margin:0 0 24px;max-width:460px}
 .hero-birdcut__desc strong{font-weight:700}
-.hero-birdcut__btn{display:inline-block;min-width:230px;text-align:center;background:#292929;border:1px solid #111;border-radius:6px;color:#fff;font-family:"Montserrat",Sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;padding:12px 32px;margin:0;text-decoration:none;transition:.25s}
-.hero-birdcut__btn:hover{background:#111;color:#fff;border-color:#111}
-@media (max-width:767px){.hero-birdcut{max-width:100%;min-height:420px;margin-top:0}.hero-birdcut__in{min-height:420px;padding:28px 16px 40px 9px}.hero-birdcut__title{font-size:22px;margin-bottom:12px}.hero-birdcut__desc{font-size:15px;margin-bottom:30px;max-width:100%}}
+.hero-birdcut__btn{display:inline-block;min-width:130px;text-align:center;background:#292929;border:1px solid #111;border-radius:6px;color:#fff;font-family:"Montserrat",Sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;padding:12px 32px;margin:0 0 0 1px;text-decoration:none;transition:.25s}
 /* ===== SHOP birdcut.pt fiel — #bc-shop-selector ===== */
 #bc-shop-selector{width:100%;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#292929;padding:50px 20px 55px;box-sizing:border-box;background:#fff}
 #bc-shop-selector .bc-eyebrow{font-size:11px;font-weight:300;letter-spacing:1.5px;margin-bottom:17px}

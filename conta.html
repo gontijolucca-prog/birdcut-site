@@ -90,7 +90,7 @@
               <div><label>Morada *</label><input type="text" id="regStreet" placeholder="Rua, nº, andar" required autocomplete="street-address"></div>
               <div class="form-row">
                 <div><label>Código Postal *</label><input type="text" id="regZip" placeholder="1000-000" required autocomplete="postal-code"></div>
-                <div><label>Cidade *</label><input type="text" id="regCity" placeholder="Lisboa" required autocomplete="address-level2"></div>
+                <div><label>Cidade *</label><input type="text" id="regCity" placeholder="Escreve para pesquisar…" required autocomplete="address-level2" list="listaCidades"><datalist id="listaCidades"></datalist></div>
               </div>
               <div><label>País *</label><input type="text" id="regCountry" value="Portugal" required autocomplete="country-name"></div>
               <div><label>Palavra-passe *</label><div class="pass-wrap"><input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="new-password"><button type="button" class="pass-toggle" data-target="regPass" aria-label="Mostrar palavra-passe">👁</button></div></div>
@@ -156,7 +156,7 @@
             <div><label>Morada</label><input type="text" id="addrStreet" placeholder="Rua, nº, andar" required></div>
             <div class="form-row">
               <div><label>Código Postal</label><input type="text" id="addrZip" placeholder="0000-000" required></div>
-              <div><label>Cidade</label><input type="text" id="addrCity" required></div>
+              <div><label>Cidade</label><input type="text" id="addrCity" placeholder="Escreve para pesquisar…" list="listaCidadesMorada" required><datalist id="listaCidadesMorada"></datalist></div>
             </div>
             <div><label>País</label><input type="text" id="addrCountry" value="Portugal" required></div>
             <button type="submit" class="btn btn--red">Guardar endereço</button>
@@ -241,6 +241,7 @@
 <script src="js/api.js"></script>
 <script src="js/main.js"></script>
 <script src="js/rafael.js"></script>
+<script src="js/cidades-portugal.js"></script>
 <script src="js/conta.js"></script>
 <script>
 // Mostra link Backoffice se for admin

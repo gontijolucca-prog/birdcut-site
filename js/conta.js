@@ -139,6 +139,13 @@
   /* ===== Boot: estado de sessão ===== */
   window.addEventListener('DOMContentLoaded', () => {
     if (typeof onAuthChange === 'function') onAuthChange(paint);
+    if (Array.isArray(window.BC_CIDADES)) {
+      ['listaCidades', 'listaCidadesMorada'].forEach((listId) => {
+        const list = document.getElementById(listId);
+        if (!list) return;
+        list.innerHTML = window.BC_CIDADES.map((cidade) => `<option value="${escapeHtml(cidade)}">`).join('');
+      });
+    }
     document.querySelectorAll('.pass-toggle').forEach((btn) => {
       btn.addEventListener('click', () => {
         const input = document.getElementById(btn.dataset.target);

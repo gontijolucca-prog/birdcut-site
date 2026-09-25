@@ -165,12 +165,10 @@
         <!-- Segurança -->
         <div class="conta-tab" id="tab-seguranca" style="display:none">
           <h2>Segurança</h2>
-          <form id="passForm" class="conta-form">
-            <div><label>Nova palavra-passe</label><input type="password" id="newPass" placeholder="Mínimo 6 caracteres" required minlength="6"></div>
-            <div><label>Confirmar nova palavra-passe</label><input type="password" id="newPass2" placeholder="••••••••" required></div>
-            <div id="passMsg" style="font-size:.88rem;min-height:1.2em"></div>
-            <button type="submit" class="btn btn--red">Atualizar palavra-passe</button>
-          </form>
+          <div class="pedido-card"><div class="pedido-card__body">
+            <p>A palavra-passe pode ser recuperada pelo link «Esqueceu a palavra-passe?» no início de sessão. A alteração autenticada ainda não é suportada pela API actual.</p>
+            <a class="btn btn--outline" href="mailto:contacto@birdcut.pt?subject=Pedido%20de%20altera%C3%A7%C3%A3o%20de%20palavra-passe">Contactar apoio</a>
+          </div></div>
         </div>
       </div>
     </div>
@@ -183,7 +181,7 @@
     <div class="footer__grid footer__grid--cinco">
       <div class="footer__about">
         <div class="brand-editorial__title brand-editorial__title--footer">Bird Cut</div>
-        <p>Ferramentas profissionais para Barbeiros que exigem precisão em cada detalhe.</p>
+        <p>Para criares diferente,<br>e com mais possibilidades.</p>
         <ul class="footer__contacto">
           <li>✉ <a href="mailto:contacto@birdcut.pt">contacto@birdcut.pt</a></li>
           <li>✆ +351 XXX XXX XXX</li>
@@ -247,10 +245,8 @@
 <script>
 // Mostra link Backoffice se for admin
 (function(){
-  const ALLOW=['contacto@birdcut.pt','admin@birdcut.pt','gontijolucca@gmail.com','lucca@birdcut.pt'];
-  function isAdmin(u){ return u && (u.role==='admin' || ALLOW.includes((u.email||'').toLowerCase())); }
   if(typeof getProfile==='function'){
-    getProfile().then(u=>{ if(isAdmin(u)) document.getElementById('adminLink').style.display=''; }).catch(()=>{});
+    getProfile().then(u=>{ if(u && u.role==='admin') document.getElementById('adminLink').style.display=''; }).catch(()=>{});
   }
 })();
 </script>

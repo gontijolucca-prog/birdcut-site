@@ -30,8 +30,7 @@ export async function onRequestPut(context){
     const check = await fetch(API_BASE + '/api/profile', { headers:{ 'Authorization':'Bearer '+token }});
     if(!check.ok) return json({ error:'Token inválido' }, 401);
     const user = await check.json();
-    const allow = ['contacto@birdcut.pt','admin@birdcut.pt','gontijolucca@gmail.com','lucca@birdcut.pt'];
-    const isAdmin = user && (user.role==='admin' || allow.includes((user.email||'').toLowerCase()));
+    const isAdmin = user && user.role === 'admin';
     if(!isAdmin) return json({ error:'Acesso restrito a administradores' }, 403);
     const body = await context.request.json();
     // tenta guardar em KV

@@ -75,6 +75,7 @@
   </div>
 </section>
 
+<script src="js/api.js"></script>
 <script>
 (async () => {
   const params = new URLSearchParams(window.location.search);
@@ -99,14 +100,14 @@
       status: 'processamento',
       sessionId: (window.BC_sid || localStorage.getItem('bc_sid') || '')
     };
-    const docRef = await createGuestOrder(orderData);
-    document.getElementById('orderId').textContent = '#' + docRef.id;
+    const docRef = isLoggedIn() ? await createOrder(orderData) : await createGuestOrder(orderData);
+    document.getElementById('orderId').textContent = '#' + (docRef.id || docRef.orderId || 'registado');
     if(window.BC_purchaseTrack) try{ window.BC_purchaseTrack(orderData); }catch(e){}
     try{ localStorage.removeItem('birdcut-cart'); }catch(e){}
   } catch(e) {
-    document.getElementById('status').textContent = 'Pago';
-    document.getElementById('amount').textContent = '18,89 €';
-    console.log('order save:', e.message);
+    document.getElementById('status').textContent = 'Pagamento recebido; registo do pedido pendente de confirmação.';
+    document.getElementById('orderId').textContent = 'Contacta contacto@birdcut.pt com o comprovativo da compra.';
+    console.error('Não foi possível verificar/persistir o pedido:', e.message);
   }
 })();
 </script>
@@ -116,7 +117,7 @@
     <div class="footer__grid footer__grid--cinco">
       <div class="footer__about">
         <div class="brand-editorial__title brand-editorial__title--footer">Bird Cut</div>
-        <p>Ferramentas profissionais para Barbeiros que exigem precisão em cada detalhe.</p>
+        <p>Para criares diferente,<br>e com mais possibilidades.</p>
         <ul class="footer__contacto">
           <li>✉ <a href="mailto:contacto@birdcut.pt">contacto@birdcut.pt</a></li>
           <li>✆ +351 XXX XXX XXX</li>
@@ -172,7 +173,6 @@
   <a href="conta.html">Área de Cliente</a>
 </div>
 
-<script src="js/api.js"></script>
 <script src="js/main.js"></script>
 <script src="js/rafael.js"></script>
 </body>

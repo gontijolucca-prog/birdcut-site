@@ -26,6 +26,13 @@ function login(email, password) {
     .then(d => { setToken(d.token); return d; });
 }
 
+// O backend de contas autentica por email; o username admin é apenas o identificador público.
+function loginAdmin(username, password) {
+  const value = String(username || '').trim().toLowerCase();
+  if (value !== 'adminbirdcut') return Promise.reject({ code: 400, message: 'Nome de utilizador inválido.' });
+  return login('adminbirdcut@birdcut.pt', password);
+}
+
 function logout() { clearToken(); return Promise.resolve(); }
 
 function getProfile() { return api('/api/profile'); }

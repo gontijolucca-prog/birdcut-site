@@ -1,6 +1,7 @@
 /* Bird Cut — Site Config loader (data/site.json + localStorage preview) */
 (function(){
   const LS_KEY = 'bc_site_config_preview';
+  const escapeHTML = (value) => String(value ?? '').replace(/[&<>\"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' }[char]));
   async function loadConfig(){
     let cfg = null;
     // 1. Try localStorage preview (admin)
@@ -103,16 +104,20 @@
       if(tit && cfg.experiencias.title) tit.textContent = cfg.experiencias.title;
       const wrap = document.querySelector('.exps-grid');
       if(wrap && Array.isArray(cfg.experiencias.cards)){
-        wrap.innerHTML = cfg.experiencias.cards.map(c=>`
+        wrap.innerHTML = cfg.experiencias.cards.map(c=>{
+          const rating = Math.min(5, Math.max(1, Number(c.rating) || 5));
+          const title = c.title ? `<h3 class="exp-card__title">${escapeHTML(c.title)}</h3>` : '';
+          return `
           <article class="exp-card">
-            <div class="exp-card__stars" aria-label="5 estrelas">★★★★★</div>
-            <h3 class="exp-card__title">${c.title}</h3>
-            <p class="exp-card__text">${c.text}</p>
+            <div class="exp-card__stars" role="img" aria-label="${rating} estrelas">${'★'.repeat(rating)}<span class="exp-card__empty-stars" aria-hidden="true">${'★'.repeat(5-rating)}</span></div>
+            ${title}
+            <p class="exp-card__text">${escapeHTML(c.text)}</p>
             <div class="exp-card__foot">
-              <span class="exp-card__author">${c.author}</span><span class="exp-card__flag">${c.flag||''}</span>
-              <span class="exp-card__verified">${c.verified||'Compra verificada'}</span>
+              <span class="exp-card__author">${escapeHTML(c.author)}</span><span class="exp-card__flag" aria-label="Bandeira do país">${escapeHTML(c.flag||'')}</span>
+              <span class="exp-card__verified">${escapeHTML(c.verified||'Criador Bird Cut')}</span>
             </div>
-          </article>`).join('');
+          </article>`;
+        }).join('');
       }
     }
     // FAQ

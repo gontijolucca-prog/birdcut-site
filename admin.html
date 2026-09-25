@@ -73,7 +73,7 @@
   <div class="header__tools"><span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.78rem;color:#555;margin-right:.5rem"></span><button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button></div>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
-<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>E-mail</label><input type="email" id="admEmail" required placeholder="admin@birdcut.pt"></div><div class="admin-field"><label>Palavra-passe</label><input type="password" id="admPass" required placeholder="••••••••"></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso: contacto@birdcut.pt · admin@birdcut.pt · gontijolucca@gmail.com<br>Pass inicial: <code>BirdCut2026!</code></p></div></section>
+<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="adminbirdcut" value="adminbirdcut"></div><div class="admin-field"><label>Palavra-passe</label><input type="password" id="admPass" required placeholder="••••••••"></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p></div></section>
 <section id="adminDenied" class="section" style="display:none"><div class="admin-login"><h2>Acesso restrito</h2><p id="deniedMsg">Esta conta não tem permissões de administrador.</p><p style="font-size:.82rem;color:#777" id="deniedEmail"></p><button class="btn" style="margin-top:1rem;background:#111;color:#fff" onclick="logout().then(()=>location.reload())">Sair</button> <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a></div></section>
 <div id="adminApp" class="admin-wrap" style="display:none">
   <aside class="admin-sidebar">
@@ -171,7 +171,7 @@
     <div id="tab-settings" class="admin-tab" style="display:none">
       <h2 style="font-family:Inter,sans-serif;margin:0 0 .8rem;font-size:1.15rem">Definições</h2>
       <div class="admin-card"><h3>Loja</h3><p style="font-size:.84rem;color:#555">Domínio oficial: <b>birdcut.pt</b> (DNS Dominios.pt → Pages <code>birdcut-site.pages.dev</code> — ver instruções no chat).<br>Pagamentos: Stripe Checkout (preço <code>STRIPE_PRICE_ID</code> em Pages Env Vars). Sucesso → <code>/success.html?session_id=</code> cria encomenda via <code>/api/orders/guest</code>.</p><p style="font-size:.84rem;color:#555">API: <code>https://media.pontofinal.site/bcapi</code> → <code>127.0.0.1:3001</code> (PM2 <code>birdcut-api</code>). Health: <code id="healthCheck">—</code></p></div>
-      <div class="admin-card"><h3>Administradores</h3><p style="font-size:.84rem;color:#555">Acesso restrito a e-mails com <code>role=admin</code> ou allow-list: <code>contacto@birdcut.pt, admin@birdcut.pt, gontijolucca@gmail.com, lucca@birdcut.pt, jrafa.farias@hotmail.com</code>.<br>Pass inicial definido no seed: <code>BirdCut2026!</code> — muda em <code>conta.html</code> se quiseres.</p></div>
+      <div class="admin-card"><h3>Administradores</h3><p style="font-size:.84rem;color:#555">O acesso ao back office e às operações administrativas é validado no servidor. Não são aceites permissões definidas apenas no browser.</p></div>
       <div class="admin-card"><h3>Atalhos</h3><div style="display:flex;gap:.6rem;flex-wrap:wrap"><a href="index.html" class="btn btn--outline">Ver loja</a><a href="conta.html" class="btn btn--outline">Área cliente</a><button class="btn btn--outline" onclick="localStorage.removeItem('bc_site_config_preview');alert('Preview limpo')">Limpar preview</button></div></div>
     </div>
   </main>
@@ -183,8 +183,7 @@
 <script>
 let CFG=null;
 const LS_KEY='bc_site_config_preview';
-const ALLOW=['contacto@birdcut.pt','admin@birdcut.pt','gontijolucca@gmail.com','lucca@birdcut.pt','admin@birdcut-site.com','jrafa.farias@hotmail.com'];
-function isAdminUser(u){ if(!u) return false; if(u.role==='admin') return true; return ALLOW.includes((u.email||'').toLowerCase()); }
+function isAdminUser(u){ return !!u && u.role === 'admin'; }
 async function loadConfig(){ try{ const ls=localStorage.getItem(LS_KEY); if(ls) return JSON.parse(ls);}catch(e){} try{ const r=await fetch('/api/site-config'); if(r.ok){ const j=await r.json(); if(j&&j.hero) return j; }}catch(e){} const r=await fetch('data/site.json',{cache:'no-store'}); return await r.json(); }
 function savePreview(){ localStorage.setItem(LS_KEY, JSON.stringify(CFG)); }
 async function saveToBackend(){ const t=localStorage.getItem('bc_token'); if(!t) return {ok:false,error:'Sem token'}; try{ const r=await fetch('/api/site-config',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify(CFG)}); return await r.json(); }catch(e){ return {ok:false,error:e.message} } }
@@ -529,14 +528,15 @@ function renderExpList(){
   c.innerHTML=(CFG.experiencias.cards||[]).map((card,i)=>`
     <div style="border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:.8rem;margin-bottom:.6rem;background:#fafafa">
       <div style="display:flex;justify-content:space-between;align-items:center"><b>Card ${i+1}</b><button class="btn btn--outline" style="padding:.3rem .5rem;font-size:.7rem" onclick="CFG.experiencias.cards.splice(${i},1);renderExpList()">Remover</button></div>
-      <div class="admin-field"><label>Título</label><input data-ek="title" data-ei="${i}" value="${String(card.title).replace(/"/g,'&quot;')}"></div>
+      <div class="admin-field"><label>Título</label><input data-ek="title" data-ei="${i}" value="${String(card.title||'').replace(/"/g,'&quot;')}"></div>
       <div class="admin-field"><label>Texto</label><textarea data-ek="text" data-ei="${i}">${card.text}</textarea></div>
-      <div class="admin-row"><div class="admin-field"><label>Autor</label><input data-ek="author" data-ei="${i}" value="${card.author}"></div><div class="admin-field"><label>Flag</label><input data-ek="flag" data-ei="${i}" value="${card.flag}"></div></div>
+      <div class="admin-row"><div class="admin-field"><label>Autor</label><input data-ek="author" data-ei="${i}" value="${card.author}"></div><div class="admin-field"><label>Bandeira</label><input data-ek="flag" data-ei="${i}" value="${card.flag}"></div></div>
+      <div class="admin-row"><div class="admin-field"><label>Classificação (1–5)</label><select data-ek="rating" data-ei="${i}">${[1,2,3,4,5].map(n=>`<option value="${n}" ${Number(card.rating||5)===n?'selected':''}>${n} estrelas</option>`).join('')}</select></div><div class="admin-field"><label>Etiqueta</label><input data-ek="verified" data-ei="${i}" value="${card.verified||'Criador Bird Cut'}"></div></div>
     </div>`).join('');
-  c.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('change',e=>{ const k=e.target.dataset.ek, i=+e.target.dataset.ei; CFG.experiencias.cards[i][k]=e.target.value; }));
+  c.querySelectorAll('input,textarea,select').forEach(el=>el.addEventListener('change',e=>{ const k=e.target.dataset.ek, i=+e.target.dataset.ei; CFG.experiencias.cards[i][k]=k==='rating'?Number(e.target.value):e.target.value; }));
   const et=document.getElementById('eTitle'); if(et) et.onchange=e=>CFG.experiencias.title=e.target.value;
 }
-function addExp(){ CFG.experiencias.cards.push({id:'e'+Date.now(), title:'Novo título', text:'“Novo testemunho…”', author:'Nome', flag:'🇵🇹', verified:'Compra verificada'}); renderExpList(); }
+function addExp(){ CFG.experiencias.cards.push({id:'e'+Date.now(), title:'', text:'“Novo testemunho…”', author:'Nome', flag:'🇵🇹', rating:5, verified:'Criador Bird Cut'}); renderExpList(); }
 function saveExp(){ CFG.experiencias.title=document.getElementById('eTitle').value; saveAll(); }
 function renderFaqList(){
   const c=document.getElementById('faqList'); if(!c) return;
@@ -589,7 +589,7 @@ async function init(){
   if(btnSaveAll) btnSaveAll.addEventListener('click',saveAll);
   document.getElementById('adminLoginForm').addEventListener('submit',async e=>{
     e.preventDefault(); const err=document.getElementById('admErr'); err.textContent=''; const btn=document.getElementById('admBtn'); btn.disabled=true; btn.textContent='A entrar…';
-    try{ await login(document.getElementById('admEmail').value.trim(), document.getElementById('admPass').value); const u=await getProfile(); if(isAdminUser(u)){ showApp(u); await bootData(); } else showDenied(u); }catch(ex){ err.textContent=ex.message||'Erro ao entrar'; } finally{ btn.disabled=false; btn.textContent='Entrar'; }
+    try{ await loginAdmin(document.getElementById('admEmail').value.trim(), document.getElementById('admPass').value); const u=await getProfile(); if(isAdminUser(u)){ showApp(u); await bootData(); } else showDenied(u); }catch(ex){ err.textContent=ex.message||'Erro ao entrar'; } finally{ btn.disabled=false; btn.textContent='Entrar'; }
   });
   document.getElementById('btnRefreshDash').addEventListener('click',()=>loadDashboard().catch(e=>alert(e.message)));
   document.getElementById('btnRefreshProd').addEventListener('click',loadProducts);

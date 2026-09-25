@@ -432,6 +432,16 @@ body.cursor-on .cursor-bird{opacity:.85}
 .pedido-status{font-family:var(--font-display);font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .8rem;border-radius:2px}
 .pedido-status--entregue{background:rgba(90,107,47,.1);color:var(--color-green)}
 .pedido-status--transito{background:rgba(255,105,0,.1);color:var(--color-orange)}
+.pedido-status--cancelado{background:rgba(0,0,0,.07);color:#555}
+.order-meta{color:var(--color-ink-soft);font-size:.82rem;margin:.5rem 0 0}
+.order-items-summary{color:var(--color-ink-soft);font-size:.9rem}
+.order-details{border-top:1px solid var(--color-line);padding:1rem 1.6rem;color:var(--color-ink-soft);font-size:.88rem}
+.order-details summary{cursor:pointer;color:var(--color-ink);font-weight:600;min-height:44px;display:flex;align-items:center}
+.order-detail-items{list-style:none;padding:0;margin:.5rem 0}
+.order-detail-items li{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--color-line)}
+.order-tracking{display:inline-flex;margin-top:.6rem;color:var(--color-orange-dark);font-weight:600;text-decoration:underline}
+.address-remove{min-height:44px;padding:.4rem .7rem}
+@media(max-width:640px){.order-details{padding:1rem}.pedido-card__header b{font-size:.9rem}}
 .pedido-card__body{padding:1.2rem 1.6rem}
 .pedido-item{display:flex;align-items:center;gap:1rem}
 .pedido-item img{width:56px;height:56px;object-fit:cover;border-radius:2px}

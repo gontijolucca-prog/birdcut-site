@@ -77,43 +77,59 @@
     "cards": [
       {
         "id": "e1",
-        "title": "Ideia excelente para todos os níveis",
-        "text": "“Achei a ideia excelente. Ajuda tanto quem está a começar como quem já tem experiência. Há clientes em que o contorno dá mais trabalho e acabamos por perder tempo até chegar ao resultado certo. Gostei da proposta. Ansioso para que chegue ao Brasil.”",
-        "author": "Renato Guerra",
-        "flag": "🇧🇷",
-        "verified": "Compra verificada"
+        "text": "“É uma ferramenta simples, mas muito bem pensada. Mesmo tendo experiência, há determinados formatos de pescoço em que encontrar a linha certa exige mais atenção. Aqui consigo ter uma referência sem deixar de trabalhar à minha maneira.”",
+        "author": "Marco Rubens",
+        "flag": "🇨🇭",
+        "rating": 5,
+        "verified": "Criador Bird Cut"
       },
       {
         "id": "e2",
-        "title": "Resolve um problema real",
-        "text": "“Gosto. Achei a proposta muito interessante e até engraçada. É um pente diferente, mas criado para resolver um problema real. Apesar de já ter 10 anos de experiência, esta parte curva da barba sempre me deixava um pouco tenso e, por vezes, obrigava-me a corrigir o contorno sempre. Esta foi uma ideia que fez todo o sentido para mim. Hoje, já é difícil imaginar a rotina da barbearia sem esta ferramenta.”",
-        "author": "Rafael Farias",
-        "flag": "🇵🇹",
-        "verified": "Compra verificada"
+        "text": "“Quando vi pela primeira vez pensei: será que preciso mesmo disto? Depois percebi que não pretendia substituir a técnica do barbeiro. É simplesmente mais uma possibilidade para construir o contorno e adaptar o resultado a cada cliente, excelente”",
+        "author": "Alejandro G.",
+        "flag": "🇪🇸",
+        "rating": 4,
+        "verified": "Criador Bird Cut"
       },
       {
         "id": "e3",
-        "title": "Uso todos os dias",
-        "text": "“Funciona, uso-o todos os dias e tiro mesmo proveito dele. É o que interessa. Sim, recomendo!”",
-        "author": "João M.",
-        "flag": "🇵🇹",
-        "verified": "Compra verificada"
+        "text": "“O que mais sentido fez para mim foram as diferentes curvas. Os clientes não têm todos o mesmo pescoço ou estrutura de barba, por isso poder reposicionar o pente e escolher outra curvatura torna a ferramenta muito mais versátil.”",
+        "author": "Thomas Marques",
+        "flag": "🇨🇭",
+        "rating": 4,
+        "verified": "Criador Bird Cut"
       },
       {
         "id": "e4",
-        "title": "O pente do futuro",
-        "text": "“O mais engraçado é que os clientes ficam logo curiosos quando o veem. Perguntam o que é e eu digo que é o pente do futuro. Acaba sempre por gerar conversa.”",
-        "author": "Miguel A.",
-        "flag": "🇵🇹",
-        "verified": "Compra verificada"
+        "text": "“Já tenho experiência e consigo fazer estes contornos sem o pente. A diferença é que ele me dá uma referência quando preciso e pode evitar algumas correções. Não substituiu minha experiência, acrescentou ela.”",
+        "author": "Lucas Almeida",
+        "flag": "🇫🇷",
+        "rating": 3,
+        "verified": "Criador Bird Cut"
       },
       {
         "id": "e5",
-        "title": "Faz sentido ter na bancada",
-        "text": "“Ao início tinha as minhas dúvidas, mas tem dado mesmo muito jeito, sobretudo em barbas mais curtas e pescoços com uma curva mais fechada. É daquelas ferramentas que faz sentido ter na bancada.”",
-        "author": "Rodrigo Almeida",
-        "flag": "🇵🇹",
-        "verified": "Compra verificada"
+        "text": "“Uma das minhas primeiras dúvidas foi se não seria apenas mais um acessório para ficar parado na bancada. Mas a ideia resolve uma situação muito específica que encontramos frequentemente na barbearia. É aí que vejo valor no produto.”",
+        "author": "Javier Oliver",
+        "flag": "🇪🇸",
+        "rating": 4,
+        "verified": "Criador Bird Cut"
+      },
+      {
+        "id": "e6",
+        "text": "“Gosto sobretudo do facto de não existir apenas uma forma de o utilizar. Posso mudar a posição, experimentar outra curva e adaptar ao cliente. Dá-me mais possibilidades sem interferir com a minha técnica.”",
+        "author": "Nicolas Parra",
+        "flag": "🇫🇷",
+        "rating": 5,
+        "verified": "Criador Bird Cut"
+      },
+      {
+        "id": "e7",
+        "text": "“Para quem está a começar, vejo-o como uma ótima referência. Para quem já tem experiência, pode ajudar nos casos mais difíceis ou simplesmente tornar o processo mais consistente. É uma ferramenta que pode fazer sentido em diferentes níveis.”",
+        "author": "Daniel Sobrinho",
+        "flag": "🇨🇭",
+        "rating": 5,
+        "verified": "Criador Bird Cut"
       }
     ]
   },
@@ -148,7 +164,7 @@
     ]
   },
   "footer": {
-    "about": "Criado para criadores. Ferramentas que incentivam o ato de criar — com precisão, técnica e liberdade.",
+    "about": "Para criares diferente, e com mais possibilidades.",
     "contact": {
       "email": "contacto@birdcut.pt",
       "phone": "+351 XXX XXX XXX",

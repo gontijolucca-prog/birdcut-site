@@ -56,7 +56,7 @@
 .funnel-arrow{align-self:center;font-size:1.2rem;color:#aaa}
 .admin-login{max-width:420px;margin:3.5rem auto;padding:2rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.06);text-align:center}
 .admin-login h2{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.3rem}
-@media(max-width:860px){.admin-wrap{grid-template-columns:1fr}.admin-sidebar{position:static;height:auto}.admin-row{grid-template-columns:1fr}.admin-kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:860px){.admin-wrap{grid-template-columns:1fr}.admin-sidebar{position:static;height:auto}.admin-row{grid-template-columns:1fr}.admin-kpis{grid-template-columns:repeat(2,1fr)}.admin-grid-2{grid-template-columns:1fr !important}.admin-grid-3{grid-template-columns:1fr !important}.admin-main{min-width:0}.chart-box{height:220px}}
 </style>
 </head>
 <body>
@@ -106,11 +106,11 @@
         <div class="admin-kpi warn"><span>Stock baixo</span><b id="kpiLow">—</b><small>≤ 15 unidades</small></div>
         <div class="admin-kpi"><span>Ticket médio</span><b id="kpiAOV2">—</b><small>carrinho → checkout</small></div>
       </div>
-      <div style="display:grid;grid-template-columns:1.6fr .9fr;gap:1rem;margin-bottom:1rem">
+      <div class="admin-grid-2" style="display:grid;grid-template-columns:1.6fr .9fr;gap:1rem;margin-bottom:1rem">
         <div class="admin-card"><h3>Receita & Encomendas — 14 dias</h3><div class="chart-box"><canvas id="chartDaily"></canvas></div></div>
         <div class="admin-card"><h3>Tráfego — 14 dias <small style="font-weight:400;color:#777">visitantes vs pageviews</small></h3><div class="chart-box"><canvas id="chartTraffic"></canvas></div></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:1rem">
+      <div class="admin-grid-3" style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:1rem">
         <div class="admin-card"><h3>Funil — 30 dias</h3><div id="funnelBox" class="funnel"></div><p style="font-size:.78rem;color:#777;margin-top:.8rem">Visitantes → Add to cart → Checkout → Compra. Cada barra = sessões únicas (exceto compra = encomendas).</p></div>
         <div class="admin-card"><h3>Top produtos — 30 dias</h3><div id="topProducts">—</div></div>
         <div class="admin-card"><h3>Stock crítico ≤ 15</h3><div id="lowStockList">—</div></div>
@@ -151,7 +151,7 @@
         <div class="admin-kpi"><span>Checkout iniciado 30d</span><b id="aCheckout">—</b></div>
       </div>
       <div class="admin-card"><h3>Visitantes vs Pageviews — 14 dias</h3><div class="chart-box"><canvas id="chartAnalyticsDaily"></canvas></div></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <div class="admin-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
         <div class="admin-card"><h3>Eventos — 30 dias</h3><div class="chart-box sm"><canvas id="chartEvents"></canvas></div><div id="eventsTable" style="margin-top:.8rem"></div></div>
         <div class="admin-card"><h3>Funil de conversão — 30 dias</h3><div class="chart-box sm"><canvas id="chartFunnel"></canvas></div><p style="font-size:.78rem;color:#777;margin-top:.6rem">visitantes (pageview único) → add_to_cart → begin_checkout → purchase (encomendas).</p></div>
       </div>

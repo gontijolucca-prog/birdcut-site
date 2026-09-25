@@ -73,7 +73,7 @@
   <div class="header__tools"><span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.78rem;color:#555;margin-right:.5rem"></span><button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button></div>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
-<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="adminbirdcut" value="adminbirdcut"></div><div class="admin-field"><label>Palavra-passe</label><input type="password" id="admPass" required placeholder="••••••••"></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p></div></section>
+<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="adminbirdcut" value="adminbirdcut"></div><div class="admin-field"><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="admPass" required placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-toggle" data-target="admPass" aria-label="Mostrar palavra-passe">👁</button></div></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p></div></section>
 <section id="adminDenied" class="section" style="display:none"><div class="admin-login"><h2>Acesso restrito</h2><p id="deniedMsg">Esta conta não tem permissões de administrador.</p><p style="font-size:.82rem;color:#777" id="deniedEmail"></p><button class="btn" style="margin-top:1rem;background:#111;color:#fff" onclick="logout().then(()=>location.reload())">Sair</button> <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a></div></section>
 <div id="adminApp" class="admin-wrap" style="display:none">
   <aside class="admin-sidebar">
@@ -627,7 +627,19 @@ async function init(){
     fetch('https://media.pontofinal.site/bcapi/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time+' (bcapi)':'—').catch(()=>{});
   }
 }
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  document.querySelectorAll('.pass-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(btn.dataset.target);
+      if (!input) return;
+      const show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      btn.textContent = show ? '🙈' : '👁';
+      btn.setAttribute('aria-label', show ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe');
+    });
+  });
+});
 </script>
 </body>
 </html>

@@ -62,8 +62,8 @@
             <h2>Entrar</h2>
             <p style="color:var(--color-ink-soft);margin-bottom:2rem">Aceda à sua conta Bird Cut.</p>
             <form id="loginForm" class="conta-form">
-              <div><label>E-mail</label><input type="email" id="loginEmail" placeholder="seu@email.pt" required></div>
-              <div><label>Palavra-passe</label><input type="password" id="loginPass" placeholder="••••••••" required></div>
+              <div><label>E-mail</label><input type="email" id="loginEmail" placeholder="seu@email.pt" required autocomplete="email"></div>
+              <div><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password"><button type="button" class="pass-toggle" data-target="loginPass" aria-label="Mostrar palavra-passe">👁</button></div></div>
               <div id="loginError" style="color:#e56d6d;font-size:.85rem;min-height:1.2em"></div>
               <button type="submit" class="btn btn--red" style="width:100%;justify-content:center" id="loginBtn">Entrar</button>
             </form>
@@ -77,16 +77,24 @@
 
           <!-- Register Form -->
           <div id="registerView" style="display:none">
+            <img src="img/birdcut-pt/logo-create-account.png" alt="Bird Cut — Created for Creators" style="width:100%;max-width:280px;height:auto;margin:0 auto 1.2rem;display:block">
             <h2>Criar Conta</h2>
             <p style="color:var(--color-ink-soft);margin-bottom:2rem">Junte-se à comunidade Bird Cut.</p>
             <form id="registerForm" class="conta-form">
               <div class="form-row">
-                <div><label>Nome</label><input type="text" id="regName" placeholder="João" required></div>
-                <div><label>Apelido</label><input type="text" id="regSurname" placeholder="Rafael" required></div>
+                <div><label>Nome *</label><input type="text" id="regName" placeholder="João" required autocomplete="given-name"></div>
+                <div><label>Apelido *</label><input type="text" id="regSurname" placeholder="Rafael" required autocomplete="family-name"></div>
               </div>
-              <div><label>E-mail</label><input type="email" id="regEmail" placeholder="seu@email.pt" required></div>
-              <div><label>Palavra-passe</label><input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required minlength="6"></div>
-              <div><label>Confirmar palavra-passe</label><input type="password" id="regPass2" placeholder="••••••••" required minlength="6"></div>
+              <div><label>E-mail *</label><input type="email" id="regEmail" placeholder="seu@email.pt" required autocomplete="email"></div>
+              <div><label>Telemóvel *</label><input type="tel" id="regPhone" placeholder="+351 912 345 678" required autocomplete="tel"></div>
+              <div><label>Morada *</label><input type="text" id="regStreet" placeholder="Rua, nº, andar" required autocomplete="street-address"></div>
+              <div class="form-row">
+                <div><label>Código Postal *</label><input type="text" id="regZip" placeholder="1000-000" required autocomplete="postal-code"></div>
+                <div><label>Cidade *</label><input type="text" id="regCity" placeholder="Lisboa" required autocomplete="address-level2"></div>
+              </div>
+              <div><label>País *</label><input type="text" id="regCountry" value="Portugal" required autocomplete="country-name"></div>
+              <div><label>Palavra-passe *</label><div class="pass-wrap"><input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="new-password"><button type="button" class="pass-toggle" data-target="regPass" aria-label="Mostrar palavra-passe">👁</button></div></div>
+              <div><label>Confirmar palavra-passe *</label><div class="pass-wrap"><input type="password" id="regPass2" placeholder="••••••••" required minlength="6" autocomplete="new-password"><button type="button" class="pass-toggle" data-target="regPass2" aria-label="Mostrar palavra-passe">👁</button></div></div>
               <div id="regError" style="color:#e56d6d;font-size:.85rem;min-height:1.2em"></div>
               <button type="submit" class="btn btn--red" style="width:100%;justify-content:center" id="regBtn">Criar Conta</button>
             </form>

@@ -139,6 +139,16 @@
   /* ===== Boot: estado de sessão ===== */
   window.addEventListener('DOMContentLoaded', () => {
     if (typeof onAuthChange === 'function') onAuthChange(paint);
+    document.querySelectorAll('.pass-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const input = document.getElementById(btn.dataset.target);
+        if (!input) return;
+        const show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.textContent = show ? '🙈' : '👁';
+        btn.setAttribute('aria-label', show ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe');
+      });
+    });
   });
 
   /* ===== Login ===== */
@@ -182,6 +192,17 @@
           $('regName').value.trim(),
           $('regSurname').value.trim()
         );
+        try {
+          await updateProfile({ phone: $('regPhone').value.trim() });
+        } catch (profileErr) { /* perfil extra opcional no backend */ }
+        try {
+          await addAddress({
+            street: $('regStreet').value.trim(),
+            zip: $('regZip').value.trim(),
+            city: $('regCity').value.trim(),
+            country: $('regCountry').value.trim() || 'Portugal'
+          });
+        } catch (addrErr) { /* morada extra opcional no backend */ }
         const user = await getProfile();
         paint(user);
       } catch (ex) {

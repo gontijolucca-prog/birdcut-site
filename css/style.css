@@ -441,7 +441,30 @@ body.cursor-on .cursor-bird{opacity:.85}
 .order-detail-items li{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--color-line)}
 .order-tracking{display:inline-flex;margin-top:.6rem;color:var(--color-orange-dark);font-weight:600;text-decoration:underline}
 .address-remove{min-height:44px;padding:.4rem .7rem}
+.pass-wrap{position:relative}
+.pass-wrap input{padding-right:3rem}
+.pass-toggle{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);border:0;background:none;cursor:pointer;font-size:1.05rem;min-width:44px;min-height:44px;line-height:1;opacity:.75}
+.pass-toggle:hover{opacity:1}
+.conta-login__brand{width:100%;max-width:280px;height:auto;margin:0 auto 1.2rem;display:block}
 @media(max-width:640px){.order-details{padding:1rem}.pedido-card__header b{font-size:.9rem}}
+@media(max-width:860px){
+.conta-page .container{padding-left:14px;padding-right:14px}
+.conta-login__card{padding:2rem 1.2rem;margin:0 auto;max-width:520px}
+.conta-dashboard{gap:1rem}
+.conta-sidebar{position:static}
+.conta-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem;padding:.7rem}
+.conta-nav a{border:1px solid var(--color-line);border-radius:8px;padding:.7rem .6rem;margin:0}
+.conta-content h2{font-size:1.3rem;margin-bottom:1rem}
+.pedido-card__header,.pedido-card__body,.order-details{padding-left:1rem;padding-right:1rem}
+.pedido-card__footer{flex-direction:column;align-items:flex-start;gap:.35rem}
+.admin-login{margin:2rem auto;max-width:420px;width:calc(100% - 28px);padding:1.5rem}
+}
+@media(max-width:480px){
+.conta-login__card{padding:1.6rem 1rem}
+.conta-nav{grid-template-columns:1fr}
+.conta-form input{font-size:16px}
+.pedido-card__header span{margin-left:0}
+}
 .pedido-card__body{padding:1.2rem 1.6rem}
 .pedido-item{display:flex;align-items:center;gap:1rem}
 .pedido-item img{width:56px;height:56px;object-fit:cover;border-radius:2px}

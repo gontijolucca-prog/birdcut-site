@@ -4,6 +4,31 @@
 (function () {
   'use strict';
 
+  /* ===== Navegação por âncoras entre páginas ===== */
+  (function(){
+    let tries = 0, stable = 0;
+    const scrollToAnchor = () => {
+      tries++;
+      if(!location.hash) return;
+      let id;
+      try { id = decodeURIComponent(location.hash.slice(1)); } catch { id = location.hash.slice(1); }
+      const target = document.getElementById(id);
+      if(!target) return;
+      const offset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      const difference = target.getBoundingClientRect().top - offset;
+      if(Math.abs(difference) > 3){
+        stable = 0;
+        window.scrollTo({ top: Math.max(0, window.scrollY + difference), left: 0, behavior: 'instant' });
+      } else stable++;
+      if(stable >= 2 || tries >= 24) clearInterval(retryTimer);
+    };
+    const retryTimer = setInterval(scrollToAnchor, 120);
+    document.addEventListener('DOMContentLoaded',scrollToAnchor,{once:true});
+    window.addEventListener('load',scrollToAnchor,{once:true});
+    window.addEventListener('hashchange',scrollToAnchor);
+    window.addEventListener('pageshow',scrollToAnchor);
+  })();
+
   /* ===== 1. FAIXA PRETA birdcut.pt fiel: 24px + arrows + 5s ===== */
   (function(){
     const bar = document.getElementById('birdcut-announcement-bar');
@@ -69,24 +94,32 @@
   bcColors.forEach(b=>{
     b.addEventListener('click', ()=> setActiveColor(b.dataset.color));
   });
-  // Best-selling cards: swatches trocam imagem do card
-  document.querySelectorAll('.ac-product-card').forEach(card=>{
-    const sws = card.querySelectorAll('.sw');
-    const img = card.querySelector('.ac-product-card__media img');
-    const quick = card.querySelector('.ac-product-card__quick');
-    sws.forEach(s=>{
-      s.addEventListener('click', ()=>{
-        sws.forEach(x=>x.classList.remove('active'));
-        s.classList.add('active');
-        const col = s.dataset.color || s.title;
-        if(isYellow(col) && img) img.src='img/birdcut-pt/Pente-CurveLine-Amarelo.png';
-        else if(isOrange(col) && img) img.src='img/birdcut-pt/Pente-CurveLine-Laranja.png';
-        if(quick){
-          quick.dataset.image = img ? img.src : quick.dataset.image;
-        }
+  // Best-selling: delegação mantém o selector activo após o site-config redesenhar o card.
+  const bestSellingGrid = document.querySelector('.best-selling__grid');
+  if(bestSellingGrid){
+    bestSellingGrid.addEventListener('click', event=>{
+      const swatch = event.target.closest('.ac-product-card__swatches .sw');
+      if(!swatch || !bestSellingGrid.contains(swatch)) return;
+      const card = swatch.closest('.ac-product-card');
+      const image = card?.querySelector('.ac-product-card__media img');
+      const quick = card?.querySelector('.ac-product-card__quick');
+      const title = card?.querySelector('.ac-product-card__title');
+      const color = swatch.dataset.color || swatch.title || 'Laranja';
+      const yellow = isYellow(color);
+      const imagePath = yellow ? 'img/birdcut-pt/Pente-CurveLine-Amarelo.png' : 'img/birdcut-pt/Pente-CurveLine-Laranja.png';
+      card.querySelectorAll('.ac-product-card__swatches .sw').forEach(button=>{
+        const active = button === swatch;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
       });
+      if(image){ image.src=imagePath; image.alt=`CurveLine Beard Pro — ${color}`; }
+      if(title) title.textContent=`${card.dataset.name || 'CurveLine Beard Pro'} — ${color}`;
+      if(quick){
+        quick.dataset.image=imagePath;
+        quick.setAttribute('aria-label',`Adicionar CurveLine Beard Pro — ${color} ao carrinho`);
+      }
     });
-  });
+  }
   // init
   setActiveColor('Laranja');
 
@@ -155,28 +188,68 @@
     });
   })();
 
-  /* ===== 6. EXPERIÊNCIAS — setas loop infinito entre os 5 ===== */
+  /* ===== 6. EXPERIÊNCIAS — carrossel circular sem salto visível ===== */
   (function(){
     const slider = document.querySelector('.exps-slider');
-    if(!slider) return;
-    const wrap = slider.querySelector('.exps-scroll-wrap');
-    if(!wrap) return;
+    const wrap = slider?.querySelector('.exps-scroll-wrap');
+    const track = wrap?.querySelector('.exps-grid');
+    if(!slider || !wrap || !track) return;
     const prev = slider.querySelector('.exps-arrow--prev');
     const next = slider.querySelector('.exps-arrow--next');
+    let originalCount = 0, cloneCount = 0, itemStep = 0, settleTimer = 0, resizeTimer = 0, layoutKey = '';
     const step = () => {
-      const card = wrap.querySelector('.exp-card');
-      const gap = getComputedStyle(wrap.querySelector('.exps-grid')).gap;
-      const gapNum = parseFloat(gap) || 20;
-      return (card ? card.offsetWidth : 360) + gapNum;
+      const card = track.querySelector('.exp-card:not([data-loop-clone])');
+      const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
+      return (card ? card.getBoundingClientRect().width : 360) + gap;
     };
-    const maxScroll = () => wrap.scrollWidth - wrap.clientWidth;
-    if(prev) prev.addEventListener('click', ()=>{
-      if(wrap.scrollLeft <= 4) wrap.scrollTo({ left: maxScroll(), behavior: 'smooth' });
-      else wrap.scrollBy({ left: -step(), behavior: 'smooth' });
-    });
-    if(next) next.addEventListener('click', ()=>{
-      if(wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 4) wrap.scrollTo({ left: 0, behavior: 'smooth' });
-      else wrap.scrollBy({ left: step(), behavior: 'smooth' });
-    });
+    const currentLayoutKey = () => `${wrap.clientWidth}:${Math.round(step())}`;
+    const scheduleRebuild = () => {
+      const key = currentLayoutKey();
+      if(key === layoutKey) return;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(()=>{ if(currentLayoutKey() !== layoutKey) buildLoop(); },180);
+    };
+    const jump = (left) => {
+      wrap.classList.add('is-loop-jumping');
+      wrap.scrollLeft = left;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>wrap.classList.remove('is-loop-jumping')));
+    };
+    const buildLoop = () => {
+      track.querySelectorAll('[data-loop-clone="true"]').forEach(node=>node.remove());
+      const originals = Array.from(track.children).filter(node=>node.classList.contains('exp-card'));
+      originalCount = originals.length;
+      if(originalCount < 2){
+        if(prev) prev.hidden = true;
+        if(next) next.hidden = true;
+        return;
+      }
+      if(prev) prev.hidden = false;
+      if(next) next.hidden = false;
+      itemStep = step();
+      layoutKey = `${wrap.clientWidth}:${Math.round(itemStep)}`;
+      cloneCount = Math.min(originalCount, Math.max(1, Math.ceil(wrap.clientWidth / itemStep) + 1));
+      const before = originals.slice(-cloneCount).map(node=>node.cloneNode(true));
+      const after = originals.slice(0, cloneCount).map(node=>node.cloneNode(true));
+      before.forEach(node=>{ node.dataset.loopClone='true'; node.setAttribute('aria-hidden','true'); node.classList.remove('reveal'); track.insertBefore(node, track.firstChild); });
+      after.forEach(node=>{ node.dataset.loopClone='true'; node.setAttribute('aria-hidden','true'); node.classList.remove('reveal'); track.appendChild(node); });
+      itemStep = step();
+      jump(cloneCount * itemStep);
+    };
+    const normalize = () => {
+      if(!originalCount || !itemStep) return;
+      const start = cloneCount * itemStep;
+      const end = start + originalCount * itemStep;
+      if(wrap.scrollLeft < start - itemStep * .5) jump(wrap.scrollLeft + originalCount * itemStep);
+      else if(wrap.scrollLeft >= end - itemStep * .5) jump(wrap.scrollLeft - originalCount * itemStep);
+    };
+    const scheduleNormalize = () => { clearTimeout(settleTimer); settleTimer=setTimeout(normalize,140); };
+    if(prev) prev.addEventListener('click',()=>wrap.scrollBy({left:-itemStep,behavior:'smooth'}));
+    if(next) next.addEventListener('click',()=>wrap.scrollBy({left:itemStep,behavior:'smooth'}));
+    wrap.addEventListener('scroll',scheduleNormalize,{passive:true});
+    window.addEventListener('birdcut:experiences-updated',buildLoop);
+    window.addEventListener('resize',scheduleRebuild);
+    if('ResizeObserver' in window) new ResizeObserver(scheduleRebuild).observe(wrap);
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',buildLoop,{once:true});
+    else buildLoop();
   })();
 })();

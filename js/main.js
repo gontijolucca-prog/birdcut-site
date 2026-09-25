@@ -161,18 +161,26 @@
     if (cartBtn) { cartBtn.style.transform = 'scale(1.15)'; setTimeout(() => cartBtn.style.transform = '', 200); }
   }
 
-  document.querySelectorAll('#addToCart, .pcard__btn:not(:disabled), .ac-product-card__quick').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const name = btn.dataset.name || 'CurveLine Beard Pro';
-      const price = parseFloat(btn.dataset.price || '18.89');
-      const image = btn.dataset.image || 'img/birdcut-pt/Pente-laranja.png';
-      const qtyInput = document.getElementById('qtyInput');
-      const qty = qtyInput ? parseInt(qtyInput.value || '1', 10) : 1;
-      addToCart(name, price, image, qty);
-      const old = btn.textContent;
-      btn.textContent = '✓ Adicionado';
-      setTimeout(() => btn.textContent = old, 1400);
-    });
+  document.addEventListener('click', (event) => {
+    const btn = event.target.closest('#addToCart, .pcard__btn:not(:disabled), .ac-product-card__quick');
+    if (!btn) return;
+    const name = btn.dataset.name || 'CurveLine Beard Pro';
+    const price = parseFloat(btn.dataset.price || '18.89');
+    const image = btn.dataset.image || 'img/birdcut-pt/Pente-laranja.png';
+    const qtyInput = document.getElementById('qtyInput');
+    const qty = qtyInput ? parseInt(qtyInput.value || '1', 10) : 1;
+    addToCart(name, price, image, qty);
+    const oldHTML = btn.innerHTML;
+    const oldLabel = btn.getAttribute('aria-label');
+    if (btn.matches('.ac-product-card__quick')) btn.setAttribute('aria-label', 'Adicionado ao carrinho');
+    else btn.textContent = '✓ Adicionado';
+    btn.classList.add('is-added');
+    setTimeout(() => {
+      btn.innerHTML = oldHTML;
+      if (oldLabel === null) btn.removeAttribute('aria-label');
+      else btn.setAttribute('aria-label', oldLabel);
+      btn.classList.remove('is-added');
+    }, 1400);
   });
 
   miniCart.querySelector('.mini-cart__checkout').addEventListener('click', async () => {

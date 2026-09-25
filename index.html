@@ -12,14 +12,6 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/rafael.css">
 <script src="js/analytics.js"></script>
-<script>
-  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-  (function(){
-    var goTop = function(){ window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); };
-    goTop();
-    window.addEventListener('load', goTop);
-  })();
-</script>
 </head>
 <body>
 
@@ -75,34 +67,22 @@
       <p class="best-selling__kicker">Estes produtos são particularmente populares.</p>
       <h2 class="best-selling__title">Best-selling products.</h2>
     </div>
-    <div class="best-selling__grid">
-      <!-- Card 1 — Laranja — formato oficial CurveLine -->
-      <div class="ac-product-card">
+    <div class="best-selling__grid best-selling__grid--single">
+      <article class="ac-product-card" data-name="CurveLine Beard Pro">
         <div class="ac-product-card__media">
-          <img src="img/birdcut-pt/Pente-CurveLine-Laranja.png" alt="CurveLine Beard Pro Laranja" loading="lazy">
-          <button type="button" class="ac-product-card__quick" data-name="CurveLine Beard Pro" data-price="18.89" data-image="img/birdcut-pt/Pente-CurveLine-Laranja.png" aria-label="Adicionar Laranja"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.6"/></svg></button>
+          <img src="img/birdcut-pt/Pente-CurveLine-Laranja.png" alt="CurveLine Beard Pro — Laranja" loading="lazy">
+          <button type="button" class="ac-product-card__quick" data-name="CurveLine Beard Pro" data-price="18.89" data-image="img/birdcut-pt/Pente-CurveLine-Laranja.png" aria-label="Adicionar CurveLine Beard Pro — Laranja ao carrinho"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.6"/></svg></button>
         </div>
         <div class="ac-product-card__info">
           <a class="ac-product-card__title" href="#comprar">CurveLine Beard Pro — Laranja</a>
           <div class="ac-product-card__price">18,89 €</div>
           <div class="ac-product-card__rating"><span class="stars">★★★★★</span><span class="count">(5.0)</span></div>
-          <div class="ac-product-card__swatches"><span class="sw active" style="background:#f56600" data-color="Laranja" title="Laranja"></span><span class="sw" style="background:#f4c430" data-color="Amarelo" title="Amarelo"></span></div>
+          <div class="ac-product-card__swatches" role="group" aria-label="Escolher cor">
+            <button type="button" class="sw active" aria-label="Laranja" aria-pressed="true" style="background:#f56600" data-color="Laranja" title="Laranja"></button>
+            <button type="button" class="sw" aria-label="Amarelo" aria-pressed="false" style="background:#f4c430" data-color="Amarelo" title="Amarelo"></button>
+          </div>
         </div>
-      </div>
-      <!-- Card 2 — Amarelo — formato oficial CurveLine -->
-      <div class="ac-product-card">
-        <div class="ac-product-card__media">
-          <img src="img/birdcut-pt/Pente-CurveLine-Amarelo.png" alt="CurveLine Beard Pro Amarelo" loading="lazy">
-          <button type="button" class="ac-product-card__quick" data-name="CurveLine Beard Pro" data-price="18.89" data-image="img/birdcut-pt/Pente-CurveLine-Amarelo.png" aria-label="Adicionar Amarelo"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.6"/></svg></button>
-        </div>
-        <div class="ac-product-card__info">
-          <a class="ac-product-card__title" href="#comprar">CurveLine Beard Pro — Amarelo</a>
-          <div class="ac-product-card__price">18,89 €</div>
-          <div class="ac-product-card__rating"><span class="stars">★★★★★</span><span class="count">(5.0)</span></div>
-          <div class="ac-product-card__swatches"><span class="sw" style="background:#f56600" data-color="Laranja" title="Laranja"></span><span class="sw active" style="background:#f4c430" data-color="Amarelo" title="Amarelo"></span></div>
-        </div>
-      </div>
-
+      </article>
     </div>
     <!-- mantém compatibilidade com JS antigo (qty + addToCart principal) -->
     <div style="display:none"><div class="cor-opcoes"><button class="swatch swatch--laranja is-active" data-cor="Laranja"></button><button class="swatch swatch--amarelo" data-cor="Amarelo"></button></div><img id="previewImg" src="img/birdcut-pt/Pente-CurveLine-Laranja.png" alt=""><div class="qty"><button id="qtyMinus">−</button><input id="qtyInput" value="1"><button id="qtyPlus">+</button></div><button id="addToCart" data-name="CurveLine Beard Pro" data-price="18.89" data-image="img/birdcut-pt/Pente-CurveLine-Laranja.png"></button><div id="bc-shop-selector" style="display:none"><div class="bc-combs"><div class="bc-comb-item" data-comb="Laranja"></div><div class="bc-comb-item" data-comb="Amarelo"></div></div><div class="bc-colors"><button class="bc-color active" data-color="Laranja"></button><button class="bc-color" data-color="Amarelo"></button></div><button class="bc-cart"></button></div></div>

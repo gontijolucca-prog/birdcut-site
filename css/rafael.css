@@ -385,8 +385,9 @@ html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky 
 .best-selling__kicker{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;font-weight:300;letter-spacing:1.2px;text-transform:uppercase;color:#777;margin:0}
 .best-selling__title{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:28px;font-weight:300;letter-spacing:.02em;color:#111;margin:0}
 @media (max-width:767px){.best-selling{padding:38px 0}.best-selling__title{font-size:22px}}
-.best-selling__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:720px;margin:0 auto}
-@media (max-width:640px){.best-selling__grid{grid-template-columns:repeat(2,1fr);gap:14px}}
+.best-selling__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:720px;margin:0 auto}
+.best-selling__grid--single{grid-template-columns:minmax(0,420px);max-width:460px}
+@media (max-width:640px){.best-selling__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.best-selling__grid--single{grid-template-columns:minmax(0,1fr);max-width:100%}}
 .ac-product-card{background:#fff;border:1px solid rgba(0,0,0,.08);display:flex;flex-direction:column;overflow:hidden;transition:box-shadow .25s,transform .25s}
 .ac-product-card:hover{box-shadow:0 12px 28px rgba(0,0,0,.08);transform:translateY(-3px)}
 .ac-product-card__media{position:relative;background:#f8f8f8;aspect-ratio:1.2;overflow:hidden;display:flex;align-items:center;justify-content:center}
@@ -394,6 +395,8 @@ html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky 
 .ac-product-card:hover .ac-product-card__media img{transform:scale(1.04)}
 .ac-product-card__quick{position:absolute;right:10px;bottom:10px;width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:background .2s,color .2s,transform .2s;color:#111}
 .ac-product-card__quick:hover{background:#111;color:#fff;transform:scale(1.08)}
+.ac-product-card__quick.is-added{background:#111;color:#fff}
+.ac-product-card__swatches .sw{background-clip:content-box;border-radius:50%}
 .ac-product-card__info{padding:14px 14px 16px;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
 .ac-product-card__title{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;font-weight:500;color:#111;text-decoration:none;line-height:1.3}
 .ac-product-card__title:hover{color:#555}
@@ -402,7 +405,7 @@ html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky 
 .ac-product-card__rating .stars{letter-spacing:1px;color:#111}
 .ac-product-card__rating .count{color:#777;font-size:11px}
 .ac-product-card__swatches{display:flex;gap:6px;margin-top:2px}
-.ac-product-card__swatches .sw{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.15);display:inline-block;position:relative}
+.ac-product-card__swatches .sw{appearance:none;width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.15);display:inline-block;position:relative;padding:0;cursor:pointer;min-width:44px;min-height:44px;background-clip:content-box;padding:13px}
 .ac-product-card__swatches .sw.active{box-shadow:0 0 0 2px #fff,0 0 0 3px #111}
 /* ===== INTERNATIONAL BARBERS — birdcut.pt fiel (apenas 5 imagens) + scrolling + cantos quase oval ===== */
 .sec-internacional{border-radius:40px !important;margin:0 clamp(18px,4vw,40px) !important;overflow:hidden}
@@ -429,6 +432,7 @@ html,body{overflow-x:clip} /* clip mantém sticky/fixed; hidden quebrava sticky 
 .sec-experiencias .container{max-width:1180px}
 .sec-experiencias__titulo{text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;font-weight:600 !important;font-size:clamp(1.5rem,2.8vw,2.2rem) !important;letter-spacing:-.02em !important;color:#111 !important;margin-bottom:1.8rem !important}
 .exps-scroll-wrap{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:8px 4px 18px;margin:0 4px}
+.exps-scroll-wrap.is-loop-jumping{scroll-behavior:auto!important;scroll-snap-type:none!important}
 .exps-scroll-wrap::-webkit-scrollbar{display:none}
 .exps-slider{position:relative}
 .exps-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.12);box-shadow:0 4px 12px rgba(0,0,0,.1);color:#111;font-size:22px;font-weight:300;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,color .2s,transform .2s}

@@ -48,22 +48,36 @@
       if(tt && cfg.bestSelling.title) tt.textContent = cfg.bestSelling.title;
       const grid = document.querySelector('.best-selling__grid');
       if(grid && Array.isArray(cfg.bestSelling.products)){
-        grid.innerHTML = cfg.bestSelling.products.map(p=>`
-          <div class="ac-product-card">
-            <div class="ac-product-card__media">
-              <img src="${p.image}" alt="${p.name}" loading="lazy">
-              <button type="button" class="ac-product-card__quick" data-name="CurveLine Beard Pro" data-price="${p.priceNum}" data-image="${p.image}" aria-label="Adicionar ${p.activeColor}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.6"/></svg></button>
-            </div>
-            <div class="ac-product-card__info">
-              <a class="ac-product-card__title" href="#comprar">${p.name}</a>
-              <div class="ac-product-card__price">${p.price}</div>
-              <div class="ac-product-card__rating"><span class="stars">★★★★★</span><span class="count">(${p.rating})</span></div>
-              <div class="ac-product-card__swatches">
-                <span class="sw ${p.activeColor==='Laranja'?'active':''}" style="background:#f56600" data-color="Laranja" title="Laranja"></span>
-                <span class="sw ${p.activeColor==='Amarelo'?'active':''}" style="background:#f4c430" data-color="Amarelo" title="Amarelo"></span>
+        const products = cfg.bestSelling.products.filter(Boolean);
+        if(products.length){
+          const product = products[0];
+          const variants = [];
+          products.forEach(p=>{
+            const color = p.activeColor || (/amarelo/i.test(p.name||'') ? 'Amarelo' : /laranja/i.test(p.name||'') ? 'Laranja' : '');
+            if(color && p.image && !variants.some(v=>v.color===color)) variants.push({color,image:p.image});
+          });
+          if(!variants.length && Array.isArray(product.colors)) product.colors.forEach(color=>variants.push({color,image:product.image}));
+          const selected = variants.find(v=>v.color===product.activeColor) || variants[0] || {color:'Laranja',image:product.image};
+          const title = String(product.name||'CurveLine Beard Pro').replace(/\s*[—-]\s*(Laranja|Amarelo)\s*$/i,'');
+          const price = Number(product.priceNum)||18.89;
+          const stars = Math.max(0,Math.min(5,Math.round(Number(product.rating)||5)));
+          grid.classList.add('best-selling__grid--single');
+          grid.innerHTML = `
+            <article class="ac-product-card" data-name="${escapeHTML(title)}">
+              <div class="ac-product-card__media">
+                <img src="${escapeHTML(selected.image)}" alt="${escapeHTML(title)} — ${escapeHTML(selected.color)}" loading="lazy">
+                <button type="button" class="ac-product-card__quick" data-name="${escapeHTML(title)}" data-price="${price}" data-image="${escapeHTML(selected.image)}" aria-label="Adicionar ${escapeHTML(title)} — ${escapeHTML(selected.color)} ao carrinho"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.6"/></svg></button>
               </div>
-            </div>
-          </div>`).join('');
+              <div class="ac-product-card__info">
+                <a class="ac-product-card__title" href="#comprar">${escapeHTML(title)} — ${escapeHTML(selected.color)}</a>
+                <div class="ac-product-card__price">${escapeHTML(product.price||`${price.toFixed(2).replace('.',',')} €`)}</div>
+                <div class="ac-product-card__rating"><span class="stars" aria-label="${stars} estrelas">${'★'.repeat(stars)}</span><span class="count">(${escapeHTML(product.rating||'5.0')})</span></div>
+                <div class="ac-product-card__swatches" role="group" aria-label="Escolher cor">${variants.map(v=>`<button type="button" class="sw ${v.color===selected.color?'active':''}" style="background:${v.color==='Amarelo'?'#f4c430':'#f56600'}" data-color="${escapeHTML(v.color)}" aria-label="${escapeHTML(v.color)}" aria-pressed="${v.color===selected.color}" title="${escapeHTML(v.color)}"></button>`).join('')}</div>
+              </div>
+            </article>`;
+        } else {
+          grid.innerHTML = '';
+        }
       }
     }
     // Tecnica (A tua técnica) — título centrado fora da grid, imagem alinhada com início do texto
@@ -118,6 +132,7 @@
             </div>
           </article>`;
         }).join('');
+        window.dispatchEvent(new Event('birdcut:experiences-updated'));
       }
     }
     // FAQ

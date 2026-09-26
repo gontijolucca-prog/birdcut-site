@@ -38,7 +38,12 @@
       if(d && cfg.hero.desc) d.innerHTML = cfg.hero.desc;
       if(b && cfg.hero.btnText) b.textContent = cfg.hero.btnText;
       if(b && cfg.hero.btnLink) b.href = cfg.hero.btnLink;
-      if(hero && cfg.hero.bgImage) hero.style.backgroundImage = `url("${cfg.hero.bgImage}")`;
+      if(hero && cfg.hero.bgImage){
+        const heroMq = window.matchMedia('(min-width:641px)');
+        const applyHeroBg = () => { hero.style.backgroundImage = heroMq.matches ? `url("${cfg.hero.bgImage}")` : 'none'; };
+        applyHeroBg();
+        if(heroMq.addEventListener) heroMq.addEventListener('change', applyHeroBg);
+      }
     }
     // Best-selling
     if(cfg.bestSelling){

@@ -191,7 +191,7 @@ async function saveAll(){ savePreview(); const res=await saveToBackend(); if(res
 
 // ---- API admin helpers ----
 function authHeaders(){ const t=localStorage.getItem('bc_token'); return {'Content-Type':'application/json','Authorization':'Bearer '+(t||'')}; }
-async function adminGet(path){ const r=await fetch(path,{headers:authHeaders()}); if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.error||('HTTP '+r.status)); } return await r.json(); }
+async function adminGet(path){ if(window.__VISITA) return demoAdmin(path); const r=await fetch(path,{headers:authHeaders()}); if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.error||('HTTP '+r.status)); } return await r.json(); }
 async function adminPost(path,body){ const r=await fetch(path,{method:'POST',headers:authHeaders(),body:JSON.stringify(body)}); const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||('HTTP '+r.status)); return j; }
 async function adminPut(path,body){ const r=await fetch(path,{method:'PUT',headers:authHeaders(),body:JSON.stringify(body)}); const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||('HTTP '+r.status)); return j; }
 
@@ -631,6 +631,55 @@ async function init(){
     fetch('https://media.pontofinal.site/bcapi/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time+' (bcapi)':'—').catch(()=>{});
   }
 }
+// ---- DADOS DEMO (modo visita: todas as páginas cheias) ----
+function demoDays(n, fn){ const out=[]; const t=new Date(); for(let i=n-1;i>=0;i--){ const d=new Date(t); d.setDate(t.getDate()-i); out.push(fn(d.toISOString().slice(0,10), n-1-i)); } return out; }
+const DEMO_PRODUCTS=[
+  {sku:'BC-CURVE-01',id:'curveline-beard-pro',name:'CurveLine Beard Pro',colors:['Preto','Branco'],rating:'4.9',price_text:'39,99 €',price_num:39.99,stock:42,active:true,image:'img/birdcut-pt/produto-1.png'},
+  {sku:'BC-TRIM-02',id:'trimmer-precision',name:'Trimmer Precision X',colors:['Preto'],rating:'4.8',price_text:'29,99 €',price_num:29.99,stock:8,active:true,image:'img/birdcut-pt/produto-2.png'},
+  {sku:'BC-KIT-03',id:'kit-barba-completo',name:'Kit Barba Completo',colors:['Castanho'],rating:'4.7',price_text:'49,99 €',price_num:49.99,stock:3,active:true,image:'img/birdcut-pt/produto-3.png'},
+  {sku:'BC-OIL-04',id:'oleo-barba-cedro',name:'Óleo de Barba Cedro',colors:['Âmbar'],rating:'4.9',price_text:'14,99 €',price_num:14.99,stock:67,active:true,image:'img/birdcut-pt/produto-1.png'},
+  {sku:'BC-COMB-05',id:'pente-carbono',name:'Pente Carbono Anti-estático',colors:['Preto'],rating:'4.6',price_text:'9,99 €',price_num:9.99,stock:0,active:false,image:'img/birdcut-pt/produto-2.png'}
+];
+const DEMO_ORDERS=[
+  {id:1042,created_at:'2026-09-30T18:24:00',email:'miguel.santos@gmail.com',user_id:12,items:[{name:'CurveLine Beard Pro',qty:1,price:'39,99 €'},{name:'Óleo de Barba Cedro',qty:2,price:'14,99 €'}],total:69.97,status:'processamento',stripe_session:'cs_demo_9f2k'},
+  {id:1041,created_at:'2026-09-29T11:02:00',email:'ana.ribeiro@hotmail.com',user_id:8,items:[{name:'Kit Barba Completo',qty:1,price:'49,99 €'}],total:49.99,status:'enviado',stripe_session:'cs_demo_7h1a'},
+  {id:1040,created_at:'2026-09-28T20:47:00',email:'joao.pedro@gmail.com',user_id:null,items:[{name:'Trimmer Precision X',qty:1,price:'29,99 €'}],total:29.99,status:'entregue',stripe_session:'cs_demo_5t8z'},
+  {id:1039,created_at:'2026-09-27T09:15:00',email:'carlos.mendes@gmail.com',user_id:21,items:[{name:'CurveLine Beard Pro',qty:1,price:'39,99 €'},{name:'Pente Carbono Anti-estático',qty:1,price:'9,99 €'}],total:49.98,status:'entregue',stripe_session:'cs_demo_3m4p'},
+  {id:1038,created_at:'2026-09-25T16:33:00',email:'tiago.ferreira@gmail.com',user_id:5,items:[{name:'Óleo de Barba Cedro',qty:1,price:'14,99 €'}],total:14.99,status:'cancelado',stripe_session:'cs_demo_1q6w'},
+  {id:1037,created_at:'2026-09-24T14:08:00',email:'rui.costa@sapo.pt',user_id:17,items:[{name:'Kit Barba Completo',qty:2,price:'49,99 €'}],total:99.98,status:'entregue',stripe_session:'cs_demo_0z3e'}
+];
+const DEMO_USERS=[
+  {email:'miguel.santos@gmail.com',name:'Miguel',surname:'Santos',orders:4,spent:189.94,created_at:'2026-06-12',role:'user'},
+  {email:'ana.ribeiro@hotmail.com',name:'Ana',surname:'Ribeiro',orders:2,spent:89.98,created_at:'2026-07-03',role:'user'},
+  {email:'joao.pedro@gmail.com',name:'João',surname:'Pedro',orders:1,spent:29.99,created_at:'2026-08-19',role:'user'},
+  {email:'carlos.mendes@gmail.com',name:'Carlos',surname:'Mendes',orders:5,spent:244.90,created_at:'2026-05-28',role:'user'},
+  {email:'rafael@birdcut.pt',name:'Rafael',surname:'',orders:0,spent:0,created_at:'2026-09-30',role:'admin'}
+];
+const DEMO_CARTS_AB=[
+  {id:1,session_id:'sess_k7d2m9xq',email:'pedro.alves@gmail.com',user_id:null,items:[{name:'CurveLine Beard Pro',qty:1}],total:39.99,last_activity:'2026-09-30T21:12:00',status:'abandoned'},
+  {id:2,session_id:'sess_p3w8n1zb',email:'',user_id:null,items:[{name:'Kit Barba Completo',qty:1},{name:'Óleo de Barba Cedro',qty:1}],total:64.98,last_activity:'2026-09-30T19:44:00',status:'abandoned'},
+  {id:3,session_id:'sess_m5q0r4th',email:'nunogomes@gmail.com',user_id:9,items:[{name:'Trimmer Precision X',qty:1}],total:29.99,last_activity:'2026-09-29T22:05:00',status:'abandoned'}
+];
+const DEMO_CARTS_AC=[
+  {id:4,session_id:'sess_a1b2c3dd',email:'miguel.santos@gmail.com',user_id:12,items:[{name:'Óleo de Barba Cedro',qty:2}],total:29.98,last_activity:'2026-10-01T02:40:00',status:'active'},
+  {id:5,session_id:'sess_e4f5g6hh',email:'',user_id:null,items:[{name:'CurveLine Beard Pro',qty:1}],total:39.99,last_activity:'2026-10-01T01:15:00',status:'active'}
+];
+function demoAdmin(path){
+  if(path==='/api/admin/stats') return Promise.resolve({kpis:{totalRevenue:1240.86,totalOrders:32,avgOrder:38.78,totalCustomers:120,visitors:980,pageviews:2400,activeCarts:6,abandoned:4,lowStock:3},
+    daily:demoDays(14,(d,i)=>({d,revenue:Math.round((40+((i*37)%90))*100)/100,orders:1+(i*7)%5})),
+    dailyTraffic:demoDays(14,(d,i)=>({d,pageviews:120+((i*53)%110),visitors:50+((i*29)%45)})),
+    topProducts:[{name:'CurveLine Beard Pro',qty:18},{name:'Óleo de Barba Cedro',qty:24},{name:'Kit Barba Completo',qty:9}],
+    lowStockList:[{name:'Kit Barba Completo',id:'kit-barba-completo',stock:3},{name:'Trimmer Precision X',id:'trimmer-precision',stock:8},{name:'Pente Carbono Anti-estático',id:'pente-carbono',stock:0}],
+    recent:DEMO_ORDERS.slice(0,5)});
+  if(path.startsWith('/api/admin/analytics')) return Promise.resolve({daily:demoDays(14,(d,i)=>({d,pageviews:120+((i*53)%110),visitors:50+((i*29)%45)})),
+    byEvent:[{event_type:'page_view',c:2400},{event_type:'add_to_cart',c:214},{event_type:'begin_checkout',c:96},{event_type:'purchase',c:32}],
+    funnel:{visitors:980,addToCart:214,beginCheckout:96,purchase:32}});
+  if(path==='/api/admin/products') return Promise.resolve(DEMO_PRODUCTS);
+  if(path==='/api/admin/orders') return Promise.resolve(DEMO_ORDERS);
+  if(path==='/api/admin/users') return Promise.resolve(DEMO_USERS);
+  if(path.startsWith('/api/admin/carts')) return Promise.resolve(path.includes('active')?DEMO_CARTS_AC:DEMO_CARTS_AB);
+  return Promise.reject(new Error('Demo: sem dados para '+path));
+}
 // ---- MODO VISITA (só design, sem backend) ----
 function fillDemoKpis(){
   const set=(id,v)=>{ const el=document.getElementById(id); if(el&&(/^—|—$/.test(el.textContent)||!el.textContent.trim())) el.textContent=v; };
@@ -645,6 +694,7 @@ function fillDemoKpis(){
   ['topProducts','lowStockList','recentOrders'].forEach(id=>{ const e2=el(id); if(e2&&!e2.innerHTML.trim()) e2.innerHTML='<p style="color:#777;font-size:.84rem">Modo visita — dados de exemplo.</p>'; });
 }
 async function initVisita(){
+  window.__VISITA=true;
   document.getElementById('adminLogin').style.display='none';
   document.getElementById('adminDenied').style.display='none';
   const app=document.getElementById('adminApp'); app.style.display='grid';
@@ -656,7 +706,11 @@ async function initVisita(){
   document.body.prepend(bar);
   CFG=await loadConfig();
   document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);
-  renderContent(); fillDemoKpis();
+  renderContent();
+  loadDashboard().catch(()=>{}); loadProducts().catch(()=>{}); loadOrders().catch(()=>{});
+  loadClients().catch(()=>{}); loadCarts().catch(()=>{}); loadAnalytics().catch(()=>{});
+  document.getElementById('healthCheck').textContent='demo (modo visita)';
+  const sm=document.getElementById('stockMoves'); if(sm) sm.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><tr><th>Data</th><th>Produto</th><th>Δ</th><th>Motivo</th></tr><tr><td>30/09 10:12</td><td>Kit Barba Completo</td><td><b>+20</b></td><td>reposição</td></tr><tr><td>28/09 15:40</td><td>Trimmer Precision X</td><td><b>−4</b></td><td>vendas</td></tr><tr><td>25/09 09:02</td><td>Óleo de Barba Cedro</td><td><b>+50</b></td><td>reposição</td></tr></table></div>';
   ['btnSaveAll','btnSaveProd'].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=true; b.title='Desligado no modo visita'; b.style.opacity='.5'; } });
 }
 document.addEventListener('DOMContentLoaded', () => {

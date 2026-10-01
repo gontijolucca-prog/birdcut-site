@@ -5,13 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Área de Cliente — Bird Cut</title>
 <meta name="description" content="Área de Cliente Bird Cut: gestão de pedidos, dados pessoais e endereços.">
-<link rel="icon" type="image/png" href="img/favicon-bw.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&family=Caveat:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/rafael.css">
 <script src="js/analytics.js"></script>
+<style>
+/* Área cliente: nada 100% em maiúsculas */
+.conta-page label,.conta-page .btn,.conta-page h2,.conta-page h3,.conta-nav a,.pedido-status{text-transform:none !important;letter-spacing:.02em !important;}
+</style>
 </head>
 <body>
 
@@ -56,7 +62,7 @@
     <div class="conta-split">
       <div class="conta-login">
         <div class="conta-login__card">
-          <img src="img/logo-black.png" alt="Bird Cut" style="width:56px;margin-bottom:1.5rem">
+          <img src="img/birdcut-pt/logo-create-account.png" alt="Bird Cut — Created for Creators" style="width:100%;max-width:140px;height:auto;margin:0 auto 1.2rem;display:block">
 
           <!-- Login Form -->
           <div id="loginView">
@@ -78,7 +84,6 @@
 
           <!-- Register Form -->
           <div id="registerView" style="display:none">
-            <img src="img/birdcut-pt/logo-create-account.png" alt="Bird Cut — Created for Creators" style="width:100%;max-width:280px;height:auto;margin:0 auto 1.2rem;display:block">
             <h2>Criar Conta</h2>
             <p style="color:var(--color-ink-soft);margin-bottom:2rem">Junte-se à comunidade Bird Cut.</p>
             <form id="registerForm" class="conta-form">

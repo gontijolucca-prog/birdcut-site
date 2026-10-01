@@ -55,7 +55,7 @@
     show($('dashboardSection'), true);
     const name = user.name || '';
     const surname = user.surname || '';
-    $('userAvatar').textContent = ((name[0] || '?') + (surname[0] || '')).toUpperCase();
+    if ($('userAvatar')) $('userAvatar').textContent = ((name[0] || '?') + (surname[0] || '')).toUpperCase();
     $('userName').textContent = (name + ' ' + surname).trim();
     $('userEmail').textContent = user.email || '';
     if ($('profName')) $('profName').value = name;

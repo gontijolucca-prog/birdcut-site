@@ -73,7 +73,7 @@
   <div class="header__tools"><span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.78rem;color:#555;margin-right:.5rem"></span><button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button></div>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
-<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="adminbirdcut" value="adminbirdcut"></div><div class="admin-field"><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="admPass" required placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-toggle" data-target="admPass" aria-label="Mostrar palavra-passe">👁</button></div></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p></div></section>
+<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="adminbirdcut" value="adminbirdcut"></div><div class="admin-field"><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="admPass" required placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-toggle" data-target="admPass" aria-label="Mostrar palavra-passe">👁</button></div></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p><p style="margin-top:.4rem;font-size:.76rem;color:#777">És o Rafael? Usa o <a href="admin.html?visita=1"><b>acesso de visita</b></a> para rever o design sem password.</p></div></section>
 <section id="adminDenied" class="section" style="display:none"><div class="admin-login"><h2>Acesso restrito</h2><p id="deniedMsg">Esta conta não tem permissões de administrador.</p><p style="font-size:.82rem;color:#777" id="deniedEmail"></p><button class="btn" style="margin-top:1rem;background:#111;color:#fff" onclick="logout().then(()=>location.reload())">Sair</button> <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a></div></section>
 <div id="adminApp" class="admin-wrap" style="display:none">
   <aside class="admin-sidebar">
@@ -557,6 +557,9 @@ window.saveRaw=()=>{ try{ CFG=JSON.parse(document.getElementById('siteRaw').valu
 
 // ---- INIT ----
 async function init(){
+  const q=new URLSearchParams(location.search);
+  // Modo visita (Rafael): ?visita=1 — vê o design sem password, sem mexer em dados reais.
+  if(q.has('visita')||q.has('demo')||q.has('preview')||q.has('rafael')){ initVisita(); return; }
   const loginSec=document.getElementById('adminLogin');
   const denied=document.getElementById('adminDenied');
   const app=document.getElementById('adminApp');
@@ -616,6 +619,7 @@ async function init(){
     CFG=await loadConfig();
     document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);
     renderContent();
+    try{ fillDemoKpis(); }catch(e){}
     try{ await loadDashboard(); }catch(e){ console.error('dash',e); }
     // preload others async
     loadProducts().catch(()=>{});
@@ -626,6 +630,34 @@ async function init(){
     fetch('/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time:'erro').catch(()=>document.getElementById('healthCheck').textContent='offline (usa bcapi direto)');
     fetch('https://media.pontofinal.site/bcapi/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time+' (bcapi)':'—').catch(()=>{});
   }
+}
+// ---- MODO VISITA (só design, sem backend) ----
+function fillDemoKpis(){
+  const set=(id,v)=>{ const el=document.getElementById(id); if(el&&(/^—|—$/.test(el.textContent)||!el.textContent.trim())) el.textContent=v; };
+  set('kpiRevenue','1.240,00 €'); set('kpiRevenueSub','32 encomendas · ticket 38,75 €');
+  set('kpiOrders','32'); set('kpiAOV','ticket 38,75 €'); set('kpiCustomers','120');
+  set('kpiVisitors','980'); set('kpiPageviews','2.400 pageviews');
+  set('kpiActive','6'); set('kpiAbandoned','4 abandonados');
+  set('kpiLow','3'); set('kpiAOV2','38,75 €');
+  const el=n=>document.getElementById(n);
+  if(el('countOrders')&&!el('countOrders').textContent.trim()) el('countOrders').textContent='32';
+  if(el('dashRange')&&!el('dashRange').textContent.trim()) el('dashRange').textContent='· demo';
+  ['topProducts','lowStockList','recentOrders'].forEach(id=>{ const e2=el(id); if(e2&&!e2.innerHTML.trim()) e2.innerHTML='<p style="color:#777;font-size:.84rem">Modo visita — dados de exemplo.</p>'; });
+}
+async function initVisita(){
+  document.getElementById('adminLogin').style.display='none';
+  document.getElementById('adminDenied').style.display='none';
+  const app=document.getElementById('adminApp'); app.style.display='grid';
+  document.getElementById('adminUserEmail').textContent='rafael (visita — só design)';
+  document.getElementById('adminRole').textContent='Visita — sem acesso a dados reais';
+  const bar=document.createElement('div');
+  bar.style.cssText='background:#fff8e1;border-bottom:1px solid #f0df9e;padding:.55rem 1rem;font:600 .8rem Inter,sans-serif;color:#7a5c00;text-align:center';
+  bar.innerHTML='👁 Modo visita: navega à vontade para apontar melhorias. Botões de guardar estão desligados — nada é alterado.';
+  document.body.prepend(bar);
+  CFG=await loadConfig();
+  document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);
+  renderContent(); fillDemoKpis();
+  ['btnSaveAll','btnSaveProd'].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=true; b.title='Desligado no modo visita'; b.style.opacity='.5'; } });
 }
 document.addEventListener('DOMContentLoaded', () => {
   init();

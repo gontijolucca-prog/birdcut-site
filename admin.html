@@ -13,8 +13,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
 .admin-wrap{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 150px);align-items:start}
-.admin-sidebar{background:#111;color:#fff;padding:1rem 0;position:sticky;top:calc(24px + 76px);height:calc(100vh - 24px - 76px);overflow-y:auto;display:flex;flex-direction:column}}
-@media(min-width:861px){.admin-wrap{height:calc(100vh - 76px);min-height:0;align-items:stretch}.admin-sidebar{position:static;top:auto;height:auto;max-height:none}.admin-main{height:calc(100vh - 76px);overflow-y:auto}}
+.admin-sidebar{background:#111;color:#fff;padding:1rem 0;position:sticky;top:100px;height:calc(100vh - 100px);overflow-y:auto;display:flex;flex-direction:column}
+@media(min-width:861px){.admin-wrap{height:calc(100vh - 76px);min-height:0;align-items:stretch}.admin-wrap>.admin-sidebar{position:static;height:auto;max-height:none;overflow-y:auto}.admin-main{height:calc(100vh - 76px);overflow-y:auto}}
 .admin-sidebar__head{padding:0 1rem 1rem;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:.6rem}
 .admin-sidebar__head b{font-family:'Inter',sans-serif;font-size:.95rem;display:block}
 .admin-sidebar__head span{font-size:.75rem;color:rgba(255,255,255,.55)}

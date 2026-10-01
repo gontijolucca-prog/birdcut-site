@@ -2,10 +2,8 @@ name = "birdcut-site"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = "."
 
-# KV para site-config (opcional, para persistir edições do backoffice)
-# Cria com: npx wrangler kv namespace create BC_SITE_KV
-# e cola o id abaixo
-# [[kv_namespaces]]
-# binding = "BC_SITE_KV"
-# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+# KV para site-config (persiste edições do backoffice)
+[[kv_namespaces]]
+binding = "BC_SITE_KV"
+id = "4a1c6c1b7cc340aa90675d20b0a95390"
 

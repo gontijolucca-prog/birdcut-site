@@ -12,8 +12,8 @@
 <script src="js/analytics.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-.admin-wrap{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 150px)}
-.admin-sidebar{background:#111;color:#fff;padding:1rem 0;position:sticky;top:calc(24px + 118px);height:calc(100vh - 24px - 118px);overflow-y:auto;display:flex;flex-direction:column}
+.admin-wrap{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 150px);align-items:start}
+.admin-sidebar{background:#111;color:#fff;padding:1rem 0;position:sticky;top:calc(24px + 76px);height:calc(100vh - 24px - 76px);overflow-y:auto;display:flex;flex-direction:column}}
 .admin-sidebar__head{padding:0 1rem 1rem;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:.6rem}
 .admin-sidebar__head b{font-family:'Inter',sans-serif;font-size:.95rem;display:block}
 .admin-sidebar__head span{font-size:.75rem;color:rgba(255,255,255,.55)}
@@ -707,11 +707,42 @@ async function initVisita(){
   CFG=await loadConfig();
   document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);
   renderContent();
+  bindVisitaUI();
   loadDashboard().catch(()=>{}); loadProducts().catch(()=>{}); loadOrders().catch(()=>{});
   loadClients().catch(()=>{}); loadCarts().catch(()=>{}); loadAnalytics().catch(()=>{});
   document.getElementById('healthCheck').textContent='demo (modo visita)';
   const sm=document.getElementById('stockMoves'); if(sm) sm.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><tr><th>Data</th><th>Produto</th><th>Δ</th><th>Motivo</th></tr><tr><td>30/09 10:12</td><td>Kit Barba Completo</td><td><b>+20</b></td><td>reposição</td></tr><tr><td>28/09 15:40</td><td>Trimmer Precision X</td><td><b>−4</b></td><td>vendas</td></tr><tr><td>25/09 09:02</td><td>Óleo de Barba Cedro</td><td><b>+50</b></td><td>reposição</td></tr></table></div>';
   ['btnSaveAll','btnSaveProd'].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=true; b.title='Desligado no modo visita'; b.style.opacity='.5'; } });
+  ['btnNewProd'].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=true; b.title='Desligado no modo visita'; b.style.opacity='.5'; } });
+}
+function bindVisitaUI(){
+  document.getElementById('adminNav').addEventListener('click',e=>{
+    const a=e.target.closest('a[data-tab]'); if(!a) return; e.preventDefault();
+    document.querySelectorAll('.admin-nav a').forEach(x=>x.classList.remove('active')); a.classList.add('active');
+    document.querySelectorAll('.admin-tab').forEach(t=>t.style.display='none');
+    const el=document.getElementById('tab-'+a.dataset.tab); if(el) el.style.display='';
+    if(a.dataset.tab==='analytics') loadAnalytics();
+    if(a.dataset.tab==='carts') loadCarts();
+    if(a.dataset.tab==='products') loadProducts();
+    if(a.dataset.tab==='orders') loadOrders();
+    if(a.dataset.tab==='clients') loadClients();
+  });
+  document.querySelectorAll('[data-goto]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const nav=document.querySelector('.admin-nav a[data-tab="'+a.getAttribute('data-goto')+'"]'); if(nav) nav.click(); }));
+  const out=()=>location.reload();
+  const lo=document.getElementById('adminLogout'); if(lo) lo.addEventListener('click',out);
+  const lo2=document.getElementById('adminLogout2'); if(lo2) lo2.addEventListener('click',out);
+  const on=(id,fn)=>{ const b=document.getElementById(id); if(b) b.addEventListener('click',fn); };
+  on('btnRefreshDash',()=>loadDashboard().catch(e=>alert(e.message)));
+  on('btnRefreshProd',loadProducts);
+  on('btnCancelProd',()=>{ document.getElementById('productForm').style.display='none'; });
+  on('btnRefreshOrders',loadOrders); on('btnExportOrders',exportOrdersCSV);
+  on('btnRefreshClients',loadClients); on('btnRefreshCarts',loadCarts);
+  const inp=(id,fn)=>{ const b=document.getElementById(id); if(b) b.addEventListener('input',fn); };
+  inp('ordersSearch',renderOrders); inp('clientsSearch',renderClients);
+  const chg=(id,fn)=>{ const b=document.getElementById(id); if(b) b.addEventListener('change',fn); };
+  chg('ordersStatus',renderOrders); chg('cartsStatus',loadCarts);
+  on('btnClearPreview',()=>{ localStorage.removeItem(LS_KEY); alert('Preview limpo.'); });
+  on('btnExport',()=>{ const box=document.getElementById('exportBox'); if(box){ box.style.display='block'; box.textContent=JSON.stringify(CFG,null,2); } });
 }
 document.addEventListener('DOMContentLoaded', () => {
   init();

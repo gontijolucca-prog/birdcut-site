@@ -70,7 +70,7 @@
             <p style="color:var(--color-ink-soft);margin-bottom:2rem">Aceda à sua conta Bird Cut.</p>
             <form id="loginForm" class="conta-form">
               <div><label>E-mail ou utilizador</label><input type="text" id="loginEmail" placeholder="seu@email.pt ou admin" required autocomplete="username"></div>
-              <div><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password"><button type="button" class="pass-toggle" data-target="loginPass" aria-label="Mostrar palavra-passe">👁</button></div></div>
+              <div><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password"><button type="button" class="pass-toggle" data-target="loginPass" aria-label="Mostrar palavra-passe"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div>
               <div id="loginError" style="color:#e56d6d;font-size:.85rem;min-height:1.2em"></div>
               <button type="submit" class="btn btn--red" style="width:100%;justify-content:center" id="loginBtn">Entrar</button>
             </form>
@@ -99,8 +99,8 @@
                 <div><label>Cidade *</label><input type="text" id="regCity" placeholder="Escreve para pesquisar…" required autocomplete="address-level2" list="listaCidades"><datalist id="listaCidades"></datalist></div>
               </div>
               <div><label>País *</label><input type="text" id="regCountry" value="Portugal" required autocomplete="country-name"></div>
-              <div><label>Palavra-passe *</label><div class="pass-wrap"><input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="new-password"><button type="button" class="pass-toggle" data-target="regPass" aria-label="Mostrar palavra-passe">👁</button></div></div>
-              <div><label>Confirmar palavra-passe *</label><div class="pass-wrap"><input type="password" id="regPass2" placeholder="••••••••" required minlength="6" autocomplete="new-password"><button type="button" class="pass-toggle" data-target="regPass2" aria-label="Mostrar palavra-passe">👁</button></div></div>
+              <div><label>Palavra-passe *</label><div class="pass-wrap"><input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="new-password"><button type="button" class="pass-toggle" data-target="regPass" aria-label="Mostrar palavra-passe"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div>
+              <div><label>Confirmar palavra-passe *</label><div class="pass-wrap"><input type="password" id="regPass2" placeholder="••••••••" required minlength="6" autocomplete="new-password"><button type="button" class="pass-toggle" data-target="regPass2" aria-label="Mostrar palavra-passe"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div>
               <div id="regError" style="color:#e56d6d;font-size:.85rem;min-height:1.2em"></div>
               <button type="submit" class="btn btn--red" style="width:100%;justify-content:center" id="regBtn">Criar Conta</button>
             </form>
@@ -123,11 +123,11 @@
           <div><b id="userName">—</b><span id="userEmail">—</span></div>
         </div>
         <nav class="conta-nav">
-          <a href="#" class="active" onclick="showTab('pedidos',this);return false">📦 Pedidos</a>
-          <a href="#" onclick="showTab('dados',this);return false">👤 Dados Pessoais</a>
-          <a href="#" onclick="showTab('enderecos',this);return false">📍 Endereços</a>
-          <a href="#" onclick="showTab('seguranca',this);return false">🔒 Segurança</a>
-          <a href="admin.html" id="adminLink" style="display:none;color:#111;font-weight:700;border-top:1px solid var(--color-line);margin-top:.6rem;padding-top:.9rem">⚙️ Backoffice</a>
+          <a href="#" class="active" onclick="showTab('pedidos',this);return false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Pedidos</a>
+          <a href="#" onclick="showTab('dados',this);return false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Dados Pessoais</a>
+          <a href="#" onclick="showTab('enderecos',this);return false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Endereços</a>
+          <a href="#" onclick="showTab('seguranca',this);return false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Segurança</a>
+          <a href="admin.html" id="adminLink" style="display:none;color:#111;font-weight:700;border-top:1px solid var(--color-line);margin-top:.6rem;padding-top:.9rem"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg> Backoffice</a>
           <a href="#" onclick="doLogout();return false" style="color:var(--color-orange)">← Sair</a>
         </nav>
       </aside>

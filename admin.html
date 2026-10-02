@@ -71,25 +71,31 @@
 <header class="header header--editorial" id="header">
   <div class="container header__in header__in--editorial">
     <div class="brand-editorial"><a href="index.html" style="text-decoration:none"><img src="img/birdcut-pt/logo-birdcut.png" alt="Bird Cut" class="brand-editorial__logo" style="max-height:46px"></a></div>
-    <nav class="nav nav--editorial"><a href="index.html">Ver loja</a><a href="admin.html" class="active">Backoffice</a><a href="conta.html">Área Cliente</a><a href="politicas.html">Políticas</a></nav>
+    <nav class="nav nav--editorial">
+      <a href="index.html#experiencias">O que dizem</a>
+      <a href="index.html#internacional">Criadores</a>
+      <a href="a-historia.html">Sobre nós</a>
+      <a href="index.html#faq">Perguntas</a>
+      <a href="admin.html" id="navBackoffice" style="display:none;font-weight:700" class="active">Backoffice</a>
+    </nav>
   </div>
-  <div class="header__tools"><span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.78rem;color:#555;margin-right:.5rem"></span><button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button></div>
+  <div class="header__tools"><a href="conta.html" class="icon-btn" aria-label="Conta" title="Conta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a><span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.78rem;color:#555;margin-left:.4rem"></span><button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button></div>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
-<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="admin" value="admin"></div><div class="admin-field"><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="admPass" required placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-toggle" data-target="admPass" aria-label="Mostrar palavra-passe">👁</button></div></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p><p style="margin-top:.4rem;font-size:.76rem;color:#777">És o Rafael? Usa o <a href="admin.html?visita=1"><b>acesso de visita</b></a> para rever o design sem password.</p></div></section>
+<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="admin" value="admin"></div><div class="admin-field"><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="admPass" required placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-toggle" data-target="admPass" aria-label="Mostrar palavra-passe"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p><p style="margin-top:.4rem;font-size:.76rem;color:#777">És o Rafael? Usa o <a href="admin.html?visita=1"><b>acesso de visita</b></a> para rever o design sem password.</p></div></section>
 <section id="adminDenied" class="section" style="display:none"><div class="admin-login"><h2>Acesso restrito</h2><p id="deniedMsg">Esta conta não tem permissões de administrador.</p><p style="font-size:.82rem;color:#777" id="deniedEmail"></p><button class="btn" style="margin-top:1rem;background:#111;color:#fff" onclick="logout().then(()=>location.reload())">Sair</button> <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a></div></section>
 <div id="adminApp" class="admin-wrap" style="display:none">
   <aside class="admin-sidebar">
     <div class="admin-sidebar__head"><b>Bird Cut — Backoffice</b><span id="adminRole">Administrador</span></div>
     <nav class="admin-nav" id="adminNav">
-      <a href="#" data-tab="dash" class="active">📊 Dashboard</a>
-      <a href="#" data-tab="orders">📦 Encomendas <small id="countOrders">—</small></a>
-      <a href="#" data-tab="clients">👥 Clientes <small id="countClients">—</small></a>
-      <a href="#" data-tab="carts">🛒 Carrinhos <small id="countCarts">—</small></a>
-      <a href="#" data-tab="products">🪮 Produtos / Stock</a>
-      <a href="#" data-tab="analytics">📈 Analytics</a>
-      <a href="#" data-tab="content">🎨 Conteúdo</a>
-      <a href="#" data-tab="settings">⚙️ Definições</a>
+      <a href="#" data-tab="dash" class="active"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg> Dashboard</a>
+      <a href="#" data-tab="orders"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Encomendas <small id="countOrders">—</small></a>
+      <a href="#" data-tab="clients"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Clientes <small id="countClients">—</small></a>
+      <a href="#" data-tab="carts"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Carrinhos <small id="countCarts">—</small></a>
+      <a href="#" data-tab="products"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg> Produtos / Stock</a>
+      <a href="#" data-tab="analytics"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Analytics</a>
+      <a href="#" data-tab="content"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="9" x2="9" y2="21"></line></svg> Conteúdo</a>
+      <a href="#" data-tab="settings"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg> Definições</a>
     </nav>
     <div style="padding:.8rem .6rem;margin-top:auto;display:grid;gap:.5rem">
       <button class="btn btn--outline" style="width:100%;justify-content:center;font-size:.76rem;color:#fff;border-color:rgba(255,255,255,.2)" onclick="window.open('index.html','_blank')">Ver loja ↗</button>
@@ -179,7 +185,7 @@
     </div>
   </main>
 </div>
-<div class="mobile-menu" id="mobileMenu"><button class="close" id="menuClose" aria-label="Fechar">×</button><a href="index.html">Ver loja</a><a href="admin.html">Backoffice</a><a href="conta.html">Área Cliente</a></div>
+<div class="mobile-menu" id="mobileMenu"><button class="close" id="menuClose" aria-label="Fechar">×</button><a href="index.html#experiencias">O que dizem</a><a href="index.html#internacional">Criadores</a><a href="a-historia.html">Sobre nós</a><a href="index.html#faq">Perguntas</a><a href="admin.html" id="mobileBackoffice" style="display:none">Backoffice</a></div>
 <script src="js/api.js"></script>
 <script src="js/main.js"></script>
 <script src="js/rafael.js"></script>
@@ -571,7 +577,7 @@ async function init(){
   const logoutBtn2=document.getElementById('adminLogout2');
   function showLogin(){ loginSec.style.display=''; denied.style.display='none'; app.style.display='none'; }
   function showDenied(u){ loginSec.style.display='none'; denied.style.display=''; app.style.display='none'; document.getElementById('deniedEmail').textContent=u?u.email:''; document.getElementById('deniedMsg').textContent='Esta conta ('+(u?.email||'')+') não tem permissões de administrador.'; }
-  function showApp(u){ loginSec.style.display='none'; denied.style.display='none'; app.style.display='grid'; emailEl.textContent=u.email; logoutBtn.style.display=''; document.getElementById('adminRole').textContent=u.role||'Administrador'; }
+  function showApp(u){ loginSec.style.display='none'; denied.style.display='none'; app.style.display='grid'; emailEl.textContent=u.email; logoutBtn.style.display=''; document.getElementById('adminRole').textContent=u.role||'Administrador'; const nb=document.getElementById('navBackoffice'); if(nb) nb.style.display=''; const mb=document.getElementById('mobileBackoffice'); if(mb) mb.style.display=''; }
 
   document.getElementById('adminNav').addEventListener('click',e=>{
     const a=e.target.closest('a[data-tab]'); if(!a) return; e.preventDefault();
@@ -703,9 +709,11 @@ async function initVisita(){
   const app=document.getElementById('adminApp'); app.style.display='grid';
   document.getElementById('adminUserEmail').textContent='rafael (visita — só design)';
   document.getElementById('adminRole').textContent='Visita — sem acesso a dados reais';
+  const nb=document.getElementById('navBackoffice'); if(nb) nb.style.display='';
+  const mb=document.getElementById('mobileBackoffice'); if(mb) mb.style.display='';
   const bar=document.createElement('div');
   bar.style.cssText='background:#fff8e1;border-bottom:1px solid #f0df9e;padding:.55rem 1rem;font:600 .8rem Inter,sans-serif;color:#7a5c00;text-align:center';
-  bar.innerHTML='👁 Modo visita: navega à vontade para apontar melhorias. Botões de guardar estão desligados — nada é alterado.';
+  bar.innerHTML='<span style="display:inline-flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> Modo visita: navega à vontade para apontar melhorias. Botões de guardar estão desligados — nada é alterado.</span>';
   document.body.prepend(bar);
   CFG=await loadConfig();
   document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);
@@ -749,13 +757,15 @@ function bindVisitaUI(){
 }
 document.addEventListener('DOMContentLoaded', () => {
   init();
+  const eyeSVG='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+  const eyeOffSVG='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.53 9.53a3 3 0 1 0 4.24 4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
   document.querySelectorAll('.pass-toggle').forEach((btn) => {
     btn.addEventListener('click', () => {
       const input = document.getElementById(btn.dataset.target);
       if (!input) return;
       const show = input.type === 'password';
       input.type = show ? 'text' : 'password';
-      btn.textContent = show ? '🙈' : '👁';
+      btn.innerHTML = show ? eyeOffSVG : eyeSVG;
       btn.setAttribute('aria-label', show ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe');
     });
   });

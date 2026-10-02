@@ -29,26 +29,18 @@
     window.addEventListener('pageshow',scrollToAnchor);
   })();
 
-  /* ===== 1. FAIXA PRETA birdcut.pt fiel: 24px + arrows + 5s ===== */
+  /* ===== 1. FAIXA PRETA birdcut.pt fiel: fixa, sem rotação ===== */
   (function(){
     const bar = document.getElementById('birdcut-announcement-bar');
     if (!bar) return;
     const messages = bar.querySelectorAll('.bc-message');
+    if (!messages.length) return;
+    // mantém só a primeira mensagem ativa, esconde restantes e setas (topo fixo)
+    messages.forEach((m,i)=>m.classList.toggle('active', i===0));
     const prevBtn = bar.querySelector('.bc-prev');
     const nextBtn = bar.querySelector('.bc-next');
-    if (!messages.length) return;
-    let current = 0, timer;
-    function showMessage(index){
-      messages[current].classList.remove('active');
-      current = (index + messages.length) % messages.length;
-      messages[current].classList.add('active');
-    }
-    function nextMessage(){ showMessage(current+1); }
-    function prevMessage(){ showMessage(current-1); }
-    function startTimer(){ clearInterval(timer); timer = setInterval(nextMessage, 5000); }
-    if (nextBtn) nextBtn.addEventListener('click', ()=>{ nextMessage(); startTimer(); });
-    if (prevBtn) prevBtn.addEventListener('click', ()=>{ prevMessage(); startTimer(); });
-    startTimer();
+    if(prevBtn) prevBtn.style.display='none';
+    if(nextBtn) nextBtn.style.display='none';
   })();
 
   /* ===== 2. ESCOLHER COR: muda a foto do pente (bc-color + swatch compat) ===== */

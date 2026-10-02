@@ -65,10 +65,16 @@
   mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mm.classList.remove('open')));
 })();
 
-/* ===== CARRINHO + TRACKING ===== */
+/* ===== CARRINHO + TRACKING + BACKOFFICE NAV ===== */
 (function(){
+  function setBackofficeVisible(on){
+    const nb=document.getElementById('navBackoffice'); if(nb) nb.style.display= on ? '' : 'none';
+    const mb=document.getElementById('mobileBackoffice'); if(mb) mb.style.display= on ? '' : 'none';
+  }
   if (typeof onAuthChange === 'function') {
     onAuthChange(user => {
+      const isAdmin = !!(user && user.role==='admin');
+      setBackofficeVisible(isAdmin);
       const contaLink = document.querySelector('a[href="conta.html"]');
       const accountLabel = contaLink?.querySelector('span');
       if (accountLabel) accountLabel.textContent = user?.email?.split('@')[0] || 'Conta';

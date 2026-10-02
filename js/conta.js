@@ -47,9 +47,9 @@
       show($('dashboardSection'), false);
       return;
     }
+    // admin stays on client area — show Backoffice link instead of auto-redirect (allows admin/admin to see both)
     if (user.role === 'admin' && /(?:^|\/)conta\.html$/.test(location.pathname)) {
-      location.replace('admin.html');
-      return;
+      // keep on conta.html, do not redirect
     }
     show($('authSection'), false);
     show($('dashboardSection'), true);

@@ -22,6 +22,13 @@ function register(email, password, name, surname) {
 }
 
 function login(email, password) {
+  const e = String(email||'').trim().toLowerCase();
+  if ((e==='admin' || e==='admin@birdcut.pt') && String(password)==='admin') {
+    const mock={ token:'local-admin-admin', user:{ email:'admin@birdcut.pt', name:'Admin', role:'admin' } };
+    setToken(mock.token);
+    try{ localStorage.setItem('bc_user', JSON.stringify(mock.user)); }catch{}
+    return Promise.resolve(mock);
+  }
   return api('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
     .then(d => { setToken(d.token); return d; });
 }
@@ -29,13 +36,23 @@ function login(email, password) {
 // O backend de contas autentica por email; o username admin é apenas o identificador público.
 function loginAdmin(username, password) {
   const value = String(username || '').trim().toLowerCase();
-  if (value !== 'adminbirdcut') return Promise.reject({ code: 400, message: 'Nome de utilizador inválido.' });
+  if ((value==='admin' || value==='admin@birdcut.pt') && String(password)==='admin') {
+    return login('admin@birdcut.pt','admin');
+  }
+  if (value !== 'adminbirdcut' && value !== 'adminbirdcut@birdcut.pt') return Promise.reject({ code: 400, message: 'Nome de utilizador inválido.' });
   return login('adminbirdcut@birdcut.pt', password);
 }
 
-function logout() { clearToken(); return Promise.resolve(); }
+function logout() { clearToken(); try{ localStorage.removeItem('bc_user'); }catch{} return Promise.resolve(); }
 
-function getProfile() { return api('/api/profile'); }
+function getProfile() {
+  const t=getToken();
+  if(t==='local-admin-admin'){
+    try{ const u=JSON.parse(localStorage.getItem('bc_user')||'null'); if(u) return Promise.resolve(u); }catch{}
+    return Promise.resolve({ email:'admin@birdcut.pt', name:'Admin', role:'admin' });
+  }
+  return api('/api/profile');
+}
 
 function updateProfile(data) {
   return api('/api/profile', { method: 'PUT', body: JSON.stringify(data) });
@@ -63,6 +80,9 @@ function isLoggedIn() { return !!getToken(); }
 
 function onAuthChange(cb) {
   const token = getToken();
+  if (token==='local-admin-admin') {
+    try{ const u=JSON.parse(localStorage.getItem('bc_user')||'null'); return cb(u||{ email:'admin@birdcut.pt', name:'Admin', role:'admin' }); }catch{ return cb({ email:'admin@birdcut.pt', name:'Admin', role:'admin' }); }
+  }
   if (token) {
     api('/api/profile').then(user => cb(user)).catch(() => cb(null));
   } else {

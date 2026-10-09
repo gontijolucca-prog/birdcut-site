@@ -23,3 +23,11 @@ DETALHE A CONHECER
 - No telemovel a 375px o logo encosta ao icone do carrinho.
 - Nao afeta desktop (1024/1440) nem o funcionamento.
 - Se quiseres, alinho o header do telemovel numa proxima passagem.
+
+--- ATUALIZACAO (mesmo dia) ---
+Texto por cima da seccao de produtos (best-selling):
+  ANTES: "Estes produtos sao particularmente populares."
+  AGORA: "Feito para criar. Escolhe a tua cor."
+Sem erros ortograficos, com pontuacao correta.
+Alterado em index.html e data/site.json (a API /api/site-config tambem devolve o texto novo).
+Commit: 178189d — ja publicado e confirmado ONline em 375 / 1024 / 1440.

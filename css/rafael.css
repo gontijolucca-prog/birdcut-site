@@ -94,7 +94,7 @@ html{scroll-padding-top:calc(20px + 112px)} /* ancora não fica sob o header fix
 .hero-birdcut__desc strong{font-weight:700}
 .hero-birdcut__btn{display:inline-flex;align-items:center;justify-content:center;width:auto;min-width:132px;max-width:100%;text-align:center;background:#292929;border:1px solid #111;border-radius:6px;color:#fff;font-family:"Montserrat",Sans-serif;font-size:12px;font-weight:600;text-transform:none;letter-spacing:.02em;padding:12px 16px;margin:0;text-decoration:none;transition:.25s;box-sizing:border-box;white-space:nowrap;line-height:1.2}
 @media(max-width:900px){.hero-birdcut{background-position:right -30px center;background-size:58% auto}.hero-birdcut__in{padding:52px 24px 48px 16px}}
-@media(max-width:640px){.hero-birdcut{background-image:url("../img/birdcut-pt/ChatGPT-Image-8_07_2026-00_31_50.jpg");background-position:center bottom;background-size:100% auto;background-repeat:no-repeat;min-height:auto;overflow:hidden}.hero-birdcut__in{min-height:auto;max-width:none;padding:18px 14px calc(56vw + 18px) 12px}.hero-birdcut::after{content:none}.hero-birdcut__title{font-size:16px;line-height:1.25;margin:0 0 8px}.hero-birdcut__desc{font-size:12.5px;line-height:1.5;margin:0 0 14px;max-width:86%}.hero-birdcut__btn{min-width:0;padding:9px 14px;font-size:11px}}
+@media(max-width:640px){.hero-birdcut{background-image:url("../img/birdcut-pt/ChatGPT-Image-8_07_2026-00_31_50.jpg");background-position:center bottom;background-size:100% auto;background-repeat:no-repeat;min-height:calc(56vw + 84px);overflow:hidden}.hero-birdcut::before{content:"";position:absolute;left:0;right:0;top:0;height:120px;background:linear-gradient(180deg,#fff 0,#fff 76px,rgba(255,255,255,0) 120px);z-index:1;pointer-events:none}.hero-birdcut__in{position:relative;z-index:2;min-height:auto;max-width:none;padding:16px 14px 0 12px}.hero-birdcut::after{content:none}.hero-birdcut__title{font-size:16px;line-height:1.25;margin:0 0 8px}.hero-birdcut__desc{font-size:12.5px;line-height:1.5;margin:0 0 14px;max-width:86%}.hero-birdcut__btn{min-width:0;padding:9px 14px;font-size:11px}.ac-product-card__media img{transform:scale(.7)}.ac-product-card:hover .ac-product-card__media img{transform:scale(.7)}}
 #bc-shop-selector{width:100%;text-align:center;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#292929;padding:50px 20px 55px;box-sizing:border-box;background:#fff}
 #bc-shop-selector .bc-eyebrow{font-size:11px;font-weight:300;letter-spacing:1.5px;margin-bottom:17px}
 #bc-shop-selector .bc-main-title{font-size:33px;font-weight:300;line-height:1.15;letter-spacing:.1px;margin-bottom:35px}
@@ -486,14 +486,15 @@ button,a{ -webkit-tap-highlight-color: transparent }
 .btn,.faq-q,.ac-product-card__quick,.exps-arrow,.icon-btn,.burger{min-height:44px;min-width:44px}
 /* Hero ultra-small */
 @media (max-width:480px){
-  .hero-birdcut__in{padding:16px 12px calc(56vw + 14px) 10px}
+  .hero-birdcut{min-height:calc(56vw + 78px)}
+  .hero-birdcut__in{padding:16px 12px 0 10px}
   .hero-birdcut__title{font-size:15px !important;line-height:1.25}
   .hero-birdcut__desc{font-size:12px !important;max-width:92%}
   .hero-birdcut__btn{padding:8px 13px;font-size:10.5px}
 }
 @media (max-width:360px){
-  .hero-birdcut{min-height:auto}
-  .hero-birdcut__in{min-height:auto;padding:14px 10px calc(56vw + 12px)}
+  .hero-birdcut{min-height:calc(56vw + 72px)}
+  .hero-birdcut__in{min-height:auto;padding:14px 10px 0}
   .hero-birdcut__title{font-size:14px !important}
   .hero-birdcut__desc{font-size:11.5px !important}
 }

@@ -168,15 +168,15 @@
       const err = $('loginError');
       if (err) err.textContent = '';
       const btn = $('loginBtn');
-      if (btn) { btn.disabled = true; btn.textContent = 'A entrar…'; }
+      if (btn) { btn.disabled = true; btn.textContent = 'A iniciar sessão…'; }
       try {
         await login($('loginEmail').value.trim(), $('loginPass').value);
         const user = await getProfile();
         paint(user);
       } catch (ex) {
-        if (err) err.textContent = (ex && ex.message) || 'Erro ao entrar. Tenta novamente.';
+        if (err) err.textContent = (ex && ex.message) || 'Erro ao iniciar sessão. Tenta novamente.';
       } finally {
-        if (btn) { btn.disabled = false; btn.textContent = 'Entrar'; }
+        if (btn) { btn.disabled = false; btn.textContent = 'Iniciar sessão'; }
       }
     });
   }

@@ -57,3 +57,13 @@ HERO EM MOBILE (index.html) — pedido do Lucca (print do telemovel)
   Causa extra encontrada e corrigida: o js/site-config.js apagava a imagem no telemovel
   (background-image:none abaixo de 641px) — era o que deixava o hero vazio.
 Commits: 6072202 (css) + 116df4e (js) — publicados, verificado ao vivo a 411px.
+
+--- ATUALIZACAO 3 (mesmo dia) ---
+1. "Feito para criar." deixou de estar em MAIUSCULAS — agora em caixa normal,
+   mesma fonte e tamanho de antes (11px, cinza #777). Mudanca em css/rafael.css
+   (.best-selling__kicker: text-transform none).
+2. Espaco entre os dois textos reduzido: de 14,4px para 6,4px.
+   (.best-selling__head gap .9rem -> .4rem)
+Titulo "Escolhe a tua cor." mantem a fonte exatamente igual (Helvetica Neue 300, 28px / 22px no telemovel).
+Commits: d7f010c e 6539f1d — publicados e verificados (375 / 1024 / 1440, 0 erros).
+QC: PASS (Jev 88%).

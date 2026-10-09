@@ -1,0 +1,25 @@
+BIRDCUT.PT — top bar a rodar + logo preto (09/10)
+Estado: ONLINE em https://www.birdcut.pt
+
+O QUE FOI FEITO
+1. Top bar (faixa preta do topo) volta a trocar de titulo sozinha a cada 5 segundos,
+   com as setas ‹ › a funcionar. Mensagens vindas da config (data/site.json / backoffice).
+2. Logotipo do topo em PRETO (era verde). Mesmo ficheiro: img/birdcut-pt/logo-birdcut.png
+   O verde fica guardado em logo-birdcut-green.png, caso se queira voltar atras.
+3. Cache renovada: todos os links do logo, rafael.js, style.css e rafael.css levam ?v=20261009b.
+   Assim todos os PC/telemoveis puxam a versao nova logo na primeira abertura.
+
+COMO CONFIRMAR
+- Abrir https://www.birdcut.pt (F5 normal, nao precisa Ctrl+Shift+R)
+- Faixa preta: ve-se o titulo a mudar de 5 em 5 segundos
+- Logo por cima, preto
+
+ONDE ESTA
+Repo: ~/Documents/GitHub/birdcut-site
+Commit: 4dddde2  (branch main, ja publicado)
+Deploy: GitHub Actions -> Cloudflare Pages (34s, sucesso)
+
+DETALHE A CONHECER
+- No telemovel a 375px o logo encosta ao icone do carrinho.
+- Nao afeta desktop (1024/1440) nem o funcionamento.
+- Se quiseres, alinho o header do telemovel numa proxima passagem.

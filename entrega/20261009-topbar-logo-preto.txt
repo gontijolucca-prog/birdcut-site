@@ -31,3 +31,11 @@ Texto por cima da seccao de produtos (best-selling):
 Sem erros ortograficos, com pontuacao correta.
 Alterado em index.html e data/site.json (a API /api/site-config tambem devolve o texto novo).
 Commit: 178189d — ja publicado e confirmado ONline em 375 / 1024 / 1440.
+
+--- ATUALIZACAO 2 (mesmo dia) ---
+Cabecalho da seccao de produtos:
+  Em cima (pequeno):  "Feito para criar."
+  Titulo grande:      "Escolhe a tua cor."   (antes: "Best-selling products.")
+Mesma fonte e tamanho de antes (Helvetica Neue 300 / 28px desktop, 22px telemovel). Zero alteracoes de CSS.
+Alterado em index.html e data/site.json (a API /api/site-config devolve o texto novo).
+Commit: 34f169c — publicado, verificado em 375 / 1024 / 1440.

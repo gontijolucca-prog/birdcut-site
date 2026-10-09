@@ -67,3 +67,8 @@ Commits: 6072202 (css) + 116df4e (js) — publicados, verificado ao vivo a 411px
 Titulo "Escolhe a tua cor." mantem a fonte exatamente igual (Helvetica Neue 300, 28px / 22px no telemovel).
 Commits: d7f010c e 6539f1d — publicados e verificados (375 / 1024 / 1440, 0 erros).
 QC: PASS (Jev 88%).
+
+--- ATUALIZACAO 4 (mesmo dia) ---
+Pagina "Sobre nos" (a-historia.html): "Por isso, um passaro nos representa."
+passou a "Dai, um passaro nos representa." (pedido do Rafael).
+Verificado ao vivo: https://www.birdcut.pt/a-historia.html (3 leituras sem cache).

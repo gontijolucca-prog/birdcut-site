@@ -9,8 +9,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/rafael.css">
+<link rel="stylesheet" href="css/style.css?v=20261009b">
+<link rel="stylesheet" href="css/rafael.css?v=20261009b">
 <script src="js/analytics.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
@@ -70,7 +70,7 @@
 </div>
 <header class="header header--editorial" id="header">
   <div class="container header__in header__in--editorial">
-    <div class="brand-editorial"><a href="index.html" style="text-decoration:none"><img src="img/birdcut-pt/logo-birdcut.png" alt="Bird Cut" class="brand-editorial__logo" style="max-height:46px"></a></div>
+    <div class="brand-editorial"><a href="index.html" style="text-decoration:none"><img src="img/birdcut-pt/logo-birdcut.png?v=20261009b" alt="Bird Cut" class="brand-editorial__logo" style="max-height:46px"></a></div>
     <nav class="nav nav--editorial">
       <a href="index.html#experiencias">O que dizem</a>
       <a href="index.html#internacional">Criadores</a>
@@ -82,7 +82,7 @@
   <div class="header__tools"><a href="conta.html" class="icon-btn" aria-label="Conta" title="Conta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a><span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.78rem;color:#555;margin-left:.4rem"></span><button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button></div>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
-<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/favicon-bw.png" alt="" style="width:44px;margin-bottom:.8rem;opacity:.9"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="admin" value="admin"></div><div class="admin-field"><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="admPass" required placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-toggle" data-target="admPass" aria-label="Mostrar palavra-passe"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p><p style="margin-top:.4rem;font-size:.76rem;color:#777">És o Rafael? Usa o <a href="admin.html?visita=1"><b>acesso de visita</b></a> para rever o design sem password.</p></div></section>
+<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/birdcut-pt/logo-create-account.png" alt="Bird Cut — Created for Creators" style="width:100%;max-width:140px;height:auto;margin:0 auto 1.2rem;display:block"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="admin" value="admin"></div><div class="admin-field"><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="admPass" required placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-toggle" data-target="admPass" aria-label="Mostrar palavra-passe"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p><p style="margin-top:.4rem;font-size:.76rem;color:#777">És o Rafael? Usa o <a href="admin.html?visita=1"><b>acesso de visita</b></a> para rever o design sem password.</p></div></section>
 <section id="adminDenied" class="section" style="display:none"><div class="admin-login"><h2>Acesso restrito</h2><p id="deniedMsg">Esta conta não tem permissões de administrador.</p><p style="font-size:.82rem;color:#777" id="deniedEmail"></p><button class="btn" style="margin-top:1rem;background:#111;color:#fff" onclick="logout().then(()=>location.reload())">Sair</button> <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a></div></section>
 <div id="adminApp" class="admin-wrap" style="display:none">
   <aside class="admin-sidebar">
@@ -188,7 +188,7 @@
 <div class="mobile-menu" id="mobileMenu"><button class="close" id="menuClose" aria-label="Fechar">×</button><a href="index.html#experiencias">O que dizem</a><a href="index.html#internacional">Criadores</a><a href="a-historia.html">Sobre nós</a><a href="index.html#faq">Perguntas</a><a href="admin.html" id="mobileBackoffice" style="display:none">Backoffice</a></div>
 <script src="js/api.js"></script>
 <script src="js/main.js"></script>
-<script src="js/rafael.js"></script>
+<script src="js/rafael.js?v=20261009b"></script>
 <script>
 let CFG=null;
 const LS_KEY='bc_site_config_preview';
@@ -475,6 +475,11 @@ function renderContent(){
   if(!CFG) { host.innerHTML='<p style="color:#777">A carregar CFG…</p>'; return; }
   const esc=s=>String(s||'').replace(/</g,'&lt;');
   host.innerHTML=`
+    <div class="admin-card"><h3>Barra do topo (mensagens)</h3>
+      <p style="font-size:.82rem;color:#555">Mensagens que alternam na faixa preta do topo do site, 5 em 5 segundos.</p>
+      <div id="barList"></div>
+      <div class="admin-actions"><button class="btn btn--outline" onclick="addBarMsg()">+ Mensagem</button><button class="btn" style="background:#111;color:#fff" onclick="saveBar()">Guardar barra</button></div>
+    </div>
     <div class="admin-card"><h3>Hero</h3>
       <div class="admin-field"><label>Título</label><input id="hTitle" value="${esc(CFG.hero?.title)}"></div>
       <div class="admin-field"><label>Descrição (HTML)</label><textarea id="hDesc">${CFG.hero?.desc||''}</textarea></div>
@@ -505,7 +510,7 @@ function renderContent(){
       <div class="admin-actions"><button class="btn btn--outline" onclick="addFaq()">+ Pergunta</button><button class="btn" style="background:#111;color:#fff" onclick="saveFaq()">Guardar FAQ</button></div>
     </div>`;
   // populate dynamic lists
-  renderBsProducts(); renderBarbList(); renderExpList(); renderFaqList();
+  renderBarList(); renderBsProducts(); renderBarbList(); renderExpList(); renderFaqList();
 }
 function renderBsProducts(){
   const c=document.getElementById('bsProducts'); if(!c) return;
@@ -561,6 +566,22 @@ function renderFaqList(){
 function addFaq(){ CFG.faq.items.push({id:'f'+Date.now(), q:'Nova pergunta?', a:'Resposta.'}); renderFaqList(); }
 function saveFaq(){ CFG.faq.title=document.getElementById('fTitle').value; saveAll(); }
 function saveHero(){ CFG.hero.title=document.getElementById('hTitle').value; CFG.hero.desc=document.getElementById('hDesc').value; CFG.hero.btnText=document.getElementById('hBtnText').value; CFG.hero.btnLink=document.getElementById('hBtnLink').value; CFG.hero.bgImage=document.getElementById('hBg').value; saveAll(); }
+
+// ---- BARRA DO TOPO ----
+function renderBarList(){
+  const host=document.getElementById('barList'); if(!host) return;
+  const list=(CFG&&CFG.announcement&&Array.isArray(CFG.announcement.messages))?CFG.announcement.messages:[];
+  if(!list.length){ host.innerHTML='<p style="color:#777;font-size:.85rem">Sem mensagens.</p>'; return; }
+  host.innerHTML=list.map((m,i)=>`<div class="admin-row" style="align-items:flex-end"><div class="admin-field" style="flex:1"><label>Mensagem ${i+1}</label><input class="barMsg" value="${String(m).replace(/"/g,'&quot;')}"></div><button class="btn btn--outline" style="height:38px" onclick="delBarMsg(${i})">Remover</button></div>`).join('');
+}
+function addBarMsg(){ if(!CFG.announcement) CFG.announcement={messages:[]}; if(!Array.isArray(CFG.announcement.messages)) CFG.announcement.messages=[]; CFG.announcement.messages.push('Nova mensagem'); renderBarList(); }
+function delBarMsg(i){ if(!CFG.announcement||!Array.isArray(CFG.announcement.messages)) return; CFG.announcement.messages.splice(i,1); renderBarList(); }
+function saveBar(){
+  const vals=Array.from(document.querySelectorAll('.barMsg')).map(i=>i.value.trim()).filter(Boolean);
+  if(!vals.length){ alert('Deixa pelo menos uma mensagem.'); return; }
+  CFG.announcement=CFG.announcement||{}; CFG.announcement.messages=vals; saveAll();
+}
+window.addBarMsg=addBarMsg; window.delBarMsg=delBarMsg; window.saveBar=saveBar; window.renderBarList=renderBarList;
 window.saveHero=saveHero; window.saveBs=saveBs; window.addBsProd=addBsProd; window.saveBarb=saveBarb; window.saveExp=saveExp; window.addExp=addExp; window.saveFaq=saveFaq; window.addFaq=addFaq;
 window.saveRaw=()=>{ try{ CFG=JSON.parse(document.getElementById('siteRaw').value); saveAll(); }catch(e){ alert('JSON inválido: '+e.message); } };
 

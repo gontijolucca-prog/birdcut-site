@@ -29,18 +29,52 @@
     window.addEventListener('pageshow',scrollToAnchor);
   })();
 
-  /* ===== 1. FAIXA PRETA birdcut.pt fiel: fixa, sem rotação ===== */
+  /* ===== 1. FAIXA PRETA birdcut.pt fiel: mensagens do config + rotação 5s ===== */
   (function(){
     const bar = document.getElementById('birdcut-announcement-bar');
     if (!bar) return;
-    const messages = bar.querySelectorAll('.bc-message');
-    if (!messages.length) return;
-    // mantém só a primeira mensagem ativa, esconde restantes e setas (topo fixo)
-    messages.forEach((m,i)=>m.classList.toggle('active', i===0));
+    const area = bar.querySelector('.bc-message-area');
     const prevBtn = bar.querySelector('.bc-prev');
     const nextBtn = bar.querySelector('.bc-next');
-    if(prevBtn) prevBtn.style.display='none';
-    if(nextBtn) nextBtn.style.display='none';
+    let messages = Array.prototype.slice.call(bar.querySelectorAll('.bc-message'));
+    let current = 0, timer = null;
+
+    function showMessage(index){
+      if(!messages.length) return;
+      messages[current] && messages[current].classList.remove('active');
+      current = (index + messages.length) % messages.length;
+      messages[current].classList.add('active');
+    }
+    function startTimer(){
+      clearInterval(timer);
+      if(messages.length > 1) timer = setInterval(()=>showMessage(current+1), 5000);
+    }
+    function build(list){
+      if(!area) return;
+      area.innerHTML = list.map((m,i)=>`<div class="bc-message${i===0?' active':''}">${String(m).replace(/</g,'&lt;')}</div>`).join('');
+      messages = Array.prototype.slice.call(area.querySelectorAll('.bc-message'));
+    }
+    async function loadMessages(){
+      let cfg = null;
+      try{ const ls = localStorage.getItem('bc_site_config_preview'); if(ls) cfg = JSON.parse(ls); }catch(e){}
+      if(!cfg){
+        try{ const r = await fetch('/api/site-config',{headers:{'Accept':'application/json'}}); if(r.ok){ const j = await r.json(); if(j && j.hero) cfg = j; } }catch(e){}
+      }
+      if(!cfg){ try{ const r = await fetch('data/site.json',{cache:'no-store'}); if(r.ok) cfg = await r.json(); }catch(e){} }
+      const list = (cfg && cfg.announcement && Array.isArray(cfg.announcement.messages))
+        ? cfg.announcement.messages.map(m=>String(m==null?'':m).trim()).filter(Boolean) : null;
+      return (list && list.length) ? list : null;
+    }
+
+    showMessage(0);
+    if(prevBtn) prevBtn.addEventListener('click',()=>{ showMessage(current-1); startTimer(); });
+    if(nextBtn) nextBtn.addEventListener('click',()=>{ showMessage(current+1); startTimer(); });
+    startTimer();
+
+    loadMessages()
+      .then(list=>{ if(list) build(list); })
+      .catch(()=>{})
+      .then(()=>{ showMessage(0); startTimer(); });
   })();
 
   /* ===== 2. ESCOLHER COR: muda a foto do pente (bc-color + swatch compat) ===== */

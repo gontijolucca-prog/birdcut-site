@@ -186,7 +186,7 @@
   </main>
 </div>
 <div class="mobile-menu" id="mobileMenu"><button class="close" id="menuClose" aria-label="Fechar">×</button><a href="index.html#experiencias">O que dizem</a><a href="index.html#internacional">Criadores</a><a href="a-historia.html">Sobre nós</a><a href="index.html#faq">Perguntas</a><a href="admin.html" id="mobileBackoffice" style="display:none">Backoffice</a></div>
-<script src="js/api.js"></script>
+<script src="js/api.js?v=20261013a"></script>
 <script src="js/main.js?v=20261009d"></script>
 <script src="js/rafael.js?v=20261009b"></script>
 <script>
@@ -638,12 +638,15 @@ async function init(){
   document.getElementById('btnRefreshCarts').addEventListener('click',loadCarts);
   document.getElementById('cartsStatus').addEventListener('change',loadCarts);
 
-  try{
-    const u=await getProfile();
-    if(!u) showLogin();
-    else if(!isAdminUser(u)) showDenied(u);
-    else { showApp(u); await bootData(); }
-  }catch(e){ showLogin(); }
+  if(!isLoggedIn()){ showLogin(); }
+  else {
+    try{
+      const u=await getProfile();
+      if(!u) showLogin();
+      else if(!isAdminUser(u)) showDenied(u);
+      else { showApp(u); await bootData(); }
+    }catch(e){ showLogin(); }
+  }
 
   async function bootData(){
     CFG=await loadConfig();

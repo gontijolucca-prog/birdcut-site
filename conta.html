@@ -157,23 +157,29 @@
           <h2>Endereços</h2>
           <div id="addressesList"></div>
           <form id="addressForm" class="conta-form" style="margin-top:1.5rem;border-top:1px solid var(--color-line);padding-top:1.5rem">
-            <h3 style="margin-bottom:1rem">Novo endereço</h3>
+            <h3 style="margin-bottom:1rem" id="addressFormTitle">Novo endereço</h3>
             <div><label>Morada</label><input type="text" id="addrStreet" placeholder="Rua, nº, andar" required></div>
             <div class="form-row">
               <div><label>Código Postal</label><input type="text" id="addrZip" placeholder="0000-000" required></div>
               <div><label>Cidade</label><input type="text" id="addrCity" placeholder="Escreve para pesquisar…" list="listaCidadesMorada" required><datalist id="listaCidadesMorada"></datalist></div>
             </div>
             <div><label>País</label><input type="text" id="addrCountry" value="Portugal" required></div>
-            <button type="submit" class="btn btn--red">Guardar endereço</button>
+            <button type="submit" class="btn btn--red" id="addressFormBtn">Guardar endereço</button>
           </form>
         </div>
         <!-- Segurança -->
         <div class="conta-tab" id="tab-seguranca" style="display:none">
           <h2>Segurança</h2>
-          <div class="pedido-card"><div class="pedido-card__body">
-            <p>A palavra-passe pode ser recuperada pelo link «Esqueceu a palavra-passe?» no início de sessão. A alteração autenticada ainda não é suportada pela API actual.</p>
-            <a class="btn btn--outline" href="mailto:contacto@birdcut.pt?subject=Pedido%20de%20altera%C3%A7%C3%A3o%20de%20palavra-passe">Contactar apoio</a>
-          </div></div>
+          <form id="passForm" class="conta-form">
+            <div><label>Palavra-passe atual</label><input type="password" id="currentPass" autocomplete="current-password" required></div>
+            <div class="form-row">
+              <div><label>Nova palavra-passe</label><input type="password" id="newPass" autocomplete="new-password" minlength="8" required></div>
+              <div><label>Confirmar nova palavra-passe</label><input type="password" id="newPass2" autocomplete="new-password" minlength="8" required></div>
+            </div>
+            <div id="passMsg" style="font-size:.88rem;min-height:1.2em"></div>
+            <button type="submit" class="btn btn--red">Atualizar palavra-passe</button>
+          </form>
+          <p style="margin-top:1rem;font-size:.85rem;color:var(--color-ink-soft)">Esqueceste-te da palavra-passe? <a href="mailto:contacto@birdcut.pt?subject=Recuperar%20palavra-passe%20Bird%20Cut" style="color:var(--color-ink);text-decoration:underline">Contacta o apoio</a>.</p>
         </div>
       </div>
     </div>
@@ -244,15 +250,15 @@
   <a href="conta.html">Área de Cliente</a>
 </div>
 
-<script src="js/api.js"></script>
+<script src="js/api.js?v=20261013a"></script>
 <script src="js/main.js?v=20261009d"></script>
 <script src="js/rafael.js?v=20261009b"></script>
 <script src="js/cidades-portugal.js"></script>
-<script src="js/conta.js?v=20261009c"></script>
+<script src="js/conta.js?v=20261013a"></script>
 <script>
 // Mostra link Backoffice se for admin
 (function(){
-  if(typeof getProfile==='function'){
+  if(typeof isLoggedIn==='function' && isLoggedIn() && typeof getProfile==='function'){
     getProfile().then(u=>{ if(u && u.role==='admin') document.getElementById('adminLink').style.display=''; }).catch(()=>{});
   }
 })();

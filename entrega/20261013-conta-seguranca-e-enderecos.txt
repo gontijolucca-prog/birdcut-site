@@ -1,0 +1,22 @@
+BIRDCUT.PT — Área de cliente: segurança + endereços (13/10)
+Estado: publicado em https://www.birdcut.pt
+
+O QUE FOI FEITO
+1. Segurança: a alteração de palavra-passe na Área de Cliente funciona agora a sério
+   (palavra-passe atual + nova, mínimo 8 caracteres, com confirmação).
+   Antes mostrava "ainda não está disponível"; agora grava no servidor e a nova
+   palavra-passe passa a valer no login seguinte.
+2. Endereços: cada morada guardada tem agora "Editar" (preenche o formulário e
+   grava as alterações) e "Tornar principal" (define a morada de envio
+   predefinida). O "Remover" continua igual.
+3. Limpeza: deixou de haver erros 401 na consola quando se abre a conta ou o
+   backoffice sem sessão iniciada.
+
+COMO CONFIRMAR
+- https://www.birdcut.pt/conta → entrar → separador "Segurança" → mudar palavra-passe
+- separador "Endereços" → "Editar" e "Tornar principal" em cada morada
+- Verificado em 375 / 1024 / 1440 sem erros na consola
+
+ONDE ESTA
+Repo: ~/Documents/GitHub/birdcut-site
+Branch main; deploy automático GitHub Actions → Cloudflare Pages.

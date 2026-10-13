@@ -67,26 +67,44 @@
     loadOrders();
   }
 
+  let addressCache = {};
+  let editingAddressId = null;
+
   function loadAddresses(addresses) {
     const wrap = $('addressesList');
     if (!wrap) return;
+    addressCache = {};
     const list = Array.isArray(addresses) ? addresses : [];
     if (!list.length) {
       wrap.innerHTML = '<p style="color:var(--color-ink-soft)">Sem endereços guardados. Adiciona um abaixo.</p>';
       return;
     }
     wrap.innerHTML = list
-      .map((a, i) => `
+      .map((a, i) => {
+        if (a.id) addressCache[String(a.id)] = a;
+        const principal = a.is_default || a.isDefault || i === 0;
+        return `
       <article class="pedido-card address-card" style="margin-bottom:1rem">
         <div class="pedido-card__header">
-          <div><b>${escapeHtml(a.label || a.street || 'Endereço')}</b><span>${a.is_default || a.isDefault || i === 0 ? 'Principal' : 'Morada guardada'}</span></div>
-          ${a.id ? `<button type="button" class="address-remove" data-address-id="${escapeHtml(a.id)}" style="color:var(--color-orange);font:inherit;border:0;background:none;cursor:pointer">Remover</button>` : ''}
+          <div><b>${escapeHtml(a.label || a.street || 'Endereço')}</b><span>${principal ? 'Principal' : 'Morada guardada'}</span></div>
+          <div style="display:flex;gap:.9rem;flex-wrap:wrap">
+            ${a.id && !principal ? `<button type="button" class="address-default" data-address-default="${escapeHtml(a.id)}" style="color:var(--color-ink);font:inherit;border:0;background:none;cursor:pointer">Tornar principal</button>` : ''}
+            ${a.id ? `<button type="button" class="address-edit" data-address-edit="${escapeHtml(a.id)}" style="color:var(--color-green);font:inherit;border:0;background:none;cursor:pointer">Editar</button>` : ''}
+            ${a.id ? `<button type="button" class="address-remove" data-address-id="${escapeHtml(a.id)}" style="color:var(--color-orange);font:inherit;border:0;background:none;cursor:pointer">Remover</button>` : ''}
+          </div>
         </div>
         <div class="pedido-card__body"><p>${escapeHtml(a.street || '')}<br>${escapeHtml(a.zip || '')} ${escapeHtml(a.city || '')}<br>${escapeHtml(a.country || '')}</p></div>
-      </article>`)
+      </article>`;
+      })
       .join('');
     wrap.querySelectorAll('[data-address-id]').forEach((button) => {
       button.addEventListener('click', () => window.removeAddressUI(button.dataset.addressId));
+    });
+    wrap.querySelectorAll('[data-address-edit]').forEach((button) => {
+      button.addEventListener('click', () => window.editAddressUI(button.dataset.addressEdit));
+    });
+    wrap.querySelectorAll('[data-address-default]').forEach((button) => {
+      button.addEventListener('click', () => window.setDefaultAddressUI(button.dataset.addressDefault));
     });
   }
 
@@ -97,6 +115,30 @@
       paint(user);
     } catch (e) {
       alert(e.message || 'Erro ao remover endereço');
+    }
+  };
+
+  window.editAddressUI = function (id) {
+    const a = addressCache[String(id)];
+    if (!a || !$('addressForm')) return;
+    editingAddressId = String(id);
+    $('addrStreet').value = a.street || '';
+    $('addrZip').value = a.zip || '';
+    $('addrCity').value = a.city || '';
+    $('addrCountry').value = a.country || 'Portugal';
+    const title = $('addressFormTitle');
+    if (title) title.textContent = 'Editar endereço';
+    const btn = $('addressFormBtn');
+    if (btn) btn.textContent = 'Guardar alterações';
+    $('addressForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  window.setDefaultAddressUI = async function (id) {
+    try {
+      await updateAddress(id, { is_default: true });
+      paint(await getProfile());
+    } catch (e) {
+      alert((e && e.message) || 'Erro ao definir morada principal.');
     }
   };
 
@@ -249,13 +291,23 @@
   if (addressForm) {
     addressForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const payload = {
+        street: $('addrStreet').value.trim(),
+        zip: $('addrZip').value.trim(),
+        city: $('addrCity').value.trim(),
+        country: $('addrCountry').value.trim(),
+      };
       try {
-        await addAddress({
-          street: $('addrStreet').value.trim(),
-          zip: $('addrZip').value.trim(),
-          city: $('addrCity').value.trim(),
-          country: $('addrCountry').value.trim(),
-        });
+        if (editingAddressId) {
+          await updateAddress(editingAddressId, payload);
+          editingAddressId = null;
+          const title = $('addressFormTitle');
+          if (title) title.textContent = 'Novo endereço';
+          const btn = $('addressFormBtn');
+          if (btn) btn.textContent = 'Guardar endereço';
+        } else {
+          await addAddress(payload);
+        }
         addressForm.reset();
         $('addrCountry').value = 'Portugal';
         paint(await getProfile());
@@ -268,12 +320,31 @@
   /* ===== Segurança (alteração de palavra-passe) ===== */
   const passForm = $('passForm');
   if (passForm) {
-    passForm.addEventListener('submit', (e) => {
+    passForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const msg = $('passMsg');
       if (!msg) return;
-      msg.style.color = '#8a3b18';
-      msg.textContent = 'A alteração de palavra-passe ainda não está disponível nesta API. Contacta o apoio para concluir o pedido; não foi feita nenhuma alteração.';
+      const newPassword = $('newPass').value;
+      const confirm = $('newPass2').value;
+      if (newPassword.length < 8) {
+        msg.style.color = '#e56d6d';
+        msg.textContent = 'A nova palavra-passe deve ter pelo menos 8 caracteres.';
+        return;
+      }
+      if (newPassword !== confirm) {
+        msg.style.color = '#e56d6d';
+        msg.textContent = 'As palavras-passe novas não coincidem.';
+        return;
+      }
+      try {
+        await updatePassword($('currentPass').value, newPassword);
+        passForm.reset();
+        msg.style.color = 'var(--color-green)';
+        msg.textContent = '✓ Palavra-passe atualizada.';
+      } catch (ex) {
+        msg.style.color = '#e56d6d';
+        msg.textContent = (ex && ex.message) || 'Erro ao atualizar a palavra-passe.';
+      }
     });
   }
 })();

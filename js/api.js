@@ -69,6 +69,16 @@ function removeAddress(id) {
   return api('/api/addresses/' + id, { method: 'DELETE' });
 }
 
+function updateAddress(id, data) {
+  if(getToken()==='local-admin-admin') return Promise.resolve({ok:true});
+  return api('/api/addresses/' + id, { method: 'PUT', body: JSON.stringify(data) });
+}
+
+function updatePassword(currentPassword, newPassword) {
+  if(getToken()==='local-admin-admin') return Promise.reject({ message: 'Alteração indisponível no modo de demonstração.' });
+  return api('/api/profile', { method: 'PUT', body: JSON.stringify({ currentPassword, newPassword }) });
+}
+
 function getOrders() {
   if(getToken()==='local-admin-admin'){
     return Promise.resolve([

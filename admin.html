@@ -660,8 +660,7 @@ async function init(){
     loadClients().catch(()=>{});
     loadCarts().catch(()=>{});
     // health
-    fetch('/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time:'erro').catch(()=>document.getElementById('healthCheck').textContent='offline (usa bcapi direto)');
-    fetch('https://media.pontofinal.site/bcapi/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time+' (bcapi)':'—').catch(()=>{});
+    fetch('/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time:'erro').catch(()=>document.getElementById('healthCheck').textContent='offline');
   }
 }
 // ---- DADOS DEMO (modo visita: todas as páginas cheias) ----

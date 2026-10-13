@@ -82,7 +82,8 @@
     wrap.innerHTML = list
       .map((a, i) => {
         if (a.id) addressCache[String(a.id)] = a;
-        const principal = a.is_default || a.isDefault || i === 0;
+        const hasFlag = a.is_default !== undefined || a.isDefault !== undefined;
+        const principal = hasFlag ? Boolean(a.is_default || a.isDefault) : i === 0;
         return `
       <article class="pedido-card address-card" style="margin-bottom:1rem">
         <div class="pedido-card__header">

@@ -6,7 +6,7 @@
   window.BC_sid=sid;
   function getUidEmail(){
     try{
-      var t=localStorage.getItem('bc_token');
+      var t=localStorage.getItem('bc_token') || sessionStorage.getItem('bc_token');
       if(!t) return {uid:null,email:''};
       var p=JSON.parse(atob(t.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
       return {uid:p.id||null,email:p.email||''};

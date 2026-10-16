@@ -2,9 +2,15 @@
 // Same-origin: o proxy em /api/* (Cloudflare Pages Function) encaminha para o backend
 const API_URL = '';
 
-function getToken() { return localStorage.getItem('bc_token'); }
-function setToken(t) { localStorage.setItem('bc_token', t); }
-function clearToken() { localStorage.removeItem('bc_token'); }
+function getToken() { return localStorage.getItem('bc_token') || sessionStorage.getItem('bc_token'); }
+function setToken(t, remember) {
+  try { localStorage.removeItem('bc_token'); sessionStorage.removeItem('bc_token'); } catch (e) { /* storage indisponível */ }
+  (remember === false ? sessionStorage : localStorage).setItem('bc_token', t);
+}
+function clearToken() {
+  try { localStorage.removeItem('bc_token'); } catch (e) { /* storage indisponível */ }
+  try { sessionStorage.removeItem('bc_token'); } catch (e) { /* storage indisponível */ }
+}
 
 async function api(path, opts = {}) {
   const token = getToken();
@@ -21,26 +27,35 @@ function register(email, password, name, surname) {
     .then(d => { setToken(d.token); return d; });
 }
 
-function login(email, password) {
+function login(email, password, remember) {
   const e = String(email||'').trim().toLowerCase();
   if ((e==='admin' || e==='admin@birdcut.pt') && String(password)==='admin') {
     const mock={ token:'local-admin-admin', user:{ email:'admin@birdcut.pt', name:'Admin', role:'admin' } };
-    setToken(mock.token);
+    setToken(mock.token, remember);
     try{ localStorage.setItem('bc_user', JSON.stringify(mock.user)); }catch{}
     return Promise.resolve(mock);
   }
   return api('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
-    .then(d => { setToken(d.token); return d; });
+    .then(d => { setToken(d.token, remember); return d; });
 }
 
 // O backend de contas autentica por email; o username admin é apenas o identificador público.
-function loginAdmin(username, password) {
+function loginAdmin(username, password, remember) {
   const value = String(username || '').trim().toLowerCase();
   if ((value==='admin' || value==='admin@birdcut.pt') && String(password)==='admin') {
-    return login('admin@birdcut.pt','admin');
+    return login('admin@birdcut.pt','admin', remember);
   }
   if (value !== 'adminbirdcut' && value !== 'adminbirdcut@birdcut.pt') return Promise.reject({ code: 400, message: 'Nome de utilizador inválido.' });
-  return login('adminbirdcut@birdcut.pt', password);
+  return login('adminbirdcut@birdcut.pt', password, remember);
+}
+
+// ===== Reposição de palavra-passe =====
+function requestPasswordReset(email) {
+  return api('/api/password-reset/request', { method: 'POST', body: JSON.stringify({ email }) });
+}
+
+function confirmPasswordReset(token, newPassword) {
+  return api('/api/password-reset/confirm', { method: 'POST', body: JSON.stringify({ token, newPassword }) });
 }
 
 function logout() { clearToken(); try{ localStorage.removeItem('bc_user'); }catch{} return Promise.resolve(); }

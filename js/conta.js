@@ -20,11 +20,10 @@
   };
 
   /* ===== Alternância de vistas (usadas por onclick inline) ===== */
-  window.showLogin = function () { show($('loginView'), true); show($('registerView'), false); };
-  window.showRegister = function () { show($('registerView'), true); show($('loginView'), false); };
-  window.resetPass = function () {
-    location.href = 'mailto:contacto@birdcut.pt?subject=Recuperar%20palavra-passe%20Bird%20Cut';
-  };
+  window.showLogin = function () { show($('loginView'), true); show($('registerView'), false); show($('forgotView'), false); show($('resetView'), false); };
+  window.showRegister = function () { show($('registerView'), true); show($('loginView'), false); show($('forgotView'), false); show($('resetView'), false); };
+  window.showForgot = function () { show($('forgotView'), true); show($('loginView'), false); show($('registerView'), false); show($('resetView'), false); };
+  window.resetPass = function () { window.showForgot(); };
 
   /* ===== Dashboard ===== */
   window.showTab = function (id, el) {
@@ -213,7 +212,8 @@
       const btn = $('loginBtn');
       if (btn) { btn.disabled = true; btn.textContent = 'A iniciar sessão…'; }
       try {
-        await login($('loginEmail').value.trim(), $('loginPass').value);
+        const rememberBox = $('loginRemember');
+        await login($('loginEmail').value.trim(), $('loginPass').value, rememberBox ? rememberBox.checked : true);
         const user = await getProfile();
         paint(user);
       } catch (ex) {
@@ -261,6 +261,68 @@
         if (err) err.textContent = (ex && ex.message) || 'Erro ao criar conta.';
       } finally {
         if (btn) { btn.disabled = false; btn.textContent = 'Criar Conta'; }
+      }
+    });
+  }
+
+  /* ===== Recuperar palavra-passe ===== */
+  const forgotForm = $('forgotForm');
+  if (forgotForm) {
+    forgotForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = $('forgotMsg');
+      const btn = $('forgotBtn');
+      if (btn) { btn.disabled = true; btn.textContent = 'A enviar…'; }
+      try {
+        await requestPasswordReset($('forgotEmail').value.trim());
+        if (msg) {
+          msg.style.color = '#2e7d32';
+          msg.textContent = '✓ Se existir conta com esse email, enviámos um link para repor a palavra-passe. Verifique também a pasta de spam.';
+        }
+        forgotForm.reset();
+      } catch (ex) {
+        if (msg) { msg.style.color = '#e56d6d'; msg.textContent = (ex && ex.message) || 'Erro ao enviar. Tente novamente.'; }
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Enviar link'; }
+      }
+    });
+  }
+
+  const resetToken = new URLSearchParams(location.search).get('reset');
+  if (resetToken) {
+    show($('dashboardSection'), false);
+    show($('authSection'), true);
+    show($('loginView'), false);
+    show($('registerView'), false);
+    show($('forgotView'), false);
+    show($('resetView'), true);
+  }
+  const resetForm = $('resetForm');
+  if (resetForm) {
+    resetForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = $('resetMsg');
+      const btn = $('resetBtn');
+      const p1 = $('resetPass1').value;
+      const p2 = $('resetPass2').value;
+      if (p1.length < 8) {
+        if (msg) { msg.style.color = '#e56d6d'; msg.textContent = 'A palavra-passe deve ter pelo menos 8 caracteres.'; }
+        return;
+      }
+      if (p1 !== p2) {
+        if (msg) { msg.style.color = '#e56d6d'; msg.textContent = 'As palavras-passe não coincidem.'; }
+        return;
+      }
+      if (btn) { btn.disabled = true; btn.textContent = 'A guardar…'; }
+      try {
+        await confirmPasswordReset(resetToken, p1);
+        if (msg) { msg.style.color = '#2e7d32'; msg.textContent = '✓ Palavra-passe alterada. Já pode entrar com a nova.'; }
+        resetForm.reset();
+        history.replaceState(null, '', 'conta');
+      } catch (ex) {
+        if (msg) { msg.style.color = '#e56d6d'; msg.textContent = (ex && ex.message) || 'Link inválido ou expirado. Peça um novo.'; }
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Guardar palavra-passe'; }
       }
     });
   }

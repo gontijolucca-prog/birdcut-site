@@ -106,12 +106,14 @@
       if(subHandle && cfg.internacional.subtitleHandle) subHandle.textContent = cfg.internacional.subtitleHandle;
       const grid = document.querySelector('.infl-grid');
       const track = document.querySelector('.infl-track');
+      // ?v= força o browser a não mostrar fotos antigas em cache (max-age 4h nos assets)
+      const vsrc = src => src + (src.includes('?') ? '&' : '?') + 'v=20261022';
       if(grid && Array.isArray(cfg.internacional.images)){
-        grid.innerHTML = cfg.internacional.images.map(src=>`<figure class="infl-grid__item"><img src="${src}" alt="International Barbers + Bird Cut" loading="lazy" width="819" height="1024"></figure>`).join('');
+        grid.innerHTML = cfg.internacional.images.map(src=>`<figure class="infl-grid__item"><img src="${vsrc(src)}" alt="International Barbers + Bird Cut" loading="lazy" width="819" height="1024"></figure>`).join('');
       }
       if(track && Array.isArray(cfg.internacional.images)){
-        const cards=cfg.internacional.images.map(src=>`<div class="infl-card"><div class="infl-card__media"><img src="${src}" alt="International Barbers + Bird Cut" loading="lazy" width="819" height="1024"></div></div>`).join('');
-        const dup=cfg.internacional.images.map(src=>`<div class="infl-card" aria-hidden="true"><div class="infl-card__media"><img src="${src}" alt="" loading="lazy" width="819" height="1024"></div></div>`).join('');
+        const cards=cfg.internacional.images.map(src=>`<div class="infl-card"><div class="infl-card__media"><img src="${vsrc(src)}" alt="International Barbers + Bird Cut" loading="lazy" width="819" height="1024"></div></div>`).join('');
+        const dup=cfg.internacional.images.map(src=>`<div class="infl-card" aria-hidden="true"><div class="infl-card__media"><img src="${vsrc(src)}" alt="" loading="lazy" width="819" height="1024"></div></div>`).join('');
         track.innerHTML=cards+dup;
       }
     }

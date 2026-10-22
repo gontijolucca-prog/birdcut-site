@@ -11,7 +11,9 @@ O QUE FOI FEITO
    Também copiados por cima de 1-1-819x1024.png e 2-819x1024.png porque o backoffice em produção guarda
    os nomes antigos no KV (BC_SITE_KV) — sem isto o site continuava a mostrar as fotos velhas.
 5. index.html (cartões + cópia do scroll infinito) e data/site.json atualizados.
-   Commits: b27583d e a9c6489.
+6. O Cloudflare serve as imagens com cache de 4h (max-age=14400) — quem já tinha aberto o site continuava a ver
+   as fotos velhas. Meti ?v=20261022 nas fotos da secção (index.html + js/site-config.js) para forçar o download.
+   Commits: b27583d, a9c6489, 3397f58.
 
 COMO CONFIRMAR
 - Online: https://birdcut.pt/#internacional

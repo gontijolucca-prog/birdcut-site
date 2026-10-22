@@ -60,6 +60,55 @@
 .admin-login{max-width:420px;margin:3.5rem auto;padding:2rem;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.06);text-align:center}
 .admin-login h2{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.3rem}
 @media(max-width:860px){.admin-wrap{grid-template-columns:1fr}.admin-sidebar{position:static;height:auto}.admin-row{grid-template-columns:1fr}.admin-kpis{grid-template-columns:repeat(2,1fr)}.admin-grid-2{grid-template-columns:1fr !important}.admin-grid-3{grid-template-columns:1fr !important}.admin-main{min-width:0}.chart-box{height:220px}}
+/* ===== Mobile + modo demonstração (2026-10-22) ===== */
+#adminUserEmail{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Botões outline do backoffice: hover legível (antes ficava preto sobre preto) */
+.admin-main .btn--outline{color:#111}
+.admin-main .btn--outline:hover:not(:disabled){background:#111;color:#fff;border-color:#111}
+.admin-main .btn--outline:disabled{color:#111;background:transparent;border-color:rgba(0,0,0,.16)}
+.admin-main .btn--outline:disabled:hover{background:transparent;color:#111;border-color:rgba(0,0,0,.16)}
+.admin-demo-chip{display:none;align-items:center;background:#c58800;color:#111;font:700 .62rem/1 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .5rem;border-radius:99px;margin-left:.4rem}
+body.is-demo .admin-demo-chip{display:inline-flex}
+#demoBanner{display:none;align-items:center;gap:.6rem;background:#fff8e6;border:1px solid #f0d28a;color:#6b4c00;border-radius:10px;padding:.6rem .8rem;font-family:'Inter',sans-serif;font-size:.8rem;margin-bottom:1rem}
+body.is-demo #demoBanner{display:block}
+body.is-demo .admin-table button:disabled,body.is-demo #btnNewProd:disabled,body.is-demo #btnSaveProd:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:700px){
+  #adminUserEmail{display:none}
+  .header__tools{gap:.2rem}
+  .admin-main{padding:1rem .8rem}
+  .admin-card{padding:1rem .85rem}
+  .admin-kpis{gap:.6rem}
+  .admin-kpi{padding:.8rem .85rem}
+  .admin-table{min-width:0;width:100%;font-size:.85rem}
+  .admin-table thead{display:none}
+  .admin-table tr{display:block;padding:.7rem .8rem;border-bottom:1px solid rgba(0,0,0,.07)}
+  .admin-table tr:last-child{border-bottom:0}
+  .admin-table tr.head{display:none}
+  .admin-table tr:hover td{background:none}
+  .admin-table td{display:grid;grid-template-columns:92px 1fr;gap:.5rem;align-items:center;padding:.16rem 0;border:0}
+  .admin-table td:before{content:attr(data-label);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:#8a8a8a;font-weight:600}
+  .admin-table td[colspan]{grid-template-columns:1fr;text-align:center;color:#777;padding:.8rem 0}
+  .admin-table td[colspan]:before{display:none}
+  .admin-table td>div{min-width:0}
+  .admin-table td img{width:34px !important;height:34px !important}
+  .admin-table td .badge{width:max-content}
+  #prodHead{display:grid !important;grid-template-columns:1fr 1fr;gap:.5rem}
+  #prodHead h2{grid-column:1/-1}
+  #prodHead .btn{margin:0 !important;width:100%;justify-content:center;font-size:.76rem}
+}
+@media(max-width:860px){
+  .admin-sidebar{padding:.55rem .55rem .6rem}
+  .admin-sidebar__head{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;padding:.1rem .25rem .5rem;border:0;margin:0}
+  .admin-sidebar__head b{font-size:.8rem}
+  .admin-sidebar__head span{font-size:.68rem}
+  .admin-nav{flex-direction:row;overflow-x:auto;gap:.35rem;padding:0 .15rem .55rem;scrollbar-width:none;scroll-snap-type:x proximity}
+  .admin-nav::-webkit-scrollbar{display:none}
+  .admin-nav a{white-space:nowrap;padding:.5rem .72rem;font-size:.78rem;background:rgba(255,255,255,.07);border-radius:99px;scroll-snap-align:start}
+  .admin-nav a.active{background:#fff;color:#111}
+  .admin-nav a small{display:none}
+  .admin-sidebar>div:last-child{grid-template-columns:1fr 1fr;gap:.45rem;margin:0;padding:0 .15rem}
+  .admin-sidebar>div:last-child .btn{font-size:.72rem;padding:.5rem}
+}
 </style>
 </head>
 <body>
@@ -86,7 +135,7 @@
 <section id="adminDenied" class="section" style="display:none"><div class="admin-login"><h2>Acesso restrito</h2><p id="deniedMsg">Esta conta não tem permissões de administrador.</p><p style="font-size:.82rem;color:#777" id="deniedEmail"></p><button class="btn" style="margin-top:1rem;background:#111;color:#fff" onclick="logout().then(()=>location.reload())">Sair</button> <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a></div></section>
 <div id="adminApp" class="admin-wrap" style="display:none">
   <aside class="admin-sidebar">
-    <div class="admin-sidebar__head"><b>Bird Cut — Backoffice</b><span id="adminRole">Administrador</span></div>
+    <div class="admin-sidebar__head"><b>Bird Cut — Backoffice</b><span id="adminRole">Administrador</span><span class="admin-demo-chip">Demo</span></div>
     <nav class="admin-nav" id="adminNav">
       <a href="#" data-tab="dash" class="active"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg> Dashboard</a>
       <a href="#" data-tab="orders"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Encomendas <small id="countOrders">—</small></a>
@@ -103,6 +152,7 @@
     </div>
   </aside>
   <main class="admin-main">
+    <div id="demoBanner"><b>Modo demonstração</b> · Dados de exemplo — criar, editar e apagar estão desativados. Entra com uma conta de administrador real para alterar a loja.</div>
     <div id="tab-dash" class="admin-tab">
       <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:.8rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.15rem">Dashboard</h2><span id="dashRange" style="font-size:.78rem;color:#777"></span><button class="btn btn--outline" style="margin-left:auto;padding:.4rem .8rem;font-size:.75rem" id="btnRefreshDash">⟳ Atualizar</button></div>
       <div class="admin-kpis" id="kpiGrid">
@@ -128,10 +178,10 @@
     </div>
 
     <div id="tab-products" class="admin-tab" style="display:none">
-      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.15rem">Produtos & Stock</h2><button class="btn" style="margin-left:auto;background:#111;color:#fff;font-size:.78rem" id="btnNewProd">+ Novo produto</button><button class="btn btn--outline" style="font-size:.78rem" id="btnRefreshProd">⟳ Atualizar</button></div>
+      <div id="prodHead" style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.15rem">Produtos & Stock</h2><button class="btn" style="margin-left:auto;background:#111;color:#fff;font-size:.78rem" id="btnNewProd">+ Novo produto</button><button class="btn btn--outline" style="font-size:.78rem" id="btnRefreshProd">⟳ Atualizar</button></div>
       <div id="productForm" class="admin-card" style="display:none"><h3 id="productFormTitle">Novo produto</h3><div class="admin-row"><div class="admin-field"><label>ID (p3…)</label><input id="p_id" placeholder="p3"></div><div class="admin-field"><label>SKU</label><input id="p_sku" placeholder="BC-CL-…"></div></div><div class="admin-field"><label>Nome</label><input id="p_name" placeholder="CurveLine Beard Pro — …"></div><div class="admin-row"><div class="admin-field"><label>Preço € (num)</label><input id="p_price_num" type="number" step="0.01" placeholder="18.89"></div><div class="admin-field"><label>Stock</label><input id="p_stock" type="number" step="1" placeholder="50"></div></div><div class="admin-field"><label>Imagem URL</label><input id="p_image" placeholder="img/birdcut-pt/…png"></div><div class="admin-row"><div class="admin-field"><label>Cores (vírgula)</label><input id="p_colors" placeholder="Laranja, Amarelo"></div><div class="admin-field"><label>Rating</label><input id="p_rating" placeholder="5.0"></div></div><div class="admin-row"><div class="admin-field"><label>Ativo</label><select id="p_active"><option value="1">Sim</option><option value="0">Não</option></select></div><div class="admin-field"><label>Motivo stock (opcional)</label><input id="p_reason" placeholder="reposição / correção"></div></div><div class="admin-actions"><button class="btn" style="background:#111;color:#fff" id="btnSaveProd">Guardar</button><button class="btn btn--outline" id="btnCancelProd">Cancelar</button></div></div>
       <div class="admin-table-wrap"><table class="admin-table" id="productsTable"><thead><tr><th>SKU</th><th>Produto</th><th>Preço</th><th>Stock</th><th>Ativo</th><th style="min-width:180px">Ações</th></tr></thead><tbody id="productsBody"><tr><td colspan="6" style="text-align:center;color:#777;padding:2rem">A carregar…</td></tr></tbody></table></div>
-      <div class="admin-card" style="margin-top:1rem"><h3>Histórico stock (últimos 40 movimentos)</h3><div id="stockMoves">—</div></div>
+      <div class="admin-card" style="margin-top:1rem"><h3>Movimentos de stock <small style="font-weight:400;color:#777;font-size:.78rem">— registados neste dispositivo</small></h3><div id="stockMoves"><p style="font-size:.82rem;color:#777;margin:0">Ainda sem ajustes neste dispositivo. Usa o botão <b>Stock</b> num produto para registar um movimento.</p></div></div>
     </div>
 
     <div id="tab-orders" class="admin-tab" style="display:none">
@@ -179,7 +229,7 @@
 
     <div id="tab-settings" class="admin-tab" style="display:none">
       <h2 style="font-family:Inter,sans-serif;margin:0 0 .8rem;font-size:1.15rem">Definições</h2>
-      <div class="admin-card"><h3>Loja</h3><p style="font-size:.84rem;color:#555">Domínio oficial: <b>birdcut.pt</b> (DNS Dominios.pt → Pages <code>birdcut-site.pages.dev</code> — ver instruções no chat).<br>Pagamentos: Stripe Checkout (preço <code>STRIPE_PRICE_ID</code> em Pages Env Vars). Sucesso → <code>/success.html?session_id=</code> cria encomenda via <code>/api/orders/guest</code>.</p><p style="font-size:.84rem;color:#555">API: <code>https://media.pontofinal.site/bcapi</code> → <code>127.0.0.1:3001</code> (PM2 <code>birdcut-api</code>). Health: <code id="healthCheck">—</code></p></div>
+      <div class="admin-card"><h3>Loja</h3><p style="font-size:.84rem;color:#555">Domínio oficial: <b>birdcut.pt</b> (DNS em Dominios.pt → Pages <code>birdcut-site.pages.dev</code>).<br>Pagamentos: Stripe Checkout (preço <code>STRIPE_PRICE_ID</code> em Pages Env Vars). Sucesso → <code>/success.html?session_id=</code> cria encomenda via <code>/api/orders/guest</code>.</p><p style="font-size:.84rem;color:#555">API: <code>https://media.pontofinal.site/bcapi</code> → <code>127.0.0.1:3001</code> (PM2 <code>birdcut-api</code>). Health: <code id="healthCheck">—</code></p></div>
       <div class="admin-card"><h3>Administradores</h3><p style="font-size:.84rem;color:#555">O acesso ao back office e às operações administrativas é validado no servidor. Não são aceites permissões definidas apenas no browser.</p></div>
       <div class="admin-card"><h3>Atalhos</h3><div style="display:flex;gap:.6rem;flex-wrap:wrap"><a href="index.html" class="btn btn--outline">Ver loja</a><a href="conta.html" class="btn btn--outline">Área cliente</a><button class="btn btn--outline" onclick="localStorage.removeItem('bc_site_config_preview');alert('Preview limpo')">Limpar preview</button></div></div>
     </div>
@@ -196,7 +246,15 @@ function isAdminUser(u){ return !!u && u.role === 'admin'; }
 async function loadConfig(){ try{ const ls=localStorage.getItem(LS_KEY); if(ls) return JSON.parse(ls);}catch(e){} try{ const r=await fetch('/api/site-config'); if(r.ok){ const j=await r.json(); if(j&&j.hero) return j; }}catch(e){} const r=await fetch('data/site.json',{cache:'no-store'}); return await r.json(); }
 function savePreview(){ localStorage.setItem(LS_KEY, JSON.stringify(CFG)); }
 async function saveToBackend(){ const t=getToken(); if(!t) return {ok:false,error:'Sem token'}; try{ const r=await fetch('/api/site-config',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify(CFG)}); return await r.json(); }catch(e){ return {ok:false,error:e.message} } }
-async function saveAll(){ savePreview(); const res=await saveToBackend(); if(res&&res.ok) alert('✓ Guardado! '+(res.saved||'ok')); else if(res&&res.error) alert('Guardado localmente. Backend: '+res.error+'\n(Se não tens KV BC_SITE_KV é normal — fica em preview local)'); else alert('✓ Guardado em preview local.'); }
+async function saveAll(){
+  savePreview();
+  if(isDemoSession()) return alert('✓ Guardado na pré-visualização local deste browser.\nModo demonstração: a loja online não é alterada.');
+  const res=await saveToBackend();
+  if(res&&res.ok) alert('✓ Guardado! '+(res.saved||'ok'));
+  else if(res&&res.error) alert('Guardado localmente. Backend: '+res.error+'\n(Se não tens KV BC_SITE_KV é normal — fica em preview local)');
+  else alert('✓ Guardado em preview local.');
+}
+function isDemoSession(){ try{ const t=localStorage.getItem('bc_token')||sessionStorage.getItem('bc_token'); return t==='local-admin-admin'; }catch(e){ return false; } }
 
 // ---- API admin helpers ----
 function authHeaders(){ const t=getToken(); return {'Content-Type':'application/json','Authorization':'Bearer '+(t||'')}; }
@@ -232,6 +290,8 @@ async function loadDashboard(){
   const funnel=data.dailyTraffic ? null : null;
   const box=document.getElementById('funnelBox');
   const f=await adminGet('/api/admin/analytics?days=30').then(d=>d.funnel).catch(()=>({visitors:k.visitors,addToCart:0,beginCheckout:0,purchase:k.totalOrders}));
+  const convEl=document.getElementById('kpiConv');
+  if(convEl){ const cv=f.visitors? (f.purchase/Math.max(1,f.visitors)*100):0; convEl.textContent=cv? cv.toFixed(1).replace('.',',')+'%' : '—'; }
   const steps=[{label:'Visitantes',v:f.visitors},{label:'Add to cart',v:f.addToCart},{label:'Checkout',v:f.beginCheckout},{label:'Compra',v:f.purchase}];
   box.innerHTML=steps.map((s,i)=>'<div class="funnel-step"><b>'+fmtInt(s.v)+'</b><span>'+s.label+'</span>'+(i<steps.length-1?'<div style="font-size:.7rem;color:#999;margin-top:.2rem">'+(s.v? Math.round(steps[i+1].v/Math.max(1,s.v)*100)+'% →':'')+'</div>':'')+'</div>'+(i<steps.length-1?'<div class="funnel-arrow">→</div>':'')).join('');
   // daily chart
@@ -268,18 +328,26 @@ async function loadProducts(){
         <td>${p.active?'<span class="badge badge--ok">ativo</span>':'<span class="badge badge--muted">inativo</span>'}</td>
         <td><div style="display:flex;gap:.4rem;flex-wrap:wrap"><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem" onclick="openEditProd('${p.id}')">Editar</button><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem" onclick="adjustStockPrompt('${p.id}')">Stock</button><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem;color:#c62828;border-color:rgba(198,40,40,.2)" onclick="deleteProd('${p.id}')">✕</button></div></td>
       </tr>`).join('');
-    loadStockMoves();
+    renderStockMoves();
   }catch(e){ document.getElementById('productsBody').innerHTML='<tr><td colspan="6" style="color:#c62828;padding:1rem">Erro: '+e.message+'</td></tr>'; }
 }
-async function loadStockMoves(){
-  try{
-    const all=productsCache;
-    let html='<div class="admin-table-wrap"><table class="admin-table"><tr><th>Data</th><th>Produto</th><th>Δ</th><th>Motivo</th></tr>';
-    // fetch via admin stats? we don't have dedicated moves endpoint — reuse products stock_moves via direct query not exposed, so skip detailed history and show placeholder from backend not yet exposed
-    // we keep stock_moves in DB but need endpoint; fallback to show stock current only
-    html+='<tr><td colspan="4" style="text-align:center;color:#777;padding:1rem">Histórico detalhado em breve — stock atual acima. Ajustes via botão Stock adicionam motivo.</td></tr></table></div>';
-    document.getElementById('stockMoves').innerHTML=html;
-  }catch(e){ document.getElementById('stockMoves').textContent='—'; }
+function readMoves(){ try{ return JSON.parse(localStorage.getItem('bc_stock_moves')||'[]'); }catch(e){ return []; } }
+function pushMove(name, from, to, reason){
+  const arr=readMoves();
+  arr.unshift({ d:new Date().toISOString(), name, delta:(Number(to)||0)-(Number(from)||0), reason:reason||'ajuste' });
+  try{ localStorage.setItem('bc_stock_moves', JSON.stringify(arr.slice(0,40))); }catch(e){}
+  renderStockMoves();
+}
+function renderStockMoves(){
+  const el=document.getElementById('stockMoves'); if(!el) return;
+  const arr=readMoves();
+  if(!arr.length){
+    if(window.__VISITA) return; // modo visita já injeta exemplos
+    el.innerHTML='<p style="font-size:.82rem;color:#777;margin:0">Ainda sem ajustes neste dispositivo. Usa o botão <b>Stock</b> num produto para registar um movimento.</p>';
+    return;
+  }
+  el.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Data</th><th>Produto</th><th>Δ</th><th>Motivo</th></tr></thead><tbody>'+arr.map(m=>'<tr><td>'+String(m.d||'').slice(0,16).replace('T',' ')+'</td><td>'+m.name+'</td><td><b>'+(m.delta>0?'+':'')+m.delta+'</b></td><td>'+m.reason+'</td></tr>').join('')+'</tbody></table></div>';
+  if(window.decorateAdminTables) window.decorateAdminTables();
 }
 function openNewProd(){
   document.getElementById('productFormTitle').textContent='Novo produto';
@@ -301,10 +369,11 @@ async function adjustStockPrompt(id){
   const v=prompt('Stock atual '+p.stock+' — novo stock para '+p.name+' (inteiro):', String(p.stock));
   if(v===null) return; const n=parseInt(v,10); if(Number.isNaN(n)) return alert('Valor inválido');
   const reason=prompt('Motivo (ex: reposição, inventário, quebra):','ajuste manual')||'ajuste manual';
-  try{ await adminPut('/api/admin/products/'+id,{stock:n, reason}); await loadProducts(); }catch(e){ alert('Erro: '+e.message); }
+  try{ await adminPut('/api/admin/products/'+id,{stock:n, reason}); pushMove(p.name, p.stock, n, reason); await loadProducts(); }catch(e){ alert('Erro: '+e.message); }
 }
 async function saveProdForm(){
   const editing=document.getElementById('productForm').dataset.editing;
+  const beforeStock=editing ? (productsCache.find(x=>x.id===editing)||{}).stock : null;
   const body={
     id: document.getElementById('p_id').value.trim()||undefined,
     sku: document.getElementById('p_sku').value.trim(),
@@ -322,6 +391,7 @@ async function saveProdForm(){
   try{
     if(editing){ await adminPut('/api/admin/products/'+editing, body); }
     else { await adminPost('/api/admin/products', body); }
+    if(editing && Number.isFinite(beforeStock) && beforeStock!==body.stock) pushMove(body.name, beforeStock, body.stock, body.reason);
     document.getElementById('productForm').style.display='none';
     await loadProducts(); await loadDashboard().catch(()=>{});
   }catch(e){ alert('Erro: '+e.message); }
@@ -793,6 +863,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+</script>
+<script>
+/* Tabelas em cartões no telemóvel + estado de demonstração (2026-10-22) */
+(function(){
+  function isDemo(){ try{ return (localStorage.getItem('bc_token')||sessionStorage.getItem('bc_token'))==='local-admin-admin'; }catch(e){ return false; } }
+  window.decorateAdminTables=function(){
+    document.querySelectorAll('.admin-main table.admin-table').forEach(function(t){
+      var labels=[];
+      if(t.tHead && t.tHead.rows[0]) labels=[].slice.call(t.tHead.rows[0].cells).map(function(c){return c.textContent.trim();});
+      else if(t.rows[0]){
+        var r0=[].slice.call(t.rows[0].cells);
+        if(r0.length && r0.every(function(c){return c.tagName==='TH';})){ labels=r0.map(function(c){return c.textContent.trim();}); t.rows[0].classList.add('head'); }
+      }
+      if(!labels.length) return;
+      [].slice.call(t.rows).forEach(function(r){
+        if(r.classList.contains('head')) return;
+        [].slice.call(r.cells).forEach(function(c,i){ if(c.tagName==='TD' && c.colSpan===1) c.setAttribute('data-label', labels[i]||''); });
+      });
+    });
+  };
+  function syncDemo(){
+    var demo=isDemo();
+    document.body.classList.toggle('is-demo', demo);
+    if(!demo) return;
+    [['#btnNewProd'],['#btnSaveProd']].forEach(function(p){ var b=document.querySelector(p[0]); if(b){ b.disabled=true; b.title='Desativado no modo demonstração'; } });
+    document.querySelectorAll('#tab-products .admin-table button').forEach(function(b){ b.disabled=true; b.title='Desativado no modo demonstração'; });
+    document.querySelectorAll('#tab-orders .admin-table select').forEach(function(s){ s.disabled=true; s.title='Desativado no modo demonstração'; });
+  }
+  var timer=null;
+  function refresh(){ clearTimeout(timer); timer=setTimeout(function(){ window.decorateAdminTables(); syncDemo(); }, 60); }
+  document.addEventListener('DOMContentLoaded', function(){
+    refresh();
+    var main=document.querySelector('.admin-main');
+    if(main) new MutationObserver(refresh).observe(main,{childList:true,subtree:true});
+    document.getElementById('adminNav').addEventListener('click', refresh);
+  });
+  setInterval(function(){ window.decorateAdminTables(); syncDemo(); }, 1200);
+})();
 </script>
 </body>
 </html>

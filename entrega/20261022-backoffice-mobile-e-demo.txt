@@ -1,0 +1,27 @@
+BIRDCUT.PT — Backoffice: mobile, modo demo e bugs (22/10)
+Estado: online (deploy Cloudflare Pages ok)
+
+O QUE FOI CORRIGIDO
+1. Telemóvel — cabeçalho: o e-mail do admin sobrepunha-se ao logo BirdCut. Agora o e-mail
+   fica só no desktop; no telemóvel aparecem apenas os ícones.
+2. Telemóvel — menu do backoffice: 8 itens em coluna ocupavam meio ecrã. Passou a barra
+   horizontal de "chips" com scroll; os botões Ver loja / Sair ficaram numa linha.
+3. Telemóvel — tabelas: Encomendas, Clientes, Carrinhos, Produtos e as tabelas do Dashboard
+   estavam cortadas (só se via metade, com scroll horizontal). Passaram a cartões com etiqueta
+   por campo (DATA, CLIENTE, TOTAL, ESTADO...), sem scroll lateral.
+4. Modo demonstração (login admin/admin): mostrava dados de exemplo mas deixava carregar em
+   Guardar/Editar → erros 401/501. Agora tem etiqueta DEMO, aviso no topo e os botões de escrita
+   desativados. O editor de conteúdo continua a guardar em pré-visualização local (funciona).
+5. Botões outline: no hover ficavam preto sobre preto (texto invisível). Corrigido.
+6. Stock: o painel dizia "Histórico detalhado em breve" (nunca existia). Agora lista os ajustes
+   feitos neste dispositivo (Data / Produto / Δ / Motivo); vazio mostra instrução.
+7. Dashboard: o KPI "Conversão" mostrava "—". Passa a calcular compras ÷ visitantes (ex. 3,3%).
+8. Definições: texto "ver instruções no chat" trocado por texto normal.
+
+COMO CONFIRMAR
+- https://birdcut.pt/admin.html (login admin/admin = demonstração; conta real = edição)
+- Telemóvel 375px: menu em chips, tabelas em cartões, banner DEMO visível
+- Tablet 1024px e desktop 1440px sem alterações de layout
+- Testado: 7 páginas × 3 larguras, 0 erros de JS, 0 scroll horizontal, imagens OK
+- Fluxos testados: login, abas, detalhe de encomenda, CSV, copiar carrinho, guardar conteúdo
+  (pré-visualização aparece na loja), filtros de pesquisa, carrinho e swatches na loja

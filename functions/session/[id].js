@@ -12,6 +12,8 @@ export async function onRequestGet(context) {
       status: session.payment_status,
       amount: session.amount_total,
       customer_email: session.customer_details?.email,
+      client_reference_id: session.client_reference_id || '',
+      metadata: session.metadata || {},
     }), {
       headers: { 'Content-Type': 'application/json' },
     });

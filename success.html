@@ -109,7 +109,14 @@
     const orderData = {
       email: d.customer_email || 'guest',
       stripeSession: sessionId,
-      items: cartSnapshot.length ? cartSnapshot.map(i=>({name:i.name, priceNum:i.priceNum, quantity:i.qty, image:i.image})) : [{ name: 'CurveLine Beard Pro', priceNum: 18.89, quantity: 1, image: 'img/birdcut-pt/Pente-CurveLine-Laranja.png' }],
+      items: (function(){
+        if(cartSnapshot.length) return cartSnapshot.map(i=>({name:i.name, priceNum:i.priceNum, quantity:i.qty, image:i.image}));
+        const meta = d.metadata || {};
+        const qty = Math.max(1, Math.min(20, parseInt(meta.quantity||1,10)||1));
+        const color = meta.color || '';
+        const pid = meta.product_id === 'p2' ? 'p2' : 'p1';
+        return [{ id: pid, name: 'CurveLine Beard Pro' + (color ? ' — ' + color : ''), priceNum: (d.amount ? d.amount/100 : 18.89)/qty, quantity: qty }];
+      })(),
       total: d.amount ? d.amount / 100 : cartSnapshot.reduce((s,i)=>s+(i.priceNum||0)*(i.qty||1),0) || 18.89,
       status: 'processamento',
       sessionId: (window.BC_sid || localStorage.getItem('bc_sid') || '')

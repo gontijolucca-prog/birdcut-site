@@ -1,0 +1,35 @@
+BIRDCUT.PT — Backend: logins, stock e backups (23/10, feito por mim)
+
+Servidor: root@167.233.116.182:/opt/birdcut-api (Express + SQLite)
+Backups antes de mexer: server.js.bak-20261023, .bak-20261023b, .bak-20261023c
+                       birdcut.db.bak-20261023
+PM2: birdcut-api (online) — reiniciado 3x, health OK em cada passo.
+
+AUTH (testado em produção)
+- E-mail normalizado: trim + minúsculas no registo e login; registo com MAIÚSCULAS
+  fica guardado em minúsculas; duplicado em caixa diferente -> 400.
+- Validação: e-mail inválido -> 400; password < 8 -> 400.
+- Rate limit: 10 tentativas de login / 15 min por IP -> 429 (testado: 10x401 e 429 na 11ª).
+  Registo: 8/hora por IP. Limpa ao reiniciar o PM2.
+
+STOCK / ENCOMENDAS
+- Encomenda passa por transação: valida stock, baixa stock, grava movimento e cria a encomenda.
+  Stock insuficiente -> 409 "Sem stock suficiente para X" e NADA é alterado.
+- Total calculado no servidor (preço x quantidade), não confia no browser.
+- Idempotente por stripeSession: repetir a mesma sessão devolve a mesma encomenda.
+- Encomenda sem session_id cs_test_/cs_live_ -> 400 "Sessão de pagamento inválida".
+- Novo GET /api/admin/stock-moves (admin) e o backoffice já lê daí (fallback local).
+- PUT /api/admin/orders/:id aceita status e tracking_url (guardado e devolvido).
+- Limite: 15 encomendas/hora por IP.
+
+MANUTENÇÃO
+- /opt/birdcut-api/backup.sh + cron 03:17 diário, mantém 14 dias (birdcut-AAAA-MM-DD.db).
+- Índices novos: orders(user_id), orders(stripe_session), stock_moves(product_id), analytics_events(created_at).
+- Apagadas as 5 contas de teste qa.*@example.com (e moradas/encomendas ligadas).
+  Ficam 12 utilizadores reais, 0 encomendas, stock 87 (laranja) / 64 (amarelo).
+
+AINDA BLOQUEADO (precisa de ti)
+- Stripe em modo TESTE: falta a chave sk_live + Price live para cobrar a sério.
+- Sem chave Stripe no servidor não dá para confirmar a sessão junto do Stripe; a validação
+  atual só verifica o formato cs_*. O webhook resolve isto de vez.
+- DNS do Resend (DKIM/SPF/DMARC) em falta: reset de password e e-mails de encomenda não saem.

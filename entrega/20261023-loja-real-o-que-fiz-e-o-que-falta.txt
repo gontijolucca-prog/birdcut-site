@@ -57,3 +57,14 @@ TERCEIRA PASSAGEM (23/10, autonomia total)
 - Testes: matriz 10 larguras x 7 páginas em produção = 0 anomalias; unit tests do checkout (stock, NIF,
   portes, clamp) e do webhook (assinatura boa/má, payload); fluxo carrinho -> checkout -> success;
   abas do backoffice e detalhe com tracking.
+
+BACKOFFICE SEM DEMO (23/10, pedido do Lucca)
+- Removido o login falso admin/admin e o token local-admin-admin (js/api.js).
+- Removido todo o modo visita (?visita=1) e o modo demonstração: banner, chip "Demo", dados de exemplo
+  (produtos/encomendas/clientes/carrinhos/KPIs), botões desativados e textos de aviso.
+- Removidos os links "acesso de visita". Login passa a pedir e-mail de administrador.
+- Backoffice lê sempre do servidor: KPIs, encomendas, stock (com movimentos reais), clientes e carrinhos.
+- Testado com conta admin real: receita 0,00 € · 0 encomendas · 11 clientes · stock 87/64 · 2 movimentos seed;
+  encomenda de teste criada e apagada, stock reposto; tracking e estado guardados no servidor; 0 erros JS;
+  0 overflow a 375/1024/1440; credenciais erradas -> "Email ou password incorretos".
+- Como entrar: adminbirdcut@birdcut.pt (ou o teu e-mail) + a password real dessa conta.

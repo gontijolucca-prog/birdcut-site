@@ -89,3 +89,13 @@ PÁGINAS DE PRODUTO (23/10, noite)
 - Homepage: título do card aponta para a página; trocar de cor atualiza o link (/produto-amarelo).
   Versões dos scripts bumped para 20261023a (o cache do Cloudflare servia o site-config antigo).
 - Testes: 375/1024/1440 sem overflow, 0 imagens quebradas, 0 erros JS, carrinho recebe o nome certo.
+
+RECUPERAÇÃO DE PALAVRA-PASSE (23/10, noite)
+- Causa do falhanço: o domínio birdcut.pt NÃO está verificado no Resend. DNS atual: SPF só Outlook,
+  sem DKIM resend._domainkey e sem DMARC. O Resend devolve 400 "domain not verified" e o endpoint
+  respondia ok na mesma (fingia sucesso).
+- Corrigido: /api/password-reset/request devolve 502 com mensagem clara quando o envio falha;
+  link passou a https://birdcut.pt (sem www); backoffice tem botão "Repor" em Clientes que gera
+  password temporária (testado: login com a temp devolve 200) e apaga pedidos antigos.
+- Falta: verificar birdcut.pt no Resend (registos DKIM/SPF) para o email sair. Com o token DNS da
+  Cloudflare que está no servidor é possível criar os registos, mas é preciso o valor DKIM do Resend.

@@ -80,3 +80,12 @@ BACKOFFICE — DADOS REAIS, STOCK E ENCOMENDAS DE TESTE (23/10, noite)
 - Testes: login real pela form, lista de encomendas, detalhe, tracking, mudança de estado, apagar #7
   (stock 4997->4998 e encomenda desapareceu da API), 0 erros JS.
 - Dispositivos: admin em 9 larguras (320..1920) = 0 overflow/erros; WebKit 3 larguras = 0; capturas em 375/1024/1440.
+
+PÁGINAS DE PRODUTO (23/10, noite)
+- /produto-laranja e /produto-amarelo: descrição própria por cor, 3 curvaturas, ficha técnica
+  (modelo, cor, Classic/Slim/Wide, referência BC-CL-LAR / BC-CL-AMA, conteúdo), portes, cross-link,
+  breadcrumb, seletor de quantidade e "Adicionar ao carrinho" (funciona com o carrinho atual).
+- SEO: title/description/canonical/OG + JSON-LD Product e BreadcrumbList (2/2 válidos), no sitemap.
+- Homepage: título do card aponta para a página; trocar de cor atualiza o link (/produto-amarelo).
+  Versões dos scripts bumped para 20261023a (o cache do Cloudflare servia o site-config antigo).
+- Testes: 375/1024/1440 sem overflow, 0 imagens quebradas, 0 erros JS, carrinho recebe o nome certo.

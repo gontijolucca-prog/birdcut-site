@@ -102,12 +102,12 @@
     // preview & cart image
     const addBtn = document.getElementById('addToCart');
     if(yellow){
-      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-CurveLine-Amarelo.png'; previewImg.style.filter=''; }
-      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-CurveLine-Amarelo.png';
+      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-CurveLine-Amarelo.png?v=20261024'; previewImg.style.filter=''; }
+      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-CurveLine-Amarelo.png?v=20261024';
       bcCombs.forEach((c)=>{ const isY = c.dataset.comb==='Amarelo' || c.dataset.comb==='Pink'; c.style.opacity = isY ? '1' : '0.35'; c.style.transform = isY ? 'scale(1.02)' : 'scale(1)'; });
     } else {
-      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-CurveLine-Laranja.png'; previewImg.style.filter=''; }
-      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-CurveLine-Laranja.png';
+      if(previewImg){ previewImg.src='img/birdcut-pt/Pente-CurveLine-Laranja.png?v=20261024'; previewImg.style.filter=''; }
+      if(addBtn) addBtn.dataset.image='img/birdcut-pt/Pente-CurveLine-Laranja.png?v=20261024';
       bcCombs.forEach((c)=>{ const isO = c.dataset.comb==='Laranja' || c.dataset.comb==='Orange'; c.style.opacity = isO ? '1' : '0.35'; c.style.transform = isO ? 'scale(1.02)' : 'scale(1)'; });
     }
   }
@@ -132,7 +132,7 @@
       const title = card?.querySelector('.ac-product-card__title');
       const color = swatch.dataset.color || swatch.title || 'Laranja';
       const yellow = isYellow(color);
-      const imagePath = yellow ? 'img/birdcut-pt/Pente-CurveLine-Amarelo.png' : 'img/birdcut-pt/Pente-CurveLine-Laranja.png';
+      const imagePath = yellow ? 'img/birdcut-pt/Pente-CurveLine-Amarelo.png?v=20261024' : 'img/birdcut-pt/Pente-CurveLine-Laranja.png?v=20261024';
       card.querySelectorAll('.ac-product-card__swatches .sw').forEach(button=>{
         const active = button === swatch;
         button.classList.toggle('active', active);

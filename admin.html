@@ -633,7 +633,7 @@ function renderBsProducts(){
     const k=e.target.dataset.bsk, i=+e.target.dataset.bsi; let v=e.target.value; if(k==='priceNum') v=parseFloat(v); CFG.bestSelling.products[i][k]=v;
   }));
 }
-function addBsProd(){ CFG.bestSelling.products.push({id:'p'+Date.now(), name:'CurveLine Beard Pro — Novo', price:'18,89 €', priceNum:18.89, image:'img/birdcut-pt/Pente-CurveLine-Laranja.png', colors:['Laranja','Amarelo'], rating:'5.0', activeColor:'Laranja'}); renderBsProducts(); }
+function addBsProd(){ CFG.bestSelling.products.push({id:'p'+Date.now(), name:'CurveLine Beard Pro — Novo', price:'18,89 €', priceNum:18.89, image:'img/birdcut-pt/Pente-CurveLine-Laranja.png?v=20261024', colors:['Laranja','Amarelo'], rating:'5.0', activeColor:'Laranja'}); renderBsProducts(); }
 function saveBs(){ CFG.bestSelling.kicker=document.getElementById('bsKicker').value; CFG.bestSelling.title=document.getElementById('bsTitle').value; saveAll(); }
 function renderBarbList(){
   const c=document.getElementById('barbList'); if(!c) return;

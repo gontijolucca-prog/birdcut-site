@@ -44,7 +44,7 @@ function login(email, password, remember) {
 function loginAdmin(username, password, remember) {
   const value = String(username || '').trim().toLowerCase();
   // Aceita o e-mail de administrador ou o atalho "adminbirdcut"
-  const email = value.includes('@') ? value : (value === 'adminbirdcut' ? 'adminbirdcut@birdcut.pt' : '');
+  const email = value.includes('@') ? value : (value === 'admin' || value === 'adminbirdcut' ? 'adminbirdcut@birdcut.pt' : '');
   if (!email) return Promise.reject({ code: 400, message: 'Usa o teu e-mail de administrador.' });
   return login(email, password, remember);
 }

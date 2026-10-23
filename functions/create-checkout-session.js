@@ -1,6 +1,6 @@
 export async function onRequestPost(context) {
   const { STRIPE_SECRET_KEY, STRIPE_PRICE_ID, SITE_URL, BC_API } = context.env;
-  const CORS = { 'Content-Type': 'application/json' };
+  const CORS = { 'Content-Type': 'application/json', 'x-bc-checkout': 'v20261023c' };
 
   try {
     const body = await context.request.json().catch(() => ({}));
@@ -14,15 +14,17 @@ export async function onRequestPost(context) {
     // Pré-verificação de stock (não bloqueia a venda se o backend estiver em baixo)
     try {
       const apiBase = BC_API || 'https://media.pontofinal.site/bcapi';
-      const r = await fetch(apiBase + '/api/products', { cf: { cacheTtl: 30 } });
+      const r = await fetch(apiBase + '/api/products', { headers: { 'accept': 'application/json' } });
       if (r.ok) {
         const products = await r.json();
         const p = Array.isArray(products) ? products.find(x => x.id === productId) : null;
         if (p && Number(p.stock) < quantity) {
-          return new Response(JSON.stringify({ error: 'Sem stock suficiente (' + p.stock + ' disponíveis)' }), { status: 409, headers: CORS });
+          return new Response(JSON.stringify({ error: 'Sem stock suficiente (' + p.stock + ' disponíveis)' }), { status: 409, headers: { ...CORS, 'x-bc-stock': 'blocked:' + p.stock } });
         }
+        if (p) CORS['x-bc-stock'] = 'ok:' + p.stock;
+        else CORS['x-bc-stock'] = 'product-missing';
       }
-    } catch (e) { /* segue para o Stripe */ }
+    } catch (e) { CORS['x-bc-stock'] = 'fetch-failed'; }
 
     const formData = new URLSearchParams();
     formData.append('mode', 'payment');

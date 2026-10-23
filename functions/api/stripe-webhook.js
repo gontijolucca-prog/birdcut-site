@@ -52,7 +52,7 @@ export async function onRequestPost(context) {
     const r = await fetch(api + '/api/orders/guest', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, items: [{ id: productId, qty }], stripeSession: s.id }),
+      body: JSON.stringify({ email, items: [{ id: productId, qty }], stripeSession: s.id, presale: s.metadata?.presale === '1' }),
     });
     if (!r.ok) {
       const msg = await r.text();

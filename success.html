@@ -119,6 +119,7 @@
       })(),
       total: d.amount ? d.amount / 100 : cartSnapshot.reduce((s,i)=>s+(i.priceNum||0)*(i.qty||1),0) || 18.89,
       status: 'processamento',
+      presale: !!(d.metadata && d.metadata.presale === '1'),
       sessionId: (window.BC_sid || localStorage.getItem('bc_sid') || '')
     };
     const docRef = isLoggedIn() ? await createOrder(orderData) : await createGuestOrder(orderData);

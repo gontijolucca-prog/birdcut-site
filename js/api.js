@@ -61,47 +61,30 @@ function confirmPasswordReset(token, newPassword) {
 function logout() { clearToken(); try{ localStorage.removeItem('bc_user'); }catch{} return Promise.resolve(); }
 
 function getProfile() {
-  const t=getToken();
-  if(t==='local-admin-admin'){
-    try{ const u=JSON.parse(localStorage.getItem('bc_user')||'null'); if(u) return Promise.resolve({...u, addresses:[{id:'a1', label:'Sede Bird Cut', street:'Rua da Criatividade 12', zip:'1000-001', city:'Lisboa', country:'Portugal', is_default:true}]}); }catch{}
-    return Promise.resolve({ email:'admin@birdcut.pt', name:'Admin', surname:'BirdCut', role:'admin', addresses:[{id:'a1', label:'Sede', street:'Rua da Criatividade 12', zip:'1000-001', city:'Lisboa', country:'Portugal', is_default:true}] });
-  }
   return api('/api/profile');
 }
 
 function updateProfile(data) {
-  if(getToken()==='local-admin-admin'){ const u=JSON.parse(localStorage.getItem('bc_user')||'{}'); const nu={...u, ...data}; try{localStorage.setItem('bc_user', JSON.stringify(nu));}catch{} return Promise.resolve(nu); }
   return api('/api/profile', { method: 'PUT', body: JSON.stringify(data) });
 }
 
 function addAddress(addr) {
-  if(getToken()==='local-admin-admin') return Promise.resolve({ok:true});
   return api('/api/addresses', { method: 'POST', body: JSON.stringify(addr) });
 }
 
 function removeAddress(id) {
-  if(getToken()==='local-admin-admin') return Promise.resolve({ok:true});
   return api('/api/addresses/' + id, { method: 'DELETE' });
 }
 
 function updateAddress(id, data) {
-  if(getToken()==='local-admin-admin') return Promise.resolve({ok:true});
   return api('/api/addresses/' + id, { method: 'PUT', body: JSON.stringify(data) });
 }
 
 function updatePassword(currentPassword, newPassword) {
-  if(getToken()==='local-admin-admin') return Promise.reject({ message: 'Alteração indisponível no modo de demonstração.' });
   return api('/api/profile', { method: 'PUT', body: JSON.stringify({ currentPassword, newPassword }) });
 }
 
 function getOrders() {
-  if(getToken()==='local-admin-admin'){
-    return Promise.resolve([
-      { id:1024, created_at:'2026-10-02T10:30:00', email:'admin@birdcut.pt', total:37.78, status:'entregue', payment_status:'Pago', items:[{name:'CurveLine Beard Pro — Laranja', quantity:2, price:18.89},{name:'CurveLine Beard Pro — Amarelo', quantity:1, price:18.89}] },
-      { id:1023, created_at:'2026-09-28T16:12:00', email:'admin@birdcut.pt', total:18.89, status:'enviado', payment_status:'Pago', tracking_url:'https://ctt.pt', items:[{name:'CurveLine Beard Pro — Amarelo', quantity:1, price:18.89}] },
-      { id:1022, created_at:'2026-09-15T09:45:00', email:'admin@birdcut.pt', total:56.67, status:'processamento', payment_status:'A aguardar', items:[{name:'CurveLine Beard Pro — Laranja', quantity:3, price:18.89}] }
-    ]);
-  }
   return api('/api/orders');
 }
 
@@ -117,9 +100,6 @@ function isLoggedIn() { return !!getToken(); }
 
 function onAuthChange(cb) {
   const token = getToken();
-  if (token==='local-admin-admin') {
-    try{ const u=JSON.parse(localStorage.getItem('bc_user')||'null'); return cb(u||{ email:'admin@birdcut.pt', name:'Admin', role:'admin' }); }catch{ return cb({ email:'admin@birdcut.pt', name:'Admin', role:'admin' }); }
-  }
   if (token) {
     api('/api/profile').then(user => cb(user)).catch(() => cb(null));
   } else {

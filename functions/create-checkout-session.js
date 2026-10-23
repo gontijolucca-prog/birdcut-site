@@ -1,5 +1,6 @@
 export async function onRequestPost(context) {
-  const { STRIPE_SECRET_KEY, SITE_URL, BC_API } = context.env;
+  const { STRIPE_SECRET_KEY, BC_API } = context.env;
+  const siteUrl = new URL(context.request.url).origin;
   const CORS = { 'Content-Type': 'application/json' };
 
   try {
@@ -44,8 +45,8 @@ export async function onRequestPost(context) {
     formData.append('line_items[0][price_data][product_data][name]', 'CurveLine Beard Pro — ' + color);
     formData.append('line_items[0][price_data][product_data][description]', presale ? 'Pré-venda — 2% de desconto' : 'CurveLine Beard Pro');
     formData.append('line_items[0][quantity]', String(quantity));
-    formData.append('success_url', SITE_URL + '/success.html?session_id={CHECKOUT_SESSION_ID}');
-    formData.append('cancel_url', SITE_URL + (presale ? '/pre-venda.html?cancel=1' : '/?checkout=cancel'));
+    formData.append('success_url', siteUrl + '/success.html?session_id={CHECKOUT_SESSION_ID}');
+    formData.append('cancel_url', siteUrl + (presale ? '/pre-venda.html?cancel=1' : '/?checkout=cancel'));
     formData.append('locale', 'pt');
     if (email) { formData.append('customer_email', email); formData.append('client_reference_id', email); }
     formData.append('metadata[product_id]', productId);

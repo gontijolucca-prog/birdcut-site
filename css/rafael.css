@@ -557,3 +557,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 /* Setas da barra de anúncios: área de toque >= 44px sem mudar o visual */
 #birdcut-announcement-bar .bc-arrow{position:relative}
 #birdcut-announcement-bar .bc-arrow::after{content:"";position:absolute;inset:-9px -9px}
+
+/* Produto esgotado na montra */
+.ac-product-card.is-soldout .ac-product-card__media img{opacity:.45;filter:grayscale(1)}
+.ac-product-card.is-soldout .ac-product-card__quick{display:none}
+.ac-product-card__stock{font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.04em;color:#b45309;margin:-.2rem 0 .5rem}

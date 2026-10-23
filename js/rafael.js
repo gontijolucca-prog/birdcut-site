@@ -144,10 +144,60 @@
         quick.dataset.image=imagePath;
         quick.setAttribute('aria-label',`Adicionar CurveLine Beard Pro — ${color} ao carrinho`);
       }
+      if(window.BC_renderStock) window.BC_renderStock(color);
     });
   }
+  // Stock por cor (p1 = Laranja, p2 = Amarelo)
+  let bcStock=null;
+  function renderStock(color){
+    const card=document.querySelector('.ac-product-card'); if(!card) return;
+    const key=isYellow(color)?'Amarelo':'Laranja';
+    if(!bcStock) return;
+    const stock=Number(bcStock[key]||0);
+    const price=card.querySelector('.ac-product-card__price');
+    const quick=card.querySelector('.ac-product-card__quick');
+    const note=card.querySelector('.ac-product-card__stock');
+    card.classList.toggle('is-soldout', stock<=0);
+    if(quick){ quick.disabled=stock<=0; if(stock<=0) quick.setAttribute('aria-label','Esgotado'); }
+    if(price){
+      if(!price.dataset.original) price.dataset.original=price.textContent;
+      price.textContent = stock<=0 ? 'Esgotado' : price.dataset.original;
+    }
+    if(note) note.remove();
+    if(stock>0 && stock<=5 && price){
+      price.insertAdjacentHTML('afterend','<div class="ac-product-card__stock">Últimas '+stock+' unidades</div>');
+    }
+  }
+  window.BC_renderStock=renderStock;
+  fetch('/api/products').then(r=>r.ok?r.json():null).then(list=>{
+    if(!Array.isArray(list)) return;
+    const lar=list.find(p=>p.id==='p1')||list.find(p=>/Laranja$/.test(p.name||''));
+    const ama=list.find(p=>p.id==='p2')||list.find(p=>/Amarelo$/.test(p.name||''));
+    bcStock={ Laranja: lar?lar.stock:null, Amarelo: ama?ama.stock:null };
+    const active=document.querySelector('.ac-product-card__swatches .sw.active');
+    renderStock(active?(active.dataset.color||'Laranja'):'Laranja');
+  }).catch(()=>{});
+
+  // O site-config volta a desenhar o card: reaplicar o stock quando isso acontece
+  const bsGrid=document.querySelector('.best-selling__grid');
+  if(bsGrid && typeof MutationObserver!=='undefined'){
+    let applying=false;
+    new MutationObserver(muts=>{
+      if(applying) return;
+      const relevant=muts.some(m=>[...m.addedNodes,...m.removedNodes].some(n=>n.nodeType===1&&(n.matches?.('.ac-product-card')||n.querySelector?.('.ac-product-card'))));
+      if(!relevant) return;
+      applying=true;
+      requestAnimationFrame(()=>{
+        const a=document.querySelector('.ac-product-card__swatches .sw.active');
+        renderStock(a?(a.dataset.color||'Laranja'):'Laranja');
+        applying=false;
+      });
+    }).observe(bsGrid,{childList:true,subtree:true});
+  }
+
   // init
   setActiveColor('Laranja');
+  if(window.BC_renderStock) window.BC_renderStock('Laranja');
 
   /* ===== 3. QUANTIDADE ===== */
   const qtyInput = document.getElementById('qtyInput');

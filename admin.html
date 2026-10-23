@@ -338,8 +338,20 @@ function pushMove(name, from, to, reason){
   try{ localStorage.setItem('bc_stock_moves', JSON.stringify(arr.slice(0,40))); }catch(e){}
   renderStockMoves();
 }
-function renderStockMoves(){
+async function renderStockMoves(){
   const el=document.getElementById('stockMoves'); if(!el) return;
+  // Sessão real: histórico vem do servidor (stock_moves). Demo/offline: localStorage.
+  if(!isDemoSession() && !window.__VISITA && typeof adminGet==='function'){
+    try{
+      const rows=await adminGet('/api/admin/stock-moves');
+      if(Array.isArray(rows)){
+        if(!rows.length){ el.innerHTML='<p style="font-size:.82rem;color:#777;margin:0">Ainda sem movimentos no servidor. Os ajustes de stock e as vendas aparecem aqui.</p>'; return; }
+        el.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Data</th><th>Produto</th><th>Δ</th><th>Motivo</th></tr></thead><tbody>'+rows.map(m=>'<tr><td>'+String(m.created_at||'').slice(0,16)+'</td><td>'+(m.product_name||m.product_id)+'</td><td><b>'+(m.delta>0?'+':'')+m.delta+'</b></td><td>'+(m.reason||'')+'</td></tr>').join('')+'</tbody></table></div>';
+        if(window.decorateAdminTables) window.decorateAdminTables();
+        return;
+      }
+    }catch(e){ /* cai para o registo local */ }
+  }
   const arr=readMoves();
   if(!arr.length){
     if(window.__VISITA) return; // modo visita já injeta exemplos

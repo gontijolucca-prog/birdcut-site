@@ -56,7 +56,7 @@
 
 <section class="success">
   <div class="container">
-    <div class="success__icon">
+    <div class="success__icon" id="successIcon">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m20 6-11 11-5-5"/></svg>
     </div>
     <h1 id="successTitle">A confirmar pagamento…</h1>
@@ -79,6 +79,7 @@
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get('session_id');
   if (!sessionId) {
+    document.getElementById('successIcon').style.display = 'none';
     document.getElementById('successTitle').textContent = 'Sem referência de pagamento';
     document.getElementById('successMsg').textContent = 'Esta página só confirma uma compra quando vem do pagamento. Se pagaste e não vês a encomenda, escreve para contacto@birdcut.pt com o comprovativo.';
     document.getElementById('status').textContent = '—';
@@ -91,6 +92,7 @@
     const d = await res.json();
     if (d.status !== 'paid') {
       const labels = { unpaid:'Não pago', no_payment_required:'Sem pagamento necessário', processing:'Em processamento' };
+      document.getElementById('successIcon').style.display = 'none';
       document.getElementById('successTitle').textContent = 'Pagamento por confirmar';
       document.getElementById('successMsg').textContent = 'O Stripe ainda não confirmou este pagamento. Nenhuma encomenda foi registada. Se já pagaste, aguarda alguns minutos ou contacta contacto@birdcut.pt.';
       document.getElementById('status').textContent = labels[d.status] || 'não confirmado';
@@ -98,6 +100,7 @@
       document.getElementById('orderId').textContent = '—';
       return;
     }
+    document.getElementById('successIcon').style.display = '';
     document.getElementById('successTitle').textContent = 'Pagamento confirmado!';
     document.getElementById('successMsg').textContent = 'O seu CurveLine Beard Pro está a caminho. Receberá um e-mail de confirmação em breve.';
     document.getElementById('status').textContent = '✅ Pago';
@@ -116,6 +119,7 @@
     if(window.BC_purchaseTrack) try{ window.BC_purchaseTrack(orderData); }catch(e){}
     try{ localStorage.removeItem('birdcut-cart'); }catch(e){}
   } catch(e) {
+    document.getElementById('successIcon').style.display = 'none';
     document.getElementById('successTitle').textContent = 'A confirmar pagamento';
     document.getElementById('successMsg').textContent = 'Não conseguimos validar a sessão agora. Se o valor saiu da tua conta, contacta contacto@birdcut.pt com o comprovativo.';
     document.getElementById('status').textContent = 'Pagamento por confirmar; registo pendente.';

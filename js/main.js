@@ -203,10 +203,16 @@
     btn.disabled = true;
     try {
       const qty = cart.reduce((s,i) => s + i.qty, 0);
+      const single = cart.length === 1 ? cart[0] : null;
+      const color = cart.map(i => (String(i.name || '').split('—')[1] || '').trim()).filter(Boolean).join(', ');
       const res = await fetch('/create-checkout-session', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ quantity: qty })
+        body: JSON.stringify({
+          quantity: qty,
+          color: color,
+          productId: single && /amarelo/i.test(single.name || '') ? 'p2' : 'p1'
+        })
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;

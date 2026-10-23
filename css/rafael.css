@@ -553,3 +553,7 @@ body{overflow-x:hidden}
 .skip-link{position:absolute;left:-9999px;top:0;z-index:9999;background:#111;color:#fff;padding:.7rem 1.1rem;font-family:'Inter',sans-serif;font-size:.8rem;border-radius:0 0 8px 0;text-decoration:none}
 .skip-link:focus{left:0}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid #111;outline-offset:2px;border-radius:2px}
+
+/* Setas da barra de anúncios: área de toque >= 44px sem mudar o visual */
+#birdcut-announcement-bar .bc-arrow{position:relative}
+#birdcut-announcement-bar .bc-arrow::after{content:"";position:absolute;inset:-9px -9px}

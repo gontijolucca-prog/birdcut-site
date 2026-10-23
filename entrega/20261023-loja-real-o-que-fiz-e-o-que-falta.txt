@@ -68,3 +68,15 @@ BACKOFFICE SEM DEMO (23/10, pedido do Lucca)
   encomenda de teste criada e apagada, stock reposto; tracking e estado guardados no servidor; 0 erros JS;
   0 overflow a 375/1024/1440; credenciais erradas -> "Email ou password incorretos".
 - Como entrar: adminbirdcut@birdcut.pt (ou o teu e-mail) + a password real dessa conta.
+
+BACKOFFICE — DADOS REAIS, STOCK E ENCOMENDAS DE TESTE (23/10, noite)
+- "Erro: Token inválido": era token antigo/demo ou sessão expirada. Agora qualquer 401 limpa o token
+  e volta ao login com "Sessão expirada. Entra outra vez." (sem alertas técnicos).
+- Stock: p1 (Laranja) e p2 (Amarelo) a 5000 cada, com movimento registado no histórico.
+- 3 encomendas de teste criadas: #4 teste1@example.com (processamento), #5 teste2@example.com
+  (enviado, com tracking CTT), #6 teste3@example.com (entregue). Apagadas do stock 4+3 unidades.
+- Novo botão "Apagar encomenda" no detalhe: apaga e repõe o stock (movimento "encomenda #X apagada").
+- Password do adminbirdcut@birdcut.pt reposta para acesso de teste; mudar na Área de Cliente.
+- Testes: login real pela form, lista de encomendas, detalhe, tracking, mudança de estado, apagar #7
+  (stock 4997->4998 e encomenda desapareceu da API), 0 erros JS.
+- Dispositivos: admin em 9 larguras (320..1920) = 0 overflow/erros; WebKit 3 larguras = 0; capturas em 375/1024/1440.

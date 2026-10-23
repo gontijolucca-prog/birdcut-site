@@ -33,3 +33,11 @@ FALTA (depende de ti)
 7. SERVIDOR (segurança): email.trim().toLowerCase() no registo e login; validar formato de email e
    mínimo 8 caracteres; rate-limit por IP no login; convém apagar as contas de teste @example.com.
 8. BACKUPS + MONITOR — cópia diária da BD, uptime e alerta de erros.
+
+EXTRA (mesma data, segunda passagem)
+- Logos em WebP: header de 61 KB -> 37 KB; logo da conta 247 KB -> 17 KB.
+- FAQPage em dados estruturados (5 perguntas) + Organization/WebSite/Product.
+- manifest.json + ícones 192/512 (instalável no telemóvel) + theme-color.
+- _headers: nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy, HSTS e cache de assets.
+- Landmark <main> em todas as páginas + link "Saltar para o conteúdo" + foco visível.
+- Rodapé: PayPal removido (não está no checkout), Multibanco assumido; link do Livro de Reclamações.

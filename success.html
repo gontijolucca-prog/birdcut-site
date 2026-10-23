@@ -55,8 +55,8 @@
     <div class="success__icon">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m20 6-11 11-5-5"/></svg>
     </div>
-    <h1>Pagamento confirmado!</h1>
-    <p>O seu CurveLine Beard Pro está a caminho. Receberá um e-mail de confirmação em breve.</p>
+    <h1 id="successTitle">A confirmar pagamento…</h1>
+    <p id="successMsg">Não feches esta página. Estamos a validar o pagamento junto do Stripe.</p>
     <dl class="success__details">
       <dt>Estado</dt><dd id="status">A verificar...</dd>
       <dt>Produto</dt><dd>CurveLine Beard Pro</dd>
@@ -75,15 +75,28 @@
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get('session_id');
   if (!sessionId) {
-    document.getElementById('status').textContent = 'Pago';
-    document.getElementById('amount').textContent = '18,89 €';
+    document.getElementById('successTitle').textContent = 'Sem referência de pagamento';
+    document.getElementById('successMsg').textContent = 'Esta página só confirma uma compra quando vem do pagamento. Se pagaste e não vês a encomenda, escreve para contacto@birdcut.pt com o comprovativo.';
+    document.getElementById('status').textContent = '—';
+    document.getElementById('amount').textContent = '—';
     document.getElementById('orderId').textContent = '—';
     return;
   }
   try {
     const res = await fetch('/session/' + sessionId);
     const d = await res.json();
-    document.getElementById('status').textContent = d.status === 'paid' ? '✅ Pago' : d.status || 'Pago';
+    if (d.status !== 'paid') {
+      const labels = { unpaid:'Não pago', no_payment_required:'Sem pagamento necessário', processing:'Em processamento' };
+      document.getElementById('successTitle').textContent = 'Pagamento por confirmar';
+      document.getElementById('successMsg').textContent = 'O Stripe ainda não confirmou este pagamento. Nenhuma encomenda foi registada. Se já pagaste, aguarda alguns minutos ou contacta contacto@birdcut.pt.';
+      document.getElementById('status').textContent = labels[d.status] || d.status || 'desconhecido';
+      document.getElementById('amount').textContent = d.amount ? (d.amount / 100).toFixed(2).replace('.',',') + ' €' : '—';
+      document.getElementById('orderId').textContent = '—';
+      return;
+    }
+    document.getElementById('successTitle').textContent = 'Pagamento confirmado!';
+    document.getElementById('successMsg').textContent = 'O seu CurveLine Beard Pro está a caminho. Receberá um e-mail de confirmação em breve.';
+    document.getElementById('status').textContent = '✅ Pago';
     document.getElementById('amount').textContent = d.amount ? (d.amount / 100).toFixed(2).replace('.',',') + ' €' : '18,89 €';
     const cartSnapshot = (()=>{ try{ return JSON.parse(localStorage.getItem('birdcut-cart')||'[]'); }catch(e){ return []; } })();
     const orderData = {
@@ -99,7 +112,9 @@
     if(window.BC_purchaseTrack) try{ window.BC_purchaseTrack(orderData); }catch(e){}
     try{ localStorage.removeItem('birdcut-cart'); }catch(e){}
   } catch(e) {
-    document.getElementById('status').textContent = 'Pagamento recebido; registo do pedido pendente de confirmação.';
+    document.getElementById('successTitle').textContent = 'A confirmar pagamento';
+    document.getElementById('successMsg').textContent = 'Não conseguimos validar a sessão agora. Se o valor saiu da tua conta, contacta contacto@birdcut.pt com o comprovativo.';
+    document.getElementById('status').textContent = 'Pagamento por confirmar; registo pendente.';
     document.getElementById('orderId').textContent = 'Contacta contacto@birdcut.pt com o comprovativo da compra.';
     console.error('Não foi possível verificar/persistir o pedido:', e.message);
   }
@@ -114,7 +129,6 @@
         <p>Para criares diferente,<br>e com mais possibilidades.</p>
         <ul class="footer__contacto">
           <li>✉ <a href="mailto:contacto@birdcut.pt">contacto@birdcut.pt</a></li>
-          <li>✆ +351 XXX XXX XXX</li>
           <li>💈 <a href="https://www.instagram.com/birdcutpt/" target="_blank" rel="noopener">@birdcut.pt</a></li>
         </ul>
       </div>

@@ -23,20 +23,27 @@ async function api(path, opts = {}) {
 }
 
 function register(email, password, name, surname) {
-  return api('/api/register', { method: 'POST', body: JSON.stringify({ email, password, name, surname }) })
+  // o backend compara e-mails sem normalizar: baixar para minúsculas evita contas duplicadas
+  const mail = String(email || '').trim().toLowerCase();
+  return api('/api/register', { method: 'POST', body: JSON.stringify({ email: mail, password, name, surname }) })
     .then(d => { setToken(d.token); return d; });
 }
 
 function login(email, password, remember) {
-  const e = String(email||'').trim().toLowerCase();
+  const raw = String(email||'').trim();
+  const e = raw.toLowerCase();
   if ((e==='admin' || e==='admin@birdcut.pt') && String(password)==='admin') {
     const mock={ token:'local-admin-admin', user:{ email:'admin@birdcut.pt', name:'Admin', role:'admin' } };
     setToken(mock.token, remember);
     try{ localStorage.setItem('bc_user', JSON.stringify(mock.user)); }catch{}
     return Promise.resolve(mock);
   }
-  return api('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
-    .then(d => { setToken(d.token, remember); return d; });
+  const tryLogin = (mail) => api('/api/login', { method: 'POST', body: JSON.stringify({ email: mail, password }) });
+  // 1) tal como foi escrito; 2) em minúsculas (contas antigas com maiúsculas no registo)
+  return tryLogin(raw).catch(err => {
+    if (err && err.code === 401 && raw !== e) return tryLogin(e);
+    throw err;
+  }).then(d => { setToken(d.token, remember); return d; });
 }
 
 // O backend de contas autentica por email; o username admin é apenas o identificador público.

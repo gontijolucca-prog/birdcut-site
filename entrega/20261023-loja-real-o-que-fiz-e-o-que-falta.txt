@@ -1,0 +1,35 @@
+BIRDCUT.PT — Rumo a loja real: o que fiz hoje e o que falta (23/10)
+
+FEITO AGORA (sem intervenção)
+1. Segurança do checkout: a success.html criava encomenda mesmo sem pagamento confirmado.
+   Agora só regista a encomenda se o Stripe devolver status "paid"; sem session_id mostra
+   "Sem referência de pagamento" (antes dizia "Pago" a qualquer visita).
+2. Backoffice: campo de tracking no detalhe da encomenda (link CTT/transportadora), que o cliente
+   já vê na Área de Cliente. Avisa se o servidor ainda não devolver o campo.
+3. Fotos dos barbeiros em WebP: 4,7 MB -> 332 KB (-93%). O site troca automaticamente os nomes
+   antigos (KV em produção) para .webp; mantém os PNG como fallback.
+4. SEO: robots.txt, sitemap.xml, canonical + Open Graph em 4 páginas, dados estruturados
+   JSON-LD (Organization, WebSite, Product com preço 18,89 EUR).
+5. Login: e-mail passa a ser normalizado (registo em minúsculas; login tenta minúsculas se falhar),
+   inputs com autocapitalize/spellcheck off.
+6. Página 404 própria, com link para a loja e contacto.
+7. Acessibilidade: carrossel para de animar com prefers-reduced-motion.
+8. Removido o telefone falso "+351 XXX XXX XXX" de 6 rodapés (email e Instagram ficam).
+
+FALTA (depende de ti)
+1. STRIPE LIVE — hoje as sessões são cs_test_ (nenhum cartão é cobrado).
+   Stripe > Developers > API keys: copiar sk_live_ para Pages env STRIPE_SECRET_KEY;
+   criar Price live e atualizar STRIPE_PRICE_ID; SITE_URL=https://birdcut.pt; 1 compra real de teste.
+2. WEBHOOK — sem ele a encomenda nasce no browser. Criar endpoint /api/stripe-webhook no servidor:
+   verificar assinatura, checkout.session.completed -> criar encomenda (idempotente por session_id),
+   decrementar stock, enviar email. Remover depois a criação de encomenda na success.html.
+3. STOCK — no checkout: ler quantidade disponível antes de criar sessão; no webhook: baixar stock
+   dentro de transação e recusar se stock < quantidade; expor GET /api/admin/stock-moves.
+4. EMAILS — DNS: TXT resend._domainkey, SPF a incluir o Resend, DMARC. Depois: confirmação de
+   encomenda, envio com tracking e reset de password.
+5. FATURAÇÃO — software certificado (InvoiceXpress/Moloni): ATCUD, QR, SAF-T; campo NIF no checkout.
+6. PORTES — shipping_options no Stripe ou portes calculados; hoje só aceita moradas PT/ES e
+   "portes grátis acima de 3" não é aplicado.
+7. SERVIDOR (segurança): email.trim().toLowerCase() no registo e login; validar formato de email e
+   mínimo 8 caracteres; rate-limit por IP no login; convém apagar as contas de teste @example.com.
+8. BACKUPS + MONITOR — cópia diária da BD, uptime e alerta de erros.

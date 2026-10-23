@@ -69,7 +69,7 @@
           <div id="loginView">
             <p style="color:var(--color-ink-soft);margin-bottom:2rem">Aceda à sua conta Bird Cut.</p>
             <form id="loginForm" class="conta-form">
-              <div><label>E-mail ou utilizador</label><input type="text" id="loginEmail" placeholder="seu@email.pt" required autocomplete="username"></div>
+              <div><label>E-mail ou utilizador</label><input type="text" id="loginEmail" placeholder="seu@email.pt" required autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
               <div><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password"><button type="button" class="pass-toggle" data-target="loginPass" aria-label="Mostrar palavra-passe"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div>
               <div style="display:flex;align-items:center;gap:.55rem">
                 <input type="checkbox" id="loginRemember" checked style="width:16px;height:16px;padding:0;margin:0;accent-color:var(--color-orange);flex:0 0 auto">
@@ -91,7 +91,7 @@
             <h2>Recuperar palavra-passe</h2>
             <p style="color:var(--color-ink-soft);margin-bottom:2rem">Indique o email da conta. Enviamos um link para definir uma nova palavra-passe.</p>
             <form id="forgotForm" class="conta-form">
-              <div><label>E-mail</label><input type="email" id="forgotEmail" placeholder="seu@email.pt" required autocomplete="email"></div>
+              <div><label>E-mail</label><input type="email" id="forgotEmail" placeholder="seu@email.pt" required autocomplete="email" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
               <div id="forgotMsg" style="font-size:.85rem;min-height:1.2em"></div>
               <button type="submit" class="btn btn--red" style="width:100%;justify-content:center" id="forgotBtn">Enviar link</button>
             </form>
@@ -124,7 +124,7 @@
                 <div><label>Nome *</label><input type="text" id="regName" placeholder="O seu nome" required autocomplete="given-name"></div>
                 <div><label>Apelido *</label><input type="text" id="regSurname" placeholder="O seu apelido" required autocomplete="family-name"></div>
               </div>
-              <div><label>E-mail *</label><input type="email" id="regEmail" placeholder="seu@email.pt" required autocomplete="email"></div>
+              <div><label>E-mail *</label><input type="email" id="regEmail" placeholder="seu@email.pt" required autocomplete="email" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
               <div><label>Telemóvel *</label><input type="tel" id="regPhone" placeholder="+351 912 345 678" required autocomplete="tel"></div>
               <div><label>Morada *</label><input type="text" id="regStreet" placeholder="Rua, nº, andar" required autocomplete="street-address"></div>
               <div class="form-row">
@@ -228,7 +228,6 @@
         <p>Para criares diferente,<br>e com mais possibilidades.</p>
         <ul class="footer__contacto">
           <li>✉ <a href="mailto:contacto@birdcut.pt">contacto@birdcut.pt</a></li>
-          <li>✆ +351 XXX XXX XXX</li>
           <li>💈 <a href="https://www.instagram.com/birdcutpt/" target="_blank" rel="noopener">@birdcut.pt</a></li>
         </ul>
       </div>

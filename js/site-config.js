@@ -107,7 +107,9 @@
       const grid = document.querySelector('.infl-grid');
       const track = document.querySelector('.infl-track');
       // ?v= força o browser a não mostrar fotos antigas em cache (max-age 4h nos assets)
-      const vsrc = src => src + (src.includes('?') ? '&' : '?') + 'v=20261022';
+      // e troca os PNG antigos (500KB-1MB) pelas versões WebP (~40KB)
+      const toWebp = src => /(?:1-1|2|3|4|5|lucas-germano|paulo-toff)-819x1024\.png$/i.test(src) ? src.replace(/\.png$/i,'.webp') : src;
+      const vsrc = src => toWebp(src) + (src.includes('?') ? '&' : '?') + 'v=20261022';
       if(grid && Array.isArray(cfg.internacional.images)){
         grid.innerHTML = cfg.internacional.images.map(src=>`<figure class="infl-grid__item"><img src="${vsrc(src)}" alt="International Barbers + Bird Cut" loading="lazy" width="819" height="1024"></figure>`).join('');
       }

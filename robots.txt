@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /conta
+Disallow: /success
+
+Sitemap: https://birdcut.pt/sitemap.xml

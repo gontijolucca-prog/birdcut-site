@@ -542,3 +542,9 @@ body{overflow-x:hidden}
 /* ===== Correção: drawer carrinho e menu mobile acima do header fixo ===== */
 .mini-cart{z-index:20001 !important}
 .mobile-menu{z-index:20000 !important}
+
+/* Acessibilidade: sem animação do carrossel para quem pede menos movimento */
+@media (prefers-reduced-motion: reduce){
+  .infl-track{animation:none !important}
+  .reveal{opacity:1 !important;transform:none !important}
+}

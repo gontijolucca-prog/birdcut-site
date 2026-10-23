@@ -41,3 +41,5 @@ EXTRA (mesma data, segunda passagem)
 - _headers: nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy, HSTS e cache de assets.
 - Landmark <main> em todas as páginas + link "Saltar para o conteúdo" + foco visível.
 - Rodapé: PayPal removido (não está no checkout), Multibanco assumido; link do Livro de Reclamações.
+- Peso da homepage: 2682 KB -> 893 KB (-67%). Corrigido download duplicado dos PNG grandes
+  que continuavam na grelha estática antes do JS trocar por WebP.

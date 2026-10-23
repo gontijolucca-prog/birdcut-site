@@ -186,7 +186,7 @@
 
     <div id="tab-clients" class="admin-tab" style="display:none">
       <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.15rem">Clientes</h2><input id="clientsSearch" placeholder="Procurar e-mail / nome…" style="margin-left:auto;max-width:240px;padding:.5rem .7rem;border:1px solid rgba(0,0,0,.15);border-radius:8px;font-size:.82rem"><button class="btn btn--outline" style="font-size:.78rem" id="btnRefreshClients">⟳</button></div>
-      <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>E-mail</th><th>Nome</th><th>Encomendas</th><th>Gasto</th><th>Registo</th><th>Role</th></tr></thead><tbody id="clientsBody"><tr><td colspan="6" style="text-align:center;color:#777;padding:2rem">A carregar…</td></tr></tbody></table></div>
+      <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>E-mail</th><th>Nome</th><th>Encomendas</th><th>Gasto</th><th>Registo</th><th>Role</th><th></th></tr></thead><tbody id="clientsBody"><tr><td colspan="6" style="text-align:center;color:#777;padding:2rem">A carregar…</td></tr></tbody></table></div>
     </div>
 
     <div id="tab-carts" class="admin-tab" style="display:none">
@@ -322,7 +322,7 @@ async function loadProducts(){
         <td><div style="display:flex;gap:.4rem;flex-wrap:wrap"><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem" onclick="openEditProd('${p.id}')">Editar</button><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem" onclick="adjustStockPrompt('${p.id}')">Stock</button><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem;color:#c62828;border-color:rgba(198,40,40,.2)" onclick="deleteProd('${p.id}')">✕</button></div></td>
       </tr>`).join('');
     renderStockMoves();
-  }catch(e){ document.getElementById('productsBody').innerHTML='<tr><td colspan="6" style="color:#c62828;padding:1rem">Erro: '+e.message+'</td></tr>'; }
+  }catch(e){ document.getElementById('productsBody').innerHTML='<tr><td colspan="7" style="color:#c62828;padding:1rem">Erro: '+e.message+'</td></tr>'; }
 }
 function readMoves(){ try{ return JSON.parse(localStorage.getItem('bc_stock_moves')||'[]'); }catch(e){ return []; } }
 function pushMove(name, from, to, reason){
@@ -493,7 +493,7 @@ function renderClients(){
   let rows=clientsCache.slice();
   if(q) rows=rows.filter(u=> String(u.email||'').toLowerCase().includes(q) || String(u.name||'').toLowerCase().includes(q));
   const tb=document.getElementById('clientsBody');
-  if(!rows.length){ tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:#777;padding:2rem">Sem clientes.</td></tr>'; return; }
+  if(!rows.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:#777;padding:2rem">Sem clientes.</td></tr>'; return; }
   tb.innerHTML=rows.slice(0,200).map(u=>`
     <tr>
       <td>${u.email||''}</td>
@@ -502,10 +502,19 @@ function renderClients(){
       <td>${fmtMoney(u.spent||0)}</td>
       <td>${(u.created_at||'').slice(0,10)}</td>
       <td><span class="badge ${u.role==='admin'?'badge--ok':'badge--muted'}">${u.role||'user'}</span></td>
+      <td><button class="btn btn--outline" style="padding:.35rem .6rem;font-size:.72rem" onclick="resetUserPassword(${u.id},'${(u.email||'').replace(/'/g,"\\'")}')">Repor</button></td>
     </tr>`).join('');
 }
 
 // ---- CARTS ----
+async function resetUserPassword(id,email){
+  if(!confirm('Repor a palavra-passe de '+email+'? A atual deixa de funcionar.')) return;
+  try{
+    const r=await adminPost('/api/admin/users/'+id+'/reset-password',{});
+    prompt('Palavra-passe temporária de '+r.email+' (copia e envia ao cliente):', r.tempPassword);
+    loadClients().catch(()=>{});
+  }catch(e){ alert('Erro: '+e.message); }
+}
 async function loadCarts(){
   try{
     const status=document.getElementById('cartsStatus').value||'abandoned';

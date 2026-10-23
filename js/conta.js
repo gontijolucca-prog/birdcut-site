@@ -277,7 +277,7 @@
         await requestPasswordReset($('forgotEmail').value.trim());
         if (msg) {
           msg.style.color = '#2e7d32';
-          msg.textContent = '✓ Se existir conta com esse email, enviámos um link para repor a palavra-passe. Verifique também a pasta de spam.';
+          msg.textContent = '✓ Enviámos um link para repor a palavra-passe. Se não chegar em 2 minutos, contacta contacto@birdcut.pt.';
         }
         forgotForm.reset();
       } catch (ex) {

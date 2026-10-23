@@ -250,7 +250,8 @@ async function saveAll(){
 
 // ---- API admin helpers ----
 function authHeaders(){ const t=getToken(); return {'Content-Type':'application/json','Authorization':'Bearer '+(t||'')}; }
-async function adminGet(path){ const r=await fetch(path,{headers:authHeaders()}); if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.error||('HTTP '+r.status)); } return await r.json(); }
+async function adminGet(path){ const r=await fetch(path,{headers:authHeaders()}); if(r.status===401){ try{ sessionStorage.setItem('bc_auth_msg','Sessão expirada. Entra outra vez.'); localStorage.removeItem('bc_token'); sessionStorage.removeItem('bc_token'); }catch(e){} location.reload(); throw new Error('Sessão expirada'); } if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.error||('HTTP '+r.status)); } return await r.json(); }
+async function adminDelete(path){ const r=await fetch(path,{method:'DELETE',headers:authHeaders()}); const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||('Erro '+r.status)); return j; }
 async function adminPost(path,body){ const r=await fetch(path,{method:'POST',headers:authHeaders(),body:JSON.stringify(body)}); const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||('HTTP '+r.status)); return j; }
 async function adminPut(path,body){ const r=await fetch(path,{method:'PUT',headers:authHeaders(),body:JSON.stringify(body)}); const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||('HTTP '+r.status)); return j; }
 
@@ -445,7 +446,19 @@ function viewOrder(id){
   el.style.display='';
   el.innerHTML='<h3>Encomenda #'+o.id+' <span class="badge badge--muted">'+(o.status||'')+'</span></h3><p style="font-size:.84rem;color:#555">Data '+(o.created_at||'')+' · '+(o.email||'')+' · Stripe '+(o.stripe_session||'—')+'</p><div class="admin-table-wrap"><table class="admin-table"><tr><th>Produto</th><th>Qtd</th><th>Preço</th></tr>'+items.map(i=>'<tr><td>'+(i.name||i.id||'?')+'</td><td>'+(i.qty||i.quantity||1)+'</td><td>'+(i.price!=null? i.price : (i.priceNum!=null? fmtMoney(i.priceNum):'—'))+'</td></tr>').join('')+'</table></div><p style="margin-top:.6rem"><b>Total: '+fmtMoney(o.total)+'</b></p><div class="admin-actions"><button class="btn btn--outline" onclick="document.getElementById(\'orderDetail\').style.display=\'none\'">Fechar</button></div>';
   el.innerHTML += '<div style="margin-top:.9rem;padding-top:.9rem;border-top:1px solid rgba(0,0,0,.08)"><label style="font-family:Inter,sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#555;display:block;margin-bottom:.35rem">Tracking (link CTT / transportadora)</label><div style="display:flex;gap:.5rem;flex-wrap:wrap"><input id="trkInput" type="url" placeholder="https://www.ctt.pt/…" value="'+((o.tracking_url||o.trackingUrl||'').replace(/"/g,'&quot;'))+'" style="flex:1;min-width:200px;padding:.55rem .7rem;border:1px solid rgba(0,0,0,.16);border-radius:8px;font-family:Inter,sans-serif;font-size:.82rem"><button class="btn" style="background:#111;color:#fff;font-size:.76rem" onclick="saveTracking('+o.id+')">Guardar tracking</button></div><p style="font-size:.76rem;color:#777;margin:.45rem 0 0">O cliente vê este link na Área de Cliente, em “Ver detalhes”.</p></div>';
+  el.innerHTML += '<div class="admin-actions" style="margin-top:.8rem"><button class="btn" style="background:#b3261e;color:#fff" onclick="deleteOrder('+o.id+')">Apagar encomenda</button></div>';
   el.scrollIntoView({behavior:'smooth'});
+}
+async function deleteOrder(id){
+  if(!confirm('Apagar a encomenda #'+id+'? O stock dos produtos é reposto.')) return;
+  try{
+    await adminDelete('/api/admin/orders/'+id);
+    document.getElementById('orderDetail').style.display='none';
+    await loadOrders();
+    loadProducts().catch(()=>{});
+    loadDashboard().catch(()=>{});
+    alert('Encomenda #'+id+' apagada e stock reposto.');
+  }catch(e){ alert('Erro: '+e.message); }
 }
 async function saveTracking(id){
   const inp=document.getElementById('trkInput'); if(!inp) return;
@@ -679,7 +692,10 @@ async function init(){
   const emailEl=document.getElementById('adminUserEmail');
   const logoutBtn=document.getElementById('adminLogout');
   const logoutBtn2=document.getElementById('adminLogout2');
-  function showLogin(){ loginSec.style.display=''; denied.style.display='none'; app.style.display='none'; }
+  function showLogin(){
+    loginSec.style.display=''; denied.style.display='none'; app.style.display='none';
+    try{ const msg=sessionStorage.getItem('bc_auth_msg'); if(msg){ document.getElementById('admErr').textContent=msg; sessionStorage.removeItem('bc_auth_msg'); } }catch(e){}
+  }
   function showDenied(u){ loginSec.style.display='none'; denied.style.display=''; app.style.display='none'; document.getElementById('deniedEmail').textContent=u?u.email:''; document.getElementById('deniedMsg').textContent='Esta conta ('+(u?.email||'')+') não tem permissões de administrador.'; }
   function showApp(u){ loginSec.style.display='none'; denied.style.display='none'; app.style.display='grid'; emailEl.textContent=u.email; logoutBtn.style.display=''; document.getElementById('adminRole').textContent=u.role||'Administrador'; const nb=document.getElementById('navBackoffice'); if(nb) nb.style.display=''; const mb=document.getElementById('mobileBackoffice'); if(mb) mb.style.display=''; }
 

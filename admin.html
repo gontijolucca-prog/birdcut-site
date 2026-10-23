@@ -67,11 +67,6 @@
 .admin-main .btn--outline:hover:not(:disabled){background:#111;color:#fff;border-color:#111}
 .admin-main .btn--outline:disabled{color:#111;background:transparent;border-color:rgba(0,0,0,.16)}
 .admin-main .btn--outline:disabled:hover{background:transparent;color:#111;border-color:rgba(0,0,0,.16)}
-.admin-demo-chip{display:none;align-items:center;background:#c58800;color:#111;font:700 .62rem/1 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .5rem;border-radius:99px;margin-left:.4rem}
-body.is-demo .admin-demo-chip{display:inline-flex}
-#demoBanner{display:none;align-items:center;gap:.6rem;background:#fff8e6;border:1px solid #f0d28a;color:#6b4c00;border-radius:10px;padding:.6rem .8rem;font-family:'Inter',sans-serif;font-size:.8rem;margin-bottom:1rem}
-body.is-demo #demoBanner{display:block}
-body.is-demo .admin-table button:disabled,body.is-demo #btnNewProd:disabled,body.is-demo #btnSaveProd:disabled{opacity:.45;cursor:not-allowed}
 @media(max-width:700px){
   #adminUserEmail{display:none}
   .header__tools{gap:.2rem}
@@ -131,11 +126,11 @@ body.is-demo .admin-table button:disabled,body.is-demo #btnNewProd:disabled,body
   <div class="header__tools"><a href="conta.html" class="icon-btn" aria-label="Conta" title="Conta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a><span id="adminUserEmail" style="font-family:Inter,sans-serif;font-size:.78rem;color:#555;margin-left:.4rem"></span><button id="adminLogout" class="icon-btn" title="Sair" style="display:none">↗</button></div>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
-<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/birdcut-pt/logo-create-account.webp" alt="Bird Cut — Created for Creators" style="width:100%;max-width:140px;height:auto;margin:0 auto 1.2rem;display:block"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>Nome de utilizador</label><input type="text" id="admEmail" autocomplete="username" required placeholder="admin" value="admin"></div><div class="admin-field"><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="admPass" required placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-toggle" data-target="admPass" aria-label="Mostrar palavra-passe"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><div style="display:flex;align-items:center;gap:.55rem;margin:-.2rem 0 .9rem"><input type="checkbox" id="admRemember" checked style="width:16px;height:16px;padding:0;margin:0;accent-color:#111;flex:0 0 auto"><label for="admRemember" style="margin:0;cursor:pointer;font-family:'Inter',sans-serif;font-size:.8rem;color:#555;text-transform:none;letter-spacing:0;font-weight:400">Lembrar-me neste dispositivo</label></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p><p style="margin-top:.4rem;font-size:.76rem;color:#777">És o Rafael? Usa o <a href="admin.html?visita=1"><b>acesso de visita</b></a> para rever o design sem password.</p></div></section>
+<section id="adminLogin" class="section" style="display:none"><div class="admin-login"><img src="img/birdcut-pt/logo-create-account.webp" alt="Bird Cut — Created for Creators" style="width:100%;max-width:140px;height:auto;margin:0 auto 1.2rem;display:block"><h2>Backoffice</h2><p>Entra com a tua conta de administrador.</p><form id="adminLoginForm" class="conta-form" style="text-align:left"><div class="admin-field"><label>E-mail de administrador</label><input type="email" id="admEmail" autocomplete="username" required placeholder="o.teu@email.pt"></div><div class="admin-field"><label>Palavra-passe</label><div class="pass-wrap"><input type="password" id="admPass" required placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-toggle" data-target="admPass" aria-label="Mostrar palavra-passe"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><div style="display:flex;align-items:center;gap:.55rem;margin:-.2rem 0 .9rem"><input type="checkbox" id="admRemember" checked style="width:16px;height:16px;padding:0;margin:0;accent-color:#111;flex:0 0 auto"><label for="admRemember" style="margin:0;cursor:pointer;font-family:'Inter',sans-serif;font-size:.8rem;color:#555;text-transform:none;letter-spacing:0;font-weight:400">Lembrar-me neste dispositivo</label></div><div id="admErr" style="color:#c62828;font-size:.82rem;min-height:1.1em"></div><button type="submit" class="btn" style="width:100%;justify-content:center;background:#111;color:#fff;border-radius:8px" id="admBtn">Entrar</button></form><p style="margin-top:.9rem;font-size:.76rem;color:#777">Acesso reservado a uma conta com permissões de administrador atribuídas no servidor.</p><p style="margin-top:.4rem;font-size:.76rem;color:#777">És o Rafael? Usa o <a href="admin.html?visita=1"><b>acesso de visita</b></a> para rever o design sem password.</p></div></section>
 <section id="adminDenied" class="section" style="display:none"><div class="admin-login"><h2>Acesso restrito</h2><p id="deniedMsg">Esta conta não tem permissões de administrador.</p><p style="font-size:.82rem;color:#777" id="deniedEmail"></p><button class="btn" style="margin-top:1rem;background:#111;color:#fff" onclick="logout().then(()=>location.reload())">Sair</button> <a href="conta.html" class="btn btn--outline" style="margin-top:.6rem">Ir para Área Cliente</a></div></section>
 <div id="adminApp" class="admin-wrap" style="display:none">
   <aside class="admin-sidebar">
-    <div class="admin-sidebar__head"><b>Bird Cut — Backoffice</b><span id="adminRole">Administrador</span><span class="admin-demo-chip">Demo</span></div>
+    <div class="admin-sidebar__head"><b>Bird Cut — Backoffice</b><span id="adminRole">Administrador</span></div>
     <nav class="admin-nav" id="adminNav">
       <a href="#" data-tab="dash" class="active"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg> Dashboard</a>
       <a href="#" data-tab="orders"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Encomendas <small id="countOrders">—</small></a>
@@ -152,7 +147,6 @@ body.is-demo .admin-table button:disabled,body.is-demo #btnNewProd:disabled,body
     </div>
   </aside>
   <main class="admin-main">
-    <div id="demoBanner"><b>Modo demonstração</b> · Dados de exemplo — criar, editar e apagar estão desativados. Entra com uma conta de administrador real para alterar a loja.</div>
     <div id="tab-dash" class="admin-tab">
       <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:.8rem"><h2 style="font-family:Inter,sans-serif;margin:0;font-size:1.15rem">Dashboard</h2><span id="dashRange" style="font-size:.78rem;color:#777"></span><button class="btn btn--outline" style="margin-left:auto;padding:.4rem .8rem;font-size:.75rem" id="btnRefreshDash">⟳ Atualizar</button></div>
       <div class="admin-kpis" id="kpiGrid">
@@ -248,17 +242,15 @@ function savePreview(){ localStorage.setItem(LS_KEY, JSON.stringify(CFG)); }
 async function saveToBackend(){ const t=getToken(); if(!t) return {ok:false,error:'Sem token'}; try{ const r=await fetch('/api/site-config',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify(CFG)}); return await r.json(); }catch(e){ return {ok:false,error:e.message} } }
 async function saveAll(){
   savePreview();
-  if(isDemoSession()) return alert('✓ Guardado na pré-visualização local deste browser.\nModo demonstração: a loja online não é alterada.');
   const res=await saveToBackend();
   if(res&&res.ok) alert('✓ Guardado! '+(res.saved||'ok'));
   else if(res&&res.error) alert('Guardado localmente. Backend: '+res.error+'\n(Se não tens KV BC_SITE_KV é normal — fica em preview local)');
   else alert('✓ Guardado em preview local.');
 }
-function isDemoSession(){ try{ const t=localStorage.getItem('bc_token')||sessionStorage.getItem('bc_token'); return t==='local-admin-admin'; }catch(e){ return false; } }
 
 // ---- API admin helpers ----
 function authHeaders(){ const t=getToken(); return {'Content-Type':'application/json','Authorization':'Bearer '+(t||'')}; }
-async function adminGet(path){ const _t=getToken(); if(window.__VISITA || _t==='local-admin-admin') return demoAdmin(path); const r=await fetch(path,{headers:authHeaders()}); if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.error||('HTTP '+r.status)); } return await r.json(); }
+async function adminGet(path){ const r=await fetch(path,{headers:authHeaders()}); if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.error||('HTTP '+r.status)); } return await r.json(); }
 async function adminPost(path,body){ const r=await fetch(path,{method:'POST',headers:authHeaders(),body:JSON.stringify(body)}); const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||('HTTP '+r.status)); return j; }
 async function adminPut(path,body){ const r=await fetch(path,{method:'PUT',headers:authHeaders(),body:JSON.stringify(body)}); const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||('HTTP '+r.status)); return j; }
 
@@ -341,7 +333,7 @@ function pushMove(name, from, to, reason){
 async function renderStockMoves(){
   const el=document.getElementById('stockMoves'); if(!el) return;
   // Sessão real: histórico vem do servidor (stock_moves). Demo/offline: localStorage.
-  if(!isDemoSession() && !window.__VISITA && typeof adminGet==='function'){
+  if(typeof adminGet==='function'){
     try{
       const rows=await adminGet('/api/admin/stock-moves');
       if(Array.isArray(rows)){
@@ -354,7 +346,6 @@ async function renderStockMoves(){
   }
   const arr=readMoves();
   if(!arr.length){
-    if(window.__VISITA) return; // modo visita já injeta exemplos
     el.innerHTML='<p style="font-size:.82rem;color:#777;margin:0">Ainda sem ajustes neste dispositivo. Usa o botão <b>Stock</b> num produto para registar um movimento.</p>';
     return;
   }
@@ -682,9 +673,6 @@ window.saveRaw=()=>{ try{ CFG=JSON.parse(document.getElementById('siteRaw').valu
 
 // ---- INIT ----
 async function init(){
-  const q=new URLSearchParams(location.search);
-  // Modo visita (Rafael): ?visita=1 — vê o design sem password, sem mexer em dados reais.
-  if(q.has('visita')||q.has('demo')||q.has('preview')||q.has('rafael')){ initVisita(); return; }
   const loginSec=document.getElementById('adminLogin');
   const denied=document.getElementById('adminDenied');
   const app=document.getElementById('adminApp');
@@ -747,7 +735,6 @@ async function init(){
     CFG=await loadConfig();
     document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);
     renderContent();
-    try{ fillDemoKpis(); }catch(e){}
     try{ await loadDashboard(); }catch(e){ console.error('dash',e); }
     // preload others async
     loadProducts().catch(()=>{});
@@ -757,121 +744,6 @@ async function init(){
     // health
     fetch('/api/health').then(r=>r.json()).then(j=>document.getElementById('healthCheck').textContent=j.ok?'OK '+j.time:'erro').catch(()=>document.getElementById('healthCheck').textContent='offline');
   }
-}
-// ---- DADOS DEMO (modo visita: todas as páginas cheias) ----
-function demoDays(n, fn){ const out=[]; const t=new Date(); for(let i=n-1;i>=0;i--){ const d=new Date(t); d.setDate(t.getDate()-i); out.push(fn(d.toISOString().slice(0,10), n-1-i)); } return out; }
-const DEMO_PRODUCTS=[
-  {sku:'BC-CURVE-01',id:'curveline-beard-pro',name:'CurveLine Beard Pro',colors:['Preto','Branco'],rating:'4.9',price_text:'39,99 €',price_num:39.99,stock:42,active:true,image:'img/birdcut-pt/Pente-CurveLine-Laranja.png'},
-  {sku:'BC-TRIM-02',id:'trimmer-precision',name:'Trimmer Precision X',colors:['Preto'],rating:'4.8',price_text:'29,99 €',price_num:29.99,stock:8,active:true,image:'img/birdcut-pt/Pente-CurveLine-Amarelo.png'},
-  {sku:'BC-KIT-03',id:'kit-barba-completo',name:'Kit Barba Completo',colors:['Castanho'],rating:'4.7',price_text:'49,99 €',price_num:49.99,stock:3,active:true,image:'img/birdcut-pt/CurveLine-Tecnica-GPT2.jpg'},
-  {sku:'BC-OIL-04',id:'oleo-barba-cedro',name:'Óleo de Barba Cedro',colors:['Âmbar'],rating:'4.9',price_text:'14,99 €',price_num:14.99,stock:67,active:true,image:'img/birdcut-pt/Pente-laranja.png'},
-  {sku:'BC-COMB-05',id:'pente-carbono',name:'Pente Carbono Anti-estático',colors:['Preto'],rating:'4.6',price_text:'9,99 €',price_num:9.99,stock:0,active:false,image:'img/birdcut-pt/Pente-Rosa.png'}
-];
-const DEMO_ORDERS=[
-  {id:1042,created_at:'2026-09-30T18:24:00',email:'miguel.santos@gmail.com',user_id:12,items:[{name:'CurveLine Beard Pro',qty:1,price:'39,99 €'},{name:'Óleo de Barba Cedro',qty:2,price:'14,99 €'}],total:69.97,status:'processamento',stripe_session:'cs_demo_9f2k'},
-  {id:1041,created_at:'2026-09-29T11:02:00',email:'ana.ribeiro@hotmail.com',user_id:8,items:[{name:'Kit Barba Completo',qty:1,price:'49,99 €'}],total:49.99,status:'enviado',stripe_session:'cs_demo_7h1a'},
-  {id:1040,created_at:'2026-09-28T20:47:00',email:'joao.pedro@gmail.com',user_id:null,items:[{name:'Trimmer Precision X',qty:1,price:'29,99 €'}],total:29.99,status:'entregue',stripe_session:'cs_demo_5t8z'},
-  {id:1039,created_at:'2026-09-27T09:15:00',email:'carlos.mendes@gmail.com',user_id:21,items:[{name:'CurveLine Beard Pro',qty:1,price:'39,99 €'},{name:'Pente Carbono Anti-estático',qty:1,price:'9,99 €'}],total:49.98,status:'entregue',stripe_session:'cs_demo_3m4p'},
-  {id:1038,created_at:'2026-09-25T16:33:00',email:'tiago.ferreira@gmail.com',user_id:5,items:[{name:'Óleo de Barba Cedro',qty:1,price:'14,99 €'}],total:14.99,status:'cancelado',stripe_session:'cs_demo_1q6w'},
-  {id:1037,created_at:'2026-09-24T14:08:00',email:'rui.costa@sapo.pt',user_id:17,items:[{name:'Kit Barba Completo',qty:2,price:'49,99 €'}],total:99.98,status:'entregue',stripe_session:'cs_demo_0z3e'}
-];
-const DEMO_USERS=[
-  {email:'miguel.santos@gmail.com',name:'Miguel',surname:'Santos',orders:4,spent:189.94,created_at:'2026-06-12',role:'user'},
-  {email:'ana.ribeiro@hotmail.com',name:'Ana',surname:'Ribeiro',orders:2,spent:89.98,created_at:'2026-07-03',role:'user'},
-  {email:'joao.pedro@gmail.com',name:'João',surname:'Pedro',orders:1,spent:29.99,created_at:'2026-08-19',role:'user'},
-  {email:'carlos.mendes@gmail.com',name:'Carlos',surname:'Mendes',orders:5,spent:244.90,created_at:'2026-05-28',role:'user'},
-  {email:'rafael@birdcut.pt',name:'Rafael',surname:'',orders:0,spent:0,created_at:'2026-09-30',role:'admin'}
-];
-const DEMO_CARTS_AB=[
-  {id:1,session_id:'sess_k7d2m9xq',email:'pedro.alves@gmail.com',user_id:null,items:[{name:'CurveLine Beard Pro',qty:1}],total:39.99,last_activity:'2026-09-30T21:12:00',status:'abandoned'},
-  {id:2,session_id:'sess_p3w8n1zb',email:'',user_id:null,items:[{name:'Kit Barba Completo',qty:1},{name:'Óleo de Barba Cedro',qty:1}],total:64.98,last_activity:'2026-09-30T19:44:00',status:'abandoned'},
-  {id:3,session_id:'sess_m5q0r4th',email:'nunogomes@gmail.com',user_id:9,items:[{name:'Trimmer Precision X',qty:1}],total:29.99,last_activity:'2026-09-29T22:05:00',status:'abandoned'}
-];
-const DEMO_CARTS_AC=[
-  {id:4,session_id:'sess_a1b2c3dd',email:'miguel.santos@gmail.com',user_id:12,items:[{name:'Óleo de Barba Cedro',qty:2}],total:29.98,last_activity:'2026-10-01T02:40:00',status:'active'},
-  {id:5,session_id:'sess_e4f5g6hh',email:'',user_id:null,items:[{name:'CurveLine Beard Pro',qty:1}],total:39.99,last_activity:'2026-10-01T01:15:00',status:'active'}
-];
-function demoAdmin(path){
-  if(path==='/api/admin/stats') return Promise.resolve({kpis:{totalRevenue:1240.86,totalOrders:32,avgOrder:38.78,totalCustomers:120,visitors:980,pageviews:2400,activeCarts:6,abandoned:4,lowStock:3},
-    daily:demoDays(14,(d,i)=>({d,revenue:Math.round((40+((i*37)%90))*100)/100,orders:1+(i*7)%5})),
-    dailyTraffic:demoDays(14,(d,i)=>({d,pageviews:120+((i*53)%110),visitors:50+((i*29)%45)})),
-    topProducts:[{name:'CurveLine Beard Pro',qty:18},{name:'Óleo de Barba Cedro',qty:24},{name:'Kit Barba Completo',qty:9}],
-    lowStockList:[{name:'Kit Barba Completo',id:'kit-barba-completo',stock:3},{name:'Trimmer Precision X',id:'trimmer-precision',stock:8},{name:'Pente Carbono Anti-estático',id:'pente-carbono',stock:0}],
-    recent:DEMO_ORDERS.slice(0,5)});
-  if(path.startsWith('/api/admin/analytics')) return Promise.resolve({daily:demoDays(14,(d,i)=>({d,pageviews:120+((i*53)%110),visitors:50+((i*29)%45)})),
-    byEvent:[{event_type:'page_view',c:2400},{event_type:'add_to_cart',c:214},{event_type:'begin_checkout',c:96},{event_type:'purchase',c:32}],
-    funnel:{visitors:980,addToCart:214,beginCheckout:96,purchase:32}});
-  if(path==='/api/admin/products') return Promise.resolve(DEMO_PRODUCTS);
-  if(path==='/api/admin/orders') return Promise.resolve(DEMO_ORDERS);
-  if(path==='/api/admin/users') return Promise.resolve(DEMO_USERS);
-  if(path.startsWith('/api/admin/carts')) return Promise.resolve(path.includes('active')?DEMO_CARTS_AC:DEMO_CARTS_AB);
-  return Promise.reject(new Error('Demo: sem dados para '+path));
-}
-// ---- MODO VISITA (só design, sem backend) ----
-function fillDemoKpis(){
-  const set=(id,v)=>{ const el=document.getElementById(id); if(el&&(/^—|—$/.test(el.textContent)||!el.textContent.trim())) el.textContent=v; };
-  set('kpiRevenue','1.240,00 €'); set('kpiRevenueSub','32 encomendas · ticket 38,75 €');
-  set('kpiOrders','32'); set('kpiAOV','ticket 38,75 €'); set('kpiCustomers','120');
-  set('kpiVisitors','980'); set('kpiPageviews','2.400 pageviews');
-  set('kpiActive','6'); set('kpiAbandoned','4 abandonados');
-  set('kpiLow','3'); set('kpiAOV2','38,75 €');
-  const el=n=>document.getElementById(n);
-  if(el('countOrders')&&!el('countOrders').textContent.trim()) el('countOrders').textContent='32';
-  if(el('dashRange')&&!el('dashRange').textContent.trim()) el('dashRange').textContent='· demo';
-  ['topProducts','lowStockList','recentOrders'].forEach(id=>{ const e2=el(id); if(e2&&!e2.innerHTML.trim()) e2.innerHTML='<p style="color:#777;font-size:.84rem">Modo visita — dados de exemplo.</p>'; });
-}
-async function initVisita(){
-  window.__VISITA=true;
-  document.getElementById('adminLogin').style.display='none';
-  document.getElementById('adminDenied').style.display='none';
-  const app=document.getElementById('adminApp'); app.style.display='grid';
-  document.getElementById('adminUserEmail').textContent='rafael (visita — só design)';
-  document.getElementById('adminRole').textContent='Visita — sem acesso a dados reais';
-  const nb=document.getElementById('navBackoffice'); if(nb) nb.style.display='';
-  const mb=document.getElementById('mobileBackoffice'); if(mb) mb.style.display='';
-  const bar=document.createElement('div');
-  bar.style.cssText='background:#fff8e1;border-bottom:1px solid #f0df9e;padding:.55rem 1rem;font:600 .8rem Inter,sans-serif;color:#7a5c00;text-align:center';
-  bar.innerHTML='<span style="display:inline-flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> Modo visita: navega à vontade para apontar melhorias. Botões de guardar estão desligados — nada é alterado.</span>';
-  document.body.prepend(bar);
-  CFG=await loadConfig();
-  document.getElementById('siteRaw').value=JSON.stringify(CFG,null,2);
-  renderContent();
-  bindVisitaUI();
-  loadDashboard().catch(()=>{}); loadProducts().catch(()=>{}); loadOrders().catch(()=>{});
-  loadClients().catch(()=>{}); loadCarts().catch(()=>{}); loadAnalytics().catch(()=>{});
-  document.getElementById('healthCheck').textContent='demo (modo visita)';
-  const sm=document.getElementById('stockMoves'); if(sm) sm.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><tr><th>Data</th><th>Produto</th><th>Δ</th><th>Motivo</th></tr><tr><td>30/09 10:12</td><td>Kit Barba Completo</td><td><b>+20</b></td><td>reposição</td></tr><tr><td>28/09 15:40</td><td>Trimmer Precision X</td><td><b>−4</b></td><td>vendas</td></tr><tr><td>25/09 09:02</td><td>Óleo de Barba Cedro</td><td><b>+50</b></td><td>reposição</td></tr></table></div>';
-  ['btnSaveAll','btnSaveProd'].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=true; b.title='Desligado no modo visita'; b.style.opacity='.5'; } });
-  ['btnNewProd'].forEach(id=>{ const b=document.getElementById(id); if(b){ b.disabled=true; b.title='Desligado no modo visita'; b.style.opacity='.5'; } });
-}
-function bindVisitaUI(){
-  document.getElementById('adminNav').addEventListener('click',e=>{
-    const a=e.target.closest('a[data-tab]'); if(!a) return; e.preventDefault();
-    document.querySelectorAll('.admin-nav a').forEach(x=>x.classList.remove('active')); a.classList.add('active');
-    document.querySelectorAll('.admin-tab').forEach(t=>t.style.display='none');
-    const el=document.getElementById('tab-'+a.dataset.tab); if(el) el.style.display='';
-    if(a.dataset.tab==='analytics') loadAnalytics();
-    if(a.dataset.tab==='carts') loadCarts();
-    if(a.dataset.tab==='products') loadProducts();
-    if(a.dataset.tab==='orders') loadOrders();
-    if(a.dataset.tab==='clients') loadClients();
-  });
-  document.querySelectorAll('[data-goto]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const nav=document.querySelector('.admin-nav a[data-tab="'+a.getAttribute('data-goto')+'"]'); if(nav) nav.click(); }));
-  const out=()=>location.reload();
-  const lo=document.getElementById('adminLogout'); if(lo) lo.addEventListener('click',out);
-  const lo2=document.getElementById('adminLogout2'); if(lo2) lo2.addEventListener('click',out);
-  const on=(id,fn)=>{ const b=document.getElementById(id); if(b) b.addEventListener('click',fn); };
-  on('btnRefreshDash',()=>loadDashboard().catch(e=>alert(e.message)));
-  on('btnRefreshProd',loadProducts);
-  on('btnCancelProd',()=>{ document.getElementById('productForm').style.display='none'; });
-  on('btnRefreshOrders',loadOrders); on('btnExportOrders',exportOrdersCSV);
-  on('btnRefreshClients',loadClients); on('btnRefreshCarts',loadCarts);
-  const inp=(id,fn)=>{ const b=document.getElementById(id); if(b) b.addEventListener('input',fn); };
-  inp('ordersSearch',renderOrders); inp('clientsSearch',renderClients);
-  const chg=(id,fn)=>{ const b=document.getElementById(id); if(b) b.addEventListener('change',fn); };
-  chg('ordersStatus',renderOrders); chg('cartsStatus',loadCarts);
-  on('btnClearPreview',()=>{ localStorage.removeItem(LS_KEY); alert('Preview limpo.'); });
-  on('btnExport',()=>{ const box=document.getElementById('exportBox'); if(box){ box.style.display='block'; box.textContent=JSON.stringify(CFG,null,2); } });
 }
 document.addEventListener('DOMContentLoaded', () => {
   init();
@@ -892,7 +764,6 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 /* Tabelas em cartões no telemóvel + estado de demonstração (2026-10-22) */
 (function(){
-  function isDemo(){ try{ return (localStorage.getItem('bc_token')||sessionStorage.getItem('bc_token'))==='local-admin-admin'; }catch(e){ return false; } }
   window.decorateAdminTables=function(){
     document.querySelectorAll('.admin-main table.admin-table').forEach(function(t){
       var labels=[];
@@ -908,23 +779,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   };
-  function syncDemo(){
-    var demo=isDemo();
-    document.body.classList.toggle('is-demo', demo);
-    if(!demo) return;
-    [['#btnNewProd'],['#btnSaveProd']].forEach(function(p){ var b=document.querySelector(p[0]); if(b){ b.disabled=true; b.title='Desativado no modo demonstração'; } });
-    document.querySelectorAll('#tab-products .admin-table button').forEach(function(b){ b.disabled=true; b.title='Desativado no modo demonstração'; });
-    document.querySelectorAll('#tab-orders .admin-table select').forEach(function(s){ s.disabled=true; s.title='Desativado no modo demonstração'; });
-  }
   var timer=null;
-  function refresh(){ clearTimeout(timer); timer=setTimeout(function(){ window.decorateAdminTables(); syncDemo(); }, 60); }
+  function refresh(){ clearTimeout(timer); timer=setTimeout(function(){ window.decorateAdminTables(); }, 60); }
   document.addEventListener('DOMContentLoaded', function(){
     refresh();
     var main=document.querySelector('.admin-main');
     if(main) new MutationObserver(refresh).observe(main,{childList:true,subtree:true});
     document.getElementById('adminNav').addEventListener('click', refresh);
   });
-  setInterval(function(){ window.decorateAdminTables(); syncDemo(); }, 1200);
+  setInterval(function(){ window.decorateAdminTables(); }, 1200);
 })();
 </script>
 </body>

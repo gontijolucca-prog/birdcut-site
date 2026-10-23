@@ -32,12 +32,6 @@ function register(email, password, name, surname) {
 function login(email, password, remember) {
   const raw = String(email||'').trim();
   const e = raw.toLowerCase();
-  if ((e==='admin' || e==='admin@birdcut.pt') && String(password)==='admin') {
-    const mock={ token:'local-admin-admin', user:{ email:'admin@birdcut.pt', name:'Admin', role:'admin' } };
-    setToken(mock.token, remember);
-    try{ localStorage.setItem('bc_user', JSON.stringify(mock.user)); }catch{}
-    return Promise.resolve(mock);
-  }
   const tryLogin = (mail) => api('/api/login', { method: 'POST', body: JSON.stringify({ email: mail, password }) });
   // 1) tal como foi escrito; 2) em minúsculas (contas antigas com maiúsculas no registo)
   return tryLogin(raw).catch(err => {
@@ -49,11 +43,10 @@ function login(email, password, remember) {
 // O backend de contas autentica por email; o username admin é apenas o identificador público.
 function loginAdmin(username, password, remember) {
   const value = String(username || '').trim().toLowerCase();
-  if ((value==='admin' || value==='admin@birdcut.pt') && String(password)==='admin') {
-    return login('admin@birdcut.pt','admin', remember);
-  }
-  if (value !== 'adminbirdcut' && value !== 'adminbirdcut@birdcut.pt') return Promise.reject({ code: 400, message: 'Nome de utilizador inválido.' });
-  return login('adminbirdcut@birdcut.pt', password, remember);
+  // Aceita o e-mail de administrador ou o atalho "adminbirdcut"
+  const email = value.includes('@') ? value : (value === 'adminbirdcut' ? 'adminbirdcut@birdcut.pt' : '');
+  if (!email) return Promise.reject({ code: 400, message: 'Usa o teu e-mail de administrador.' });
+  return login(email, password, remember);
 }
 
 // ===== Reposição de palavra-passe =====

@@ -43,3 +43,17 @@ EXTRA (mesma data, segunda passagem)
 - Rodapé: PayPal removido (não está no checkout), Multibanco assumido; link do Livro de Reclamações.
 - Peso da homepage: 2682 KB -> 893 KB (-67%). Corrigido download duplicado dos PNG grandes
   que continuavam na grelha estática antes do JS trocar por WebP.
+
+TERCEIRA PASSAGEM (23/10, autonomia total)
+- Checkout: pré-verificação de stock (409 antes de abrir Stripe), metadata com product_id/cor/quantidade,
+  NIF no checkout (tax_id_collection), moradas PT/ES/FR/DE/NL/BE/IT/LU, portes opcionais por env
+  (SHIPPING_FEE em cêntimos + FREE_SHIPPING_QTY); sem env = portes grátis como antes.
+- Webhook Stripe escrito em functions/api/stripe-webhook.js: verifica assinatura (HMAC + tolerância 5 min),
+  só aceita paid e cria a encomenda via backend (idempotente). Responde 503 até STRIPE_WEBHOOK_SECRET existir.
+- Montra: estado "Esgotado" e "Últimas X unidades" por cor, atualizado ao trocar de swatch e depois do
+  site-config redesenhar o card; botão de compra desativado quando esgotado.
+- success.html: ícone de check só aparece com pagamento confirmado (antes aparecia sempre).
+- Barra de anúncios: setas com área de toque >=44px (visual igual).
+- Testes: matriz 10 larguras x 7 páginas em produção = 0 anomalias; unit tests do checkout (stock, NIF,
+  portes, clamp) e do webhook (assinatura boa/má, payload); fluxo carrinho -> checkout -> success;
+  abas do backoffice e detalhe com tracking.

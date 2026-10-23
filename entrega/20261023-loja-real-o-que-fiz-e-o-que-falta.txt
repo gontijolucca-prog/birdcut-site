@@ -99,3 +99,10 @@ RECUPERAÇÃO DE PALAVRA-PASSE (23/10, noite)
   password temporária (testado: login com a temp devolve 200) e apaga pedidos antigos.
 - Falta: verificar birdcut.pt no Resend (registos DKIM/SPF) para o email sair. Com o token DNS da
   Cloudflare que está no servidor é possível criar os registos, mas é preciso o valor DKIM do Resend.
+
+INTERNATIONAL BARBERS — animação (23/10, noite)
+- O carrossel já existia (infl-track, 28s linear infinito) mas era desligado pela regra
+  @media (prefers-reduced-motion: reduce){.infl-track{animation:none}} — quem tem "Reduzir movimento"
+  no sistema via a faixa parada. Removida essa regra; só o .reveal fica estático.
+- Verificado: transform do track a mudar (-53 → -120 em 1,2 s) com reducedMotion=reduce e no-preference.
+- Versão do CSS bumped para 20261023c (cache Cloudflare).

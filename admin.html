@@ -744,7 +744,10 @@ async function init(){
       if(!u) showLogin();
       else if(!isAdminUser(u)) showDenied(u);
       else { showApp(u); await bootData(); }
-    }catch(e){ showLogin(); }
+    }catch(e){
+      if(getToken()){ try{ sessionStorage.setItem('bc_auth_msg','Sessão expirada. Entra outra vez.'); localStorage.removeItem('bc_token'); sessionStorage.removeItem('bc_token'); }catch(_){} }
+      showLogin();
+    }
   }
 
   async function bootData(){

@@ -139,7 +139,7 @@
         button.setAttribute('aria-pressed', String(active));
       });
       if(image){ image.src=imagePath; image.alt=`CurveLine Beard Pro — ${color}`; }
-      if(title) title.textContent=`${card.dataset.name || 'CurveLine Beard Pro'} — ${color}`;
+      if(title){ title.textContent=`${card.dataset.name || 'CurveLine Beard Pro'} — ${color}`; title.href = yellow ? '/produto-amarelo' : '/produto-laranja'; }
       if(quick){
         quick.dataset.image=imagePath;
         quick.setAttribute('aria-label',`Adicionar CurveLine Beard Pro — ${color} ao carrinho`);

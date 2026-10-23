@@ -72,7 +72,7 @@
                 <button type="button" class="ac-product-card__quick" data-name="${escapeHTML(title)}" data-price="${price}" data-image="${escapeHTML(selected.image)}" aria-label="Adicionar ${escapeHTML(title)} — ${escapeHTML(selected.color)} ao carrinho"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.6"/></svg></button>
               </div>
               <div class="ac-product-card__info">
-                <a class="ac-product-card__title" href="#comprar">${escapeHTML(title)} — ${escapeHTML(selected.color)}</a>
+                <a class="ac-product-card__title" href="${selected.color==='Amarelo'?'/produto-amarelo':'/produto-laranja'}">${escapeHTML(title)} — ${escapeHTML(selected.color)}</a>
                 <div class="ac-product-card__price">${escapeHTML(product.price||`${price.toFixed(2).replace('.',',')} €`)}</div>
                 <div class="ac-product-card__rating"><span class="stars" aria-label="${stars} estrelas">${'★'.repeat(stars)}</span><span class="count">(${escapeHTML(product.rating||'5.0')})</span></div>
                 <div class="ac-product-card__swatches" role="group" aria-label="Escolher cor">${variants.map(v=>`<button type="button" class="sw ${v.color===selected.color?'active':''}" style="background:${v.color==='Amarelo'?'#f4c430':'#f56600'}" data-color="${escapeHTML(v.color)}" aria-label="${escapeHTML(v.color)}" aria-pressed="${v.color===selected.color}" title="${escapeHTML(v.color)}"></button>`).join('')}</div>

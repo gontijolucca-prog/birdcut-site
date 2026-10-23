@@ -1,6 +1,6 @@
 export async function onRequestPost(context) {
   const { STRIPE_SECRET_KEY, STRIPE_PRICE_ID, SITE_URL, BC_API } = context.env;
-  const CORS = { 'Content-Type': 'application/json', 'x-bc-checkout': 'v20261023c' };
+  const CORS = { 'Content-Type': 'application/json' };
 
   try {
     const body = await context.request.json().catch(() => ({}));
@@ -19,12 +19,10 @@ export async function onRequestPost(context) {
         const products = await r.json();
         const p = Array.isArray(products) ? products.find(x => x.id === productId) : null;
         if (p && Number(p.stock) < quantity) {
-          return new Response(JSON.stringify({ error: 'Sem stock suficiente (' + p.stock + ' disponíveis)' }), { status: 409, headers: { ...CORS, 'x-bc-stock': 'blocked:' + p.stock } });
+          return new Response(JSON.stringify({ error: 'Sem stock suficiente (' + p.stock + ' disponíveis)' }), { status: 409, headers: { ...CORS } });
         }
-        if (p) CORS['x-bc-stock'] = 'ok:' + p.stock;
-        else CORS['x-bc-stock'] = 'product-missing';
       }
-    } catch (e) { CORS['x-bc-stock'] = 'fetch-failed'; }
+    } catch (e) { /* segue para o Stripe */ }
 
     const formData = new URLSearchParams();
     formData.append('mode', 'payment');

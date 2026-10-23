@@ -545,7 +545,7 @@ body{overflow-x:hidden}
 
 /* Acessibilidade: sem animação do carrossel para quem pede menos movimento */
 @media (prefers-reduced-motion: reduce){
-  .infl-track{animation:none !important}
+  /* mantém o carrossel dos barbeiros a andar (pedido do Lucca); só o reveal fica estático */
   .reveal{opacity:1 !important;transform:none !important}
 }
 

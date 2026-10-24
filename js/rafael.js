@@ -58,7 +58,7 @@
       let cfg = null;
       try{ const ls = localStorage.getItem('bc_site_config_preview'); if(ls) cfg = JSON.parse(ls); }catch(e){}
       if(!cfg){
-        try{ const r = await fetch('/api/site-config',{headers:{'Accept':'application/json'}}); if(r.ok){ const j = await r.json(); if(j && j.hero) cfg = j; } }catch(e){}
+        try{ const r = await fetch('/api/site-config?v=20261024b',{headers:{'Accept':'application/json'},cache:'no-store'}); if(r.ok){ const j = await r.json(); if(j && j.hero) cfg = j; } }catch(e){}
       }
       if(!cfg){ try{ const r = await fetch('data/site.json',{cache:'no-store'}); if(r.ok) cfg = await r.json(); }catch(e){} }
       const list = (cfg && cfg.announcement && Array.isArray(cfg.announcement.messages))

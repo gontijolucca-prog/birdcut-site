@@ -1,6 +1,6 @@
 /* Bird Cut — Site Config loader (data/site.json + localStorage preview) */
 (function(){
-  const LS_KEY = 'bc_site_config_preview';
+  const LS_KEY = 'bc_site_config_preview_v2';
   const escapeHTML = (value) => String(value ?? '').replace(/[&<>\"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' }[char]));
   async function loadConfig(){
     let cfg = null;

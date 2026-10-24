@@ -225,7 +225,7 @@
       <h2 style="font-family:Inter,sans-serif;margin:0 0 .8rem;font-size:1.15rem">Definições</h2>
       <div class="admin-card"><h3>Loja</h3><p style="font-size:.84rem;color:#555">Domínio oficial: <b>birdcut.pt</b> (DNS em Dominios.pt → Pages <code>birdcut-site.pages.dev</code>).<br>Pagamentos: Stripe Checkout (preço <code>STRIPE_PRICE_ID</code> em Pages Env Vars). Sucesso → <code>/success.html?session_id=</code> cria encomenda via <code>/api/orders/guest</code>.</p><p style="font-size:.84rem;color:#555">API: <code>https://media.pontofinal.site/bcapi</code> → <code>127.0.0.1:3001</code> (PM2 <code>birdcut-api</code>). Health: <code id="healthCheck">—</code></p></div>
       <div class="admin-card"><h3>Administradores</h3><p style="font-size:.84rem;color:#555">O acesso ao back office e às operações administrativas é validado no servidor. Não são aceites permissões definidas apenas no browser.</p></div>
-      <div class="admin-card"><h3>Atalhos</h3><div style="display:flex;gap:.6rem;flex-wrap:wrap"><a href="index.html" class="btn btn--outline">Ver loja</a><a href="conta.html" class="btn btn--outline">Área cliente</a><button class="btn btn--outline" onclick="localStorage.removeItem('bc_site_config_preview');alert('Preview limpo')">Limpar preview</button></div></div>
+      <div class="admin-card"><h3>Atalhos</h3><div style="display:flex;gap:.6rem;flex-wrap:wrap"><a href="index.html" class="btn btn--outline">Ver loja</a><a href="conta.html" class="btn btn--outline">Área cliente</a><button class="btn btn--outline" onclick="localStorage.removeItem('bc_site_config_preview_v2');alert('Preview limpo')">Limpar preview</button></div></div>
     </div>
   </main>
 </div>
@@ -235,7 +235,7 @@
 <script src="js/rafael.js?v=20261024b"></script>
 <script>
 let CFG=null;
-const LS_KEY='bc_site_config_preview';
+const LS_KEY='bc_site_config_preview_v2';
 function isAdminUser(u){ return !!u && u.role === 'admin'; }
 async function loadConfig(){ try{ const ls=localStorage.getItem(LS_KEY); if(ls) return JSON.parse(ls);}catch(e){} try{ const r=await fetch('/api/site-config'); if(r.ok){ const j=await r.json(); if(j&&j.hero) return j; }}catch(e){} const r=await fetch('data/site.json',{cache:'no-store'}); return await r.json(); }
 function savePreview(){ localStorage.setItem(LS_KEY, JSON.stringify(CFG)); }

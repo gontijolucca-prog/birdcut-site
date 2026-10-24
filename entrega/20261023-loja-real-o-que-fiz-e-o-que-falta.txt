@@ -106,3 +106,8 @@ INTERNATIONAL BARBERS — animação (23/10, noite)
   no sistema via a faixa parada. Removida essa regra; só o .reveal fica estático.
 - Verificado: transform do track a mudar (-53 → -120 em 1,2 s) com reducedMotion=reduce e no-preference.
 - Versão do CSS bumped para 20261023c (cache Cloudflare).
+
+"COMPRAR AGORA" PERSISTIA NO BROWSER (24/10)
+- Causa: preview antigo em localStorage (bc_site_config_preview) e fallback data/site.json ainda com "Comprar agora".
+- Corrigido: chave passou a bc_site_config_preview_v2 (ignora o preview antigo), data/site.json atualizado,
+  site-config com no-store e URLs versionadas. Testado com o preview antigo gravado: mostra "Reservar pré-venda".

@@ -264,68 +264,25 @@
     });
   })();
 
-  /* ===== 6. EXPERIÊNCIAS — carrossel circular sem salto visível ===== */
+  /* ===== 6. EXPERIÊNCIAS — marquee infinito (igual aos International Barbers) ===== */
   (function(){
-    const slider = document.querySelector('.exps-slider');
-    const wrap = slider?.querySelector('.exps-scroll-wrap');
-    const track = wrap?.querySelector('.exps-grid');
-    if(!slider || !wrap || !track) return;
-    const prev = slider.querySelector('.exps-arrow--prev');
-    const next = slider.querySelector('.exps-arrow--next');
-    let originalCount = 0, cloneCount = 0, itemStep = 0, settleTimer = 0, resizeTimer = 0, layoutKey = '';
-    const step = () => {
-      const card = track.querySelector('.exp-card:not([data-loop-clone])');
-      const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
-      return (card ? card.getBoundingClientRect().width : 360) + gap;
+    const track = document.querySelector('.exps-grid');
+    if(!track) return;
+    document.querySelectorAll('.exps-arrow').forEach(a=>a.remove());
+    const build = () => {
+      track.querySelectorAll('[data-loop-clone="true"]').forEach(n=>n.remove());
+      const base = Array.from(track.querySelectorAll('.exp-card')).filter(n=>n.dataset.loopClone!=='true');
+      if(!base.length) return;
+      base.forEach(node=>{
+        const clone = node.cloneNode(true);
+        clone.dataset.loopClone = 'true';
+        clone.setAttribute('aria-hidden','true');
+        clone.classList.remove('reveal');
+        track.appendChild(clone);
+      });
     };
-    const currentLayoutKey = () => `${wrap.clientWidth}:${Math.round(step())}`;
-    const scheduleRebuild = () => {
-      const key = currentLayoutKey();
-      if(key === layoutKey) return;
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(()=>{ if(currentLayoutKey() !== layoutKey) buildLoop(); },180);
-    };
-    const jump = (left) => {
-      wrap.classList.add('is-loop-jumping');
-      wrap.scrollLeft = left;
-      requestAnimationFrame(()=>requestAnimationFrame(()=>wrap.classList.remove('is-loop-jumping')));
-    };
-    const buildLoop = () => {
-      track.querySelectorAll('[data-loop-clone="true"]').forEach(node=>node.remove());
-      const originals = Array.from(track.children).filter(node=>node.classList.contains('exp-card'));
-      originalCount = originals.length;
-      if(originalCount < 2){
-        if(prev) prev.hidden = true;
-        if(next) next.hidden = true;
-        return;
-      }
-      if(prev) prev.hidden = false;
-      if(next) next.hidden = false;
-      itemStep = step();
-      layoutKey = `${wrap.clientWidth}:${Math.round(itemStep)}`;
-      cloneCount = Math.min(originalCount, Math.max(1, Math.ceil(wrap.clientWidth / itemStep) + 1));
-      const before = originals.slice(-cloneCount).map(node=>node.cloneNode(true));
-      const after = originals.slice(0, cloneCount).map(node=>node.cloneNode(true));
-      before.forEach(node=>{ node.dataset.loopClone='true'; node.setAttribute('aria-hidden','true'); node.classList.remove('reveal'); track.insertBefore(node, track.firstChild); });
-      after.forEach(node=>{ node.dataset.loopClone='true'; node.setAttribute('aria-hidden','true'); node.classList.remove('reveal'); track.appendChild(node); });
-      itemStep = step();
-      jump(cloneCount * itemStep);
-    };
-    const normalize = () => {
-      if(!originalCount || !itemStep) return;
-      const start = cloneCount * itemStep;
-      const end = start + originalCount * itemStep;
-      if(wrap.scrollLeft < start - itemStep * .5) jump(wrap.scrollLeft + originalCount * itemStep);
-      else if(wrap.scrollLeft >= end - itemStep * .5) jump(wrap.scrollLeft - originalCount * itemStep);
-    };
-    const scheduleNormalize = () => { clearTimeout(settleTimer); settleTimer=setTimeout(normalize,140); };
-    if(prev) prev.addEventListener('click',()=>wrap.scrollBy({left:-itemStep,behavior:'smooth'}));
-    if(next) next.addEventListener('click',()=>wrap.scrollBy({left:itemStep,behavior:'smooth'}));
-    wrap.addEventListener('scroll',scheduleNormalize,{passive:true});
-    window.addEventListener('birdcut:experiences-updated',buildLoop);
-    window.addEventListener('resize',scheduleRebuild);
-    if('ResizeObserver' in window) new ResizeObserver(scheduleRebuild).observe(wrap);
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',buildLoop,{once:true});
-    else buildLoop();
+    window.addEventListener('birdcut:experiences-updated', build);
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', build, {once:true});
+    else build();
   })();
 })();

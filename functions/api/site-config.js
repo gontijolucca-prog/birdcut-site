@@ -54,5 +54,5 @@ export async function onRequestOptions(){
 }
 
 function json(obj, status=200){
-  return new Response(JSON.stringify(obj), { status, headers:{ 'Content-Type':'application/json','Access-Control-Allow-Origin':'*' }});
+  return new Response(JSON.stringify(obj), { status, headers:{ 'Content-Type':'application/json','Access-Control-Allow-Origin':'*','Cache-Control':'no-store' }});
 }

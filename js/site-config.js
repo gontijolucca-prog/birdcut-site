@@ -12,7 +12,7 @@
     if(cfg) return cfg;
     // 2. Try /api/site-config (if backend exists)
     try{
-      const r = await fetch('/api/site-config', { headers: { 'Accept':'application/json' }});
+      const r = await fetch('/api/site-config?v=20261024b', { headers: { 'Accept':'application/json' }, cache:'no-store' });
       if(r.ok){
         const j = await r.json();
         if(j && j.hero) return j;

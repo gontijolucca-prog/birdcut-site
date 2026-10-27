@@ -44,15 +44,20 @@ export async function onRequestPost(context) {
   if (s.payment_status !== 'paid') return json({ received: true, unpaid: true });
 
   const api = context.env.BC_API || 'https://media.pontofinal.site/bcapi';
-  const productId = s.metadata?.product_id === 'p2' ? 'p2' : 'p1';
-  const qty = Math.max(1, Math.min(20, parseInt(s.metadata?.quantity || '1', 10) || 1));
-  const email = s.customer_details?.email || 'guest';
+  let items = null;
+  try { const raw = s.metadata?.items; if (raw) items = JSON.parse(raw); } catch (e) { items = null; }
+  if (!Array.isArray(items) || !items.length) {
+    const productId = s.metadata?.product_id === 'p2' ? 'p2' : 'p1';
+    const qty = Math.max(1, Math.min(20, parseInt(s.metadata?.quantity || '1', 10) || 1));
+    items = [{ id: productId, qty }];
+  }
+  const email = s.customer_details?.email || s.client_reference_id || s.metadata?.email || 'guest';
 
   try {
     const r = await fetch(api + '/api/orders/guest', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, items: [{ id: productId, qty }], stripeSession: s.id, presale: s.metadata?.presale === '1' }),
+      body: JSON.stringify({ email, items, stripeSession: s.id, presale: s.metadata?.presale === '1' }),
     });
     if (!r.ok) {
       const msg = await r.text();

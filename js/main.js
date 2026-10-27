@@ -211,7 +211,8 @@
         body: JSON.stringify({
           quantity: qty,
           color: color,
-          productId: single && /amarelo/i.test(single.name || '') ? 'p2' : 'p1'
+          productId: single && /amarelo/i.test(single.name || '') ? 'p2' : 'p1',
+          items: cart.map(i => ({ id: /amarelo/i.test(i.name || '') ? 'p2' : 'p1', qty: i.qty }))
         })
       });
       const data = await res.json();

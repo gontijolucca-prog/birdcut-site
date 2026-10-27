@@ -15,42 +15,68 @@ export async function onRequestPost(context) {
     }
 
     const color = String(body.color || 'Laranja').slice(0, 40);
-    const productId = body.productId === 'p2' ? 'p2' : 'p1';
     const email = String(body.email || '').trim().toLowerCase().slice(0, 200);
+
+    // Itens: carrinho multi-cor quando enviado; senão produto único (pré-venda)
+    let items = [];
+    if (Array.isArray(body.items) && body.items.length) {
+      const agg = new Map();
+      for (const it of body.items) {
+        const id = it && it.id === 'p2' ? 'p2' : 'p1';
+        const q = Math.max(1, parseInt(it && it.qty, 10) || 1);
+        agg.set(id, (agg.get(id) || 0) + q);
+      }
+      items = [...agg.entries()].map(([id, qty]) => ({ id, qty }));
+      quantity = items.reduce((s, i) => s + i.qty, 0);
+    }
+    const productId = items.length ? items[0].id : (body.productId === 'p2' ? 'p2' : 'p1');
+    if (!items.length) items = [{ id: productId, qty: quantity }];
+
+    if (presale && quantity > 2) {
+      return new Response(JSON.stringify({ error: 'Máximo de 2 unidades por pessoa na pré-venda.' }), { status: 400, headers: CORS });
+    }
 
     // Preço: 18,89 € normal; 2% desconto na pré-venda (18,51 €)
     const base = parseInt(context.env.BASE_PRICE_CENTS || '1889', 10);
     const unit = presale ? Math.round(base * 0.98) : base;
 
-    // Stock
+    // Stock por item
+    let products = [];
     try {
       const apiBase = BC_API || 'https://media.pontofinal.site/bcapi';
       const r = await fetch(apiBase + '/api/products', { headers: { 'accept': 'application/json' } });
-      if (r.ok) {
-        const products = await r.json();
-        const p = Array.isArray(products) ? products.find(x => x.id === productId) : null;
-        if (p && Number(p.stock) < quantity) {
-          return new Response(JSON.stringify({ error: 'Sem stock suficiente (' + p.stock + ' disponíveis)' }), { status: 409, headers: CORS });
+      if (r.ok) products = await r.json();
+    } catch (e) { products = []; }
+    if (Array.isArray(products) && products.length) {
+      for (const it of items) {
+        const p = products.find(x => x.id === it.id);
+        if (p && Number(p.stock) < it.qty) {
+          return new Response(JSON.stringify({ error: 'Sem stock suficiente de ' + (p.name || it.id) + ' (' + p.stock + ' disponíveis)' }), { status: 409, headers: CORS });
         }
       }
-    } catch (e) { /* segue */ }
+    }
 
     const formData = new URLSearchParams();
     formData.append('mode', 'payment');
     formData.append('payment_method_types[]', 'card');
     formData.append('payment_method_types[]', 'multibanco');
     formData.append('payment_method_types[]', 'mb_way');
-    formData.append('line_items[0][price_data][currency]', 'eur');
-    formData.append('line_items[0][price_data][unit_amount]', String(unit));
-    formData.append('line_items[0][price_data][product_data][name]', 'CurveLine Beard Pro — ' + color);
-    formData.append('line_items[0][price_data][product_data][description]', presale ? 'Pré-venda — 2% de desconto' : 'CurveLine Beard Pro');
-    formData.append('line_items[0][quantity]', String(quantity));
+    items.forEach((it, i) => {
+      const p = Array.isArray(products) ? products.find(x => x.id === it.id) : null;
+      const nm = (p && p.name) ? p.name : ('CurveLine Beard Pro — ' + (it.id === 'p2' ? 'Amarelo' : 'Laranja'));
+      formData.append('line_items[' + i + '][price_data][currency]', 'eur');
+      formData.append('line_items[' + i + '][price_data][unit_amount]', String(unit));
+      formData.append('line_items[' + i + '][price_data][product_data][name]', nm);
+      formData.append('line_items[' + i + '][price_data][product_data][description]', presale ? 'Pré-venda — 2% de desconto' : 'CurveLine Beard Pro');
+      formData.append('line_items[' + i + '][quantity]', String(it.qty));
+    });
     formData.append('success_url', siteUrl + '/success.html?session_id={CHECKOUT_SESSION_ID}');
     formData.append('cancel_url', siteUrl + (presale ? '/pre-venda.html?cancel=1' : '/?checkout=cancel'));
     formData.append('locale', 'pt');
     if (email) { formData.append('customer_email', email); formData.append('client_reference_id', email); }
     formData.append('metadata[product_id]', productId);
     formData.append('metadata[color]', color);
+    formData.append('metadata[items]', JSON.stringify(items));
     formData.append('metadata[quantity]', String(quantity));
     formData.append('metadata[presale]', presale ? '1' : '0');
     formData.append('metadata[email]', email);

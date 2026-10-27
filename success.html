@@ -112,6 +112,11 @@
       items: (function(){
         if(cartSnapshot.length) return cartSnapshot.map(i=>({name:i.name, priceNum:i.priceNum, quantity:i.qty, image:i.image}));
         const meta = d.metadata || {};
+        let parsed = null;
+        try { if (meta.items) parsed = JSON.parse(meta.items); } catch (e) { parsed = null; }
+        if (Array.isArray(parsed) && parsed.length) {
+          return parsed.map(it => ({ id: it.id === 'p2' ? 'p2' : 'p1', name: 'CurveLine Beard Pro', priceNum: 18.89, quantity: Math.max(1, parseInt(it.qty,10)||1) }));
+        }
         const qty = Math.max(1, Math.min(20, parseInt(meta.quantity||1,10)||1));
         const color = meta.color || '';
         const pid = meta.product_id === 'p2' ? 'p2' : 'p1';
@@ -122,7 +127,18 @@
       presale: !!(d.metadata && d.metadata.presale === '1'),
       sessionId: (window.BC_sid || localStorage.getItem('bc_sid') || '')
     };
-    const docRef = isLoggedIn() ? await createOrder(orderData) : await createGuestOrder(orderData);
+    let docRef = null, lastErr = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        docRef = isLoggedIn() ? await createOrder(orderData) : await createGuestOrder(orderData);
+        break;
+      } catch (err) {
+        lastErr = err;
+        if (!err || (err.code !== 402 && err.code !== 502)) break;
+        await new Promise(r => setTimeout(r, 1000 + attempt * 1500));
+      }
+    }
+    if (!docRef) throw lastErr || new Error('Falha ao registar a encomenda');
     document.getElementById('orderId').textContent = '#' + (docRef.id || docRef.orderId || 'registado');
     if(window.BC_purchaseTrack) try{ window.BC_purchaseTrack(orderData); }catch(e){}
     try{ localStorage.removeItem('birdcut-cart'); }catch(e){}
@@ -199,7 +215,7 @@
   <a href="conta.html">Área de Cliente</a>
 </div>
 
-<script src="js/main.js?v=20261027a"></script>
+<script src="js/main.js?v=20261027b"></script>
 <script src="js/rafael.js?v=20261027a"></script>
 </body>
 </html>

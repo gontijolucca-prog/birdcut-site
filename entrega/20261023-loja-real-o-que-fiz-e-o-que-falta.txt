@@ -111,3 +111,33 @@ INTERNATIONAL BARBERS — animação (23/10, noite)
 - Causa: preview antigo em localStorage (bc_site_config_preview) e fallback data/site.json ainda com "Comprar agora".
 - Corrigido: chave passou a bc_site_config_preview_v2 (ignora o preview antigo), data/site.json atualizado,
   site-config com no-store e URLs versionadas. Testado com o preview antigo gravado: mostra "Reservar pré-venda".
+
+AUDITORIA COMPLETA (27/10) — BUGS ENCONTRADOS E CORRIGIDOS
+1. Encomendas falsas: /api/orders(/guest) aceitava qualquer "cs_test_…" e baixava stock sem pagamento.
+   Agora o servidor confirma a sessão no Stripe (/session/:id), exige payment_status=paid e compara o valor pago.
+2. Formulário de contacto e newsletter eram botões mortos: agora POST /api/contact e /api/newsletter,
+   tabelas contact_messages/newsletter_subscribers e separador "Mensagens" no backoffice.
+3. Carrinho perdia a cor (dois itens ficavam p1): data-name inclui a cor e o checkout agrega por produto.
+4. Checkout multi-cor só validava/registava um produto: agora uma linha por produto, stock por item.
+5. /produto-amarelo adicionava imagem Laranja: init respeita a cor da página.
+6. Quantidade podia ir a 99 e o checkout cortava para 20 em silêncio: teto 20 + erro explícito.
+7. Rate limit contava todos os visitantes como o mesmo IP (proxy não enviava IP): agora envia cf-connecting-ip.
+8. Apagar produto dava 500 (FK stock_moves): transação + 404; erros do Express em JSON (sem stack).
+9. Criar/editar produto com valores inválidos dava 500: validação.
+10. "Repor" podia repor a password de outro admin: bloqueado (403).
+11. Chart.js em CDN: se falhasse, o dashboard partia: helper tolerante.
+12. setInterval de 1,2 s a redesenhar tabelas do admin: removido.
+13. Select de estado mostrava alteração mesmo se o PUT falhasse: reverte.
+14. deleteProd ignorava erros HTTP: passa a adminDelete.
+15. Dados injetados nas tabelas do admin sem escape: escapados.
+16. localStorage do carrinho corrompido matava o carrinho: protegido.
+17. api() rebentava com respostas não-JSON: tratado.
+18. Link de reset era escondido por sessão ativa: corrigido.
+19. Chave antiga de preview no leitor de mensagens: v2.
+20. Newsletter prometia 5% sem mecanismo: texto corrigido para "novidades".
+21. Textos desatualizados (STRIPE_PRICE_ID, tracking, stock moves): corrigidos.
+22. analytics.js corria no admin e sujava as estatísticas: removido.
+
+TESTES: 100 combos (10 páginas × 10 larguras) 0 erros/overflow; pagamento teste real 18,51 € e encomenda
+criada com verificação; carrinho 2 cores 37,78 €; pré-venda qty 2 = 37,02 €; contacto/newsletter gravam e
+aparecem no admin; CRUD de produto e estado de encomenda pela UI; 401/403/400 nos casos de abuso.

@@ -265,6 +265,7 @@ async function adminPut(path,body){ const r=await fetch(path,{method:'PUT',heade
 let chartDaily=null, chartTraffic=null, chartAnalyticsDaily=null, chartEvents=null, chartFunnel=null;
 
 function escapeHTML(v){ return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function makeChart(id,cfg){ if(typeof Chart==='undefined'){ return null; } try{ return new Chart(document.getElementById(id), cfg); }catch(e){ console.warn('chart',id,e); return null; } }
 function fmtMoney(n){ return (Number(n)||0).toFixed(2).replace('.',',')+' €'; }
 function fmtInt(n){ return (Number(n)||0).toLocaleString('pt-PT'); }
 
@@ -298,14 +299,13 @@ async function loadDashboard(){
   const labels=(data.daily||[]).map(d=>d.d.slice(5));
   const revs=(data.daily||[]).map(d=>d.revenue);
   const ordersDaily=(data.daily||[]).map(d=>d.orders);
-  if(typeof Chart==='undefined') return;
   if(chartDaily) chartDaily.destroy();
-  chartDaily=new Chart(document.getElementById('chartDaily'),{type:'bar',data:{labels, datasets:[{label:'Receita €', data:revs, yAxisID:'y', backgroundColor:'rgba(17,17,17,.85)', borderRadius:6, barPercentage:.7},{label:'Encomendas', data:ordersDaily, yAxisID:'y1', type:'line', borderColor:'#c58800', backgroundColor:'rgba(197,136,0,.15)', tension:.35, pointRadius:3}]}, options:{responsive:true,maintainAspectRatio:false, scales:{ y:{position:'left', grid:{color:'rgba(0,0,0,.06)'}}, y1:{position:'right', grid:{display:false}}}}});
+  chartDaily=makeChart('chartDaily',{type:'bar',data:{labels, datasets:[{label:'Receita €', data:revs, yAxisID:'y', backgroundColor:'rgba(17,17,17,.85)', borderRadius:6, barPercentage:.7},{label:'Encomendas', data:ordersDaily, yAxisID:'y1', type:'line', borderColor:'#c58800', backgroundColor:'rgba(197,136,0,.15)', tension:.35, pointRadius:3}]}, options:{responsive:true,maintainAspectRatio:false, scales:{ y:{position:'left', grid:{color:'rgba(0,0,0,.06)'}}, y1:{position:'right', grid:{display:false}}}}});
   const tLabels=(data.dailyTraffic||[]).map(d=>d.d.slice(5));
   const pv=(data.dailyTraffic||[]).map(d=>d.pageviews);
   const vis=(data.dailyTraffic||[]).map(d=>d.visitors);
   if(chartTraffic) chartTraffic.destroy();
-  chartTraffic=new Chart(document.getElementById('chartTraffic'),{type:'line',data:{labels:tLabels, datasets:[{label:'Pageviews', data:pv, borderColor:'#111', backgroundColor:'rgba(17,17,17,.06)', fill:true, tension:.35},{label:'Visitantes', data:vis, borderColor:'#1a7a2e', backgroundColor:'rgba(26,122,46,.10)', fill:true, tension:.35}]}, options:{responsive:true,maintainAspectRatio:false, scales:{ y:{grid:{color:'rgba(0,0,0,.06)'}}}}});
+  chartTraffic=makeChart('chartTraffic',{type:'line',data:{labels:tLabels, datasets:[{label:'Pageviews', data:pv, borderColor:'#111', backgroundColor:'rgba(17,17,17,.06)', fill:true, tension:.35},{label:'Visitantes', data:vis, borderColor:'#1a7a2e', backgroundColor:'rgba(26,122,46,.10)', fill:true, tension:.35}]}, options:{responsive:true,maintainAspectRatio:false, scales:{ y:{grid:{color:'rgba(0,0,0,.06)'}}}}});
   // top products
   document.getElementById('topProducts').innerHTML=(data.topProducts&&data.topProducts.length)? '<table class="admin-table" style="min-width:0"><tr><th>Produto</th><th>Qtd</th></tr>'+data.topProducts.map(p=>'<tr><td>'+escapeHTML(p.name)+'</td><td><b>'+p.qty+'</b></td></tr>').join('')+'</table>' : '<p style="color:#777;font-size:.84rem">Sem vendas nos últimos 30 dias.</p>';
   document.getElementById('lowStockList').innerHTML=(data.lowStockList&&data.lowStockList.length)? '<table class="admin-table" style="min-width:0"><tr><th>SKU</th><th>Stock</th></tr>'+data.lowStockList.map(p=>'<tr><td>'+escapeHTML(p.name)+' <small style="color:#777">'+escapeHTML(p.id)+'</small></td><td><span class="badge '+(p.stock<=5?'badge--bad':p.stock<=10?'badge--bad':'badge--warn')+'">'+p.stock+'</span></td></tr>').join('')+'</table>' : '<p style="color:#777;font-size:.84rem">Stock OK.</p>';
@@ -594,21 +594,20 @@ async function loadAnalytics(){
     const labels=(data.daily||[]).map(d=>d.d.slice(5));
     const pv=(data.daily||[]).map(d=>d.pageviews);
     const vis=(data.daily||[]).map(d=>d.visitors);
-    if(typeof Chart==='undefined') return;
     if(chartAnalyticsDaily) chartAnalyticsDaily.destroy();
-    chartAnalyticsDaily=new Chart(document.getElementById('chartAnalyticsDaily'),{type:'line',data:{labels, datasets:[{label:'Pageviews',data:pv,borderColor:'#111',backgroundColor:'rgba(17,17,17,.06)',fill:true,tension:.35},{label:'Visitantes',data:vis,borderColor:'#1a7a2e',backgroundColor:'rgba(26,122,46,.08)',fill:true,tension:.35}]}, options:{responsive:true,maintainAspectRatio:false, scales:{y:{grid:{color:'rgba(0,0,0,.06)'}}}}});
+    chartAnalyticsDaily=makeChart('chartAnalyticsDaily',{type:'line',data:{labels, datasets:[{label:'Pageviews',data:pv,borderColor:'#111',backgroundColor:'rgba(17,17,17,.06)',fill:true,tension:.35},{label:'Visitantes',data:vis,borderColor:'#1a7a2e',backgroundColor:'rgba(26,122,46,.08)',fill:true,tension:.35}]}, options:{responsive:true,maintainAspectRatio:false, scales:{y:{grid:{color:'rgba(0,0,0,.06)'}}}}});
     // events pie
     const evLabels=(data.byEvent||[]).map(e=>e.event_type);
     const evVals=(data.byEvent||[]).map(e=>e.c);
     if(chartEvents) chartEvents.destroy();
-    chartEvents=new Chart(document.getElementById('chartEvents'),{type:'doughnut',data:{labels:evLabels, datasets:[{data:evVals, backgroundColor:['#111','#1a7a2e','#c58800','#c62828','#888','#555']} ]}, options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}}});
+    chartEvents=makeChart('chartEvents',{type:'doughnut',data:{labels:evLabels, datasets:[{data:evVals, backgroundColor:['#111','#1a7a2e','#c58800','#c62828','#888','#555']} ]}, options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}}});
     document.getElementById('eventsTable').innerHTML='<table class="admin-table" style="min-width:0"><tr><th>Evento</th><th>Qtd</th></tr>'+(data.byEvent||[]).map(e=>'<tr><td>'+e.event_type+'</td><td><b>'+e.c+'</b></td></tr>').join('')+'</table>';
     // funnel
     const f=data.funnel||{visitors:0,addToCart:0,beginCheckout:0,purchase:0};
     const funnelLabels=['Visitantes','Add to cart','Checkout','Compra'];
     const funnelVals=[f.visitors, f.addToCart, f.beginCheckout, f.purchase];
     if(chartFunnel) chartFunnel.destroy();
-    chartFunnel=new Chart(document.getElementById('chartFunnel'),{type:'bar',data:{labels:funnelLabels, datasets:[{label:'Sessões / Encomendas', data:funnelVals, backgroundColor:['#111','#1a7a2e','#c58800','#c62828']}]}, options:{indexAxis:'y', responsive:true, maintainAspectRatio:false, scales:{x:{grid:{color:'rgba(0,0,0,.06)'}}}}});
+    chartFunnel=makeChart('chartFunnel',{type:'bar',data:{labels:funnelLabels, datasets:[{label:'Sessões / Encomendas', data:funnelVals, backgroundColor:['#111','#1a7a2e','#c58800','#c62828']}]}, options:{indexAxis:'y', responsive:true, maintainAspectRatio:false, scales:{x:{grid:{color:'rgba(0,0,0,.06)'}}}}});
   }catch(e){
     console.error(e);
   }

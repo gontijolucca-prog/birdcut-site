@@ -134,7 +134,11 @@
       btn.addEventListener('click', (ev) => {
         ev.stopPropagation();
         const idx = parseInt(btn.dataset.idx);
-        if (btn.dataset.action === 'plus') cart[idx].qty++;
+        if (btn.dataset.action === 'plus') {
+          const total = cart.reduce((s, i) => s + i.qty, 0);
+          if (total >= 20) { alert('Máximo de 20 unidades por encomenda.'); return; }
+          cart[idx].qty++;
+        }
         else if (btn.dataset.action === 'minus') {
           cart[idx].qty--;
           if (cart[idx].qty <= 0) cart.splice(idx, 1);

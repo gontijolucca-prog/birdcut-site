@@ -28,6 +28,9 @@ export async function onRequestPost(context) {
       }
       items = [...agg.entries()].map(([id, qty]) => ({ id, qty }));
       quantity = items.reduce((s, i) => s + i.qty, 0);
+      if (quantity > 20) {
+        return new Response(JSON.stringify({ error: 'Máximo de 20 unidades por encomenda.' }), { status: 400, headers: CORS });
+      }
     }
     const productId = items.length ? items[0].id : (body.productId === 'p2' ? 'p2' : 'p1');
     if (!items.length) items = [{ id: productId, qty: quantity }];

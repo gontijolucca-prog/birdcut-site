@@ -142,6 +142,7 @@
       if(title){ title.textContent=`${card.dataset.name || 'CurveLine Beard Pro'} — ${color}`; title.href = yellow ? '/produto-amarelo' : '/produto-laranja'; }
       if(quick){
         quick.dataset.image=imagePath;
+        quick.dataset.name=`CurveLine Beard Pro — ${color}`;
         quick.setAttribute('aria-label',`Adicionar CurveLine Beard Pro — ${color} ao carrinho`);
       }
       if(window.BC_renderStock) window.BC_renderStock(color);

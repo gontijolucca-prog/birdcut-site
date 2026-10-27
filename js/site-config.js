@@ -69,7 +69,7 @@
             <article class="ac-product-card" data-name="${escapeHTML(title)}">
               <div class="ac-product-card__media">
                 <img src="${escapeHTML(selected.image)}" alt="${escapeHTML(title)} — ${escapeHTML(selected.color)}" loading="lazy">
-                <button type="button" class="ac-product-card__quick" data-name="${escapeHTML(title)}" data-price="${price}" data-image="${escapeHTML(selected.image)}" aria-label="Adicionar ${escapeHTML(title)} — ${escapeHTML(selected.color)} ao carrinho"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.6"/></svg></button>
+                <button type="button" class="ac-product-card__quick" data-name="${escapeHTML(title)} — ${escapeHTML(selected.color)}" data-price="${price}" data-image="${escapeHTML(selected.image)}" aria-label="Adicionar ${escapeHTML(title)} — ${escapeHTML(selected.color)} ao carrinho"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.6"/></svg></button>
               </div>
               <div class="ac-product-card__info">
                 <a class="ac-product-card__title" href="${selected.color==='Amarelo'?'/produto-amarelo':'/produto-laranja'}">${escapeHTML(title)} — ${escapeHTML(selected.color)}</a>

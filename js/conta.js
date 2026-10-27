@@ -180,7 +180,8 @@
 
   /* ===== Boot: estado de sessão ===== */
   window.addEventListener('DOMContentLoaded', () => {
-    if (typeof onAuthChange === 'function') onAuthChange(paint);
+    const hasReset = new URLSearchParams(location.search).get('reset');
+    if (!hasReset && typeof onAuthChange === 'function') onAuthChange(paint);
     if (Array.isArray(window.BC_CIDADES)) {
       ['listaCidades', 'listaCidadesMorada'].forEach((listId) => {
         const list = document.getElementById(listId);

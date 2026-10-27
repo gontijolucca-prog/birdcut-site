@@ -56,7 +56,7 @@
     }
     async function loadMessages(){
       let cfg = null;
-      try{ const ls = localStorage.getItem('bc_site_config_preview'); if(ls) cfg = JSON.parse(ls); }catch(e){}
+      try{ const ls = localStorage.getItem('bc_site_config_preview_v2'); if(ls) cfg = JSON.parse(ls); }catch(e){}
       if(!cfg){
         try{ const r = await fetch('/api/site-config?v=20261024b',{headers:{'Accept':'application/json'},cache:'no-store'}); if(r.ok){ const j = await r.json(); if(j && j.hero) cfg = j; } }catch(e){}
       }
@@ -195,9 +195,16 @@
     }).observe(bsGrid,{childList:true,subtree:true});
   }
 
-  // init
-  setActiveColor('Laranja');
-  if(window.BC_renderStock) window.BC_renderStock('Laranja');
+  // init — respeita a cor da página de produto (ex.: /produto-amarelo)
+  const initialColor = (function(){
+    const btn=document.getElementById('addToCart');
+    const name=btn && btn.dataset ? String(btn.dataset.name||'') : '';
+    if(/Amarelo/i.test(name)) return 'Amarelo';
+    const sw=document.querySelector('.ac-product-card__swatches .sw.active');
+    return sw && sw.dataset && sw.dataset.color ? sw.dataset.color : 'Laranja';
+  })();
+  setActiveColor(initialColor);
+  if(window.BC_renderStock) window.BC_renderStock(initialColor);
 
   /* ===== 3. QUANTIDADE ===== */
   const qtyInput = document.getElementById('qtyInput');
@@ -208,7 +215,7 @@
       qtyInput.value = Math.max(1, (parseInt(qtyInput.value, 10) || 1) - 1);
     });
     qtyPlus.addEventListener('click', () => {
-      qtyInput.value = Math.min(99, (parseInt(qtyInput.value, 10) || 1) + 1);
+      const max = parseInt(qtyInput.getAttribute('max'),10) || 99; qtyInput.value = Math.min(max, (parseInt(qtyInput.value, 10) || 1) + 1);
     });
   }
 

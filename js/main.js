@@ -81,7 +81,7 @@
     });
   }
 
-  let cart = JSON.parse(localStorage.getItem('birdcut-cart') || '[]');
+  let cart = (()=>{ try{ const v=JSON.parse(localStorage.getItem('birdcut-cart')||'[]'); return Array.isArray(v)? v.filter(i=>i&&i.name&&Number.isFinite(Number(i.priceNum))&&Number.isFinite(Number(i.qty))):[]; }catch(e){ return []; } })();
   const cartCount = document.querySelector('.cart-count');
   const cartBtn = document.querySelector('.icon-btn--cart');
 

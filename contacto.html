@@ -83,10 +83,11 @@
         <div><b>Instagram</b><p><a href="https://www.instagram.com/birdcutpt/" target="_blank" rel="noopener">@birdcutpt</a></p></div>
       </div>
     </div>
-    <form class="reveal" data-delay="1">
-      <input type="text" placeholder="O seu nome" required aria-label="Nome">
-      <input type="email" placeholder="O seu e-mail" required aria-label="E-mail">
-      <textarea placeholder="A sua mensagem" required aria-label="Mensagem"></textarea>
+    <form class="reveal" data-contact data-delay="1">
+      <input type="text" name="name" placeholder="O seu nome" required aria-label="Nome" autocomplete="name">
+      <input type="email" name="email" placeholder="O seu e-mail" required aria-label="E-mail" autocomplete="email">
+      <textarea name="message" placeholder="A sua mensagem" required aria-label="Mensagem"></textarea>
+      <p data-form-msg role="status" hidden style="font-size:.85rem;margin:.2rem 0 0"></p>
       <button type="submit" class="btn btn--red" style="justify-self:start">Enviar Mensagem</button>
     </form>
   </div>
@@ -94,10 +95,11 @@
 <section class="section newsletter">
   <div class="container newsletter__in reveal">
     <div class="section__kicker">Newsletter</div>
-    <h2>Subscreva e receba 5% de desconto</h2>
-    <form class="newsletter-form">
+    <h2>Subscreva e receba novidades da Bird Cut</h2>
+    <form class="newsletter-form" data-newsletter>
       <input type="email" placeholder="O seu e-mail" required aria-label="E-mail">
       <button type="submit" class="btn btn--red">Subscrever</button>
+      <p data-newsletter-msg role="status" hidden style="font-size:.85rem;margin:.4rem 0 0;width:100%"></p>
     </form>
   </div>
 </section>
@@ -166,8 +168,9 @@
   <a href="conta.html">Área de Cliente</a>
 </div>
 
-<script src="js/api.js?v=20261023b"></script>
-<script src="js/main.js?v=20261023a"></script>
-<script src="js/rafael.js?v=20261024d"></script>
+<script src="js/api.js?v=20261027a"></script>
+<script src="js/main.js?v=20261027a"></script>
+<script src="js/forms.js?v=20261027a"></script>
+<script src="js/rafael.js?v=20261027a"></script>
 </body>
 </html>

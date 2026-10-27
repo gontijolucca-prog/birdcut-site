@@ -17,9 +17,11 @@ async function api(path, opts = {}) {
   const headers = { 'Content-Type': 'application/json', ...opts.headers };
   if (token) headers['Authorization'] = 'Bearer ' + token;
   const res = await fetch(API_URL + path, { ...opts, headers });
-  const data = await res.json();
-  if (!res.ok) throw { code: res.status, message: data.error || 'Erro' };
-  return data;
+  const text = await res.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch (e) { data = null; }
+  if (!res.ok) throw { code: res.status, message: (data && data.error) || 'Erro ' + res.status };
+  return data || {};
 }
 
 function register(email, password, name, surname) {

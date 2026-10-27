@@ -13,6 +13,9 @@ export async function onRequest(context) {
   if (contentType) headers['content-type'] = contentType;
   const auth = context.request.headers.get('authorization');
   if (auth) headers['authorization'] = auth;
+  // IP real do visitante (senão o rate limit do backend conta tudo como um só IP)
+  const clientIp = context.request.headers.get('cf-connecting-ip') || context.request.headers.get('x-real-ip');
+  if (clientIp) headers['x-forwarded-for'] = clientIp;
 
   const init = { method: context.request.method, headers };
   if (!['GET', 'HEAD'].includes(context.request.method)) {

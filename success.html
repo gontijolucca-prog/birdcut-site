@@ -107,7 +107,7 @@
     document.getElementById('amount').textContent = d.amount ? (d.amount / 100).toFixed(2).replace('.',',') + ' €' : '18,89 €';
     const cartSnapshot = (()=>{ try{ return JSON.parse(localStorage.getItem('birdcut-cart')||'[]'); }catch(e){ return []; } })();
     const orderData = {
-      email: d.customer_email || 'guest',
+      email: d.customer_email || (d.metadata && d.metadata.email) || 'guest',
       stripeSession: sessionId,
       items: (function(){
         if(cartSnapshot.length) return cartSnapshot.map(i=>({name:i.name, priceNum:i.priceNum, quantity:i.qty, image:i.image}));
